@@ -42,7 +42,6 @@ export default function Header(
     {session, status}: { session: Session | null, status: string }
 ) {
     const photo = session?.user?.image || undefined
-    const name = session?.user?.name || undefined
     const [showModal, setShowModal] = useState(false);
 
     return (
