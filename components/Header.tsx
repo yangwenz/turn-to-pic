@@ -75,11 +75,6 @@ export default function Header(
                         height={25}
                     />
                 )}
-                {name && (
-                    <p className="mr-1 ml-1 lg:text-base text-sm">
-                        {name}
-                    </p>
-                )}
                 {status === "authenticated" && (
                     <button
                         onClick={() => setShowModal(true)}

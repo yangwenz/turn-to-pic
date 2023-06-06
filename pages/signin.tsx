@@ -22,7 +22,7 @@ export default function SignIn() {
     return (
         <div className="flex flex-col max-w-6xl mx-auto items-center min-h-screen">
             <Head>
-                <title>ImageGen</title>
+                <title>TurnToPic</title>
             </Head>
             <Header session={session} status={status}/>
             <main
@@ -50,19 +50,6 @@ export default function SignIn() {
                             className="mr-1"
                         />
                         <span>Sign in with Google</span>
-                    </button>
-                    <button
-                        onClick={() => signIn("github", {callbackUrl: "/"})}
-                        className={buttonStyle}
-                    >
-                        <Image
-                            src="/github.png"
-                            width={25}
-                            height={25}
-                            alt="github's logo"
-                            className="mr-1"
-                        />
-                        <span>Sign in with Github</span>
                     </button>
                 </div>
                 <Footer/>
