@@ -59,8 +59,9 @@ export default function Header(
                     <h1 className="lg:text-4xl text-2xl font-bold ml-2 tracking-tight
                         antialiased mt-1 drop-shadow-xl"
                         style={{fontFamily: "ABC"}}>
-                        <span className="text-slate-800">Pic</span>
-                        <span className="text-slate-600">Tinker</span>
+                        <span className="text-slate-800">Turn</span>
+                        <span className="text-slate-700">To</span>
+                        <span className="text-slate-600">Pic</span>
                     </h1>
                 </Link>
             </Tilt>
