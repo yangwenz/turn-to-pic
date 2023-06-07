@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
             <Head>
-                <title>TurnToPic</title>
+                <title>Turn2Pic</title>
             </Head>
             <Header session={session} status={status}/>
             <main className="flex w-full flex-col items-center justify-center text-center px-4 mt-8 sm:mb-0 mb-auto">
