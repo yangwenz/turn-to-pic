@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 let examples = [
     "test_29.png", "test_42.png", "test_50.png", "test_58.png", "test_66.png", "test_74.png", "test_82.png",
@@ -23,31 +23,107 @@ function shuffle(items: string[]) {
     return items;
 }
 
-export function GalleryExample() {
+function Content({imageUrl, isSmall, onClick}: {
+    imageUrl: string,
+    isSmall: boolean,
+    onClick: () => void
+}) {
+    let frameStyle: string;
+    let contentStyle: string;
+    if (isSmall) {
+        frameStyle = "lg:w-[256px] w-[160px] ";
+        contentStyle = "lg:w-[256px] lg:h-[384px] w-[160px] h-[240px] ";
+    } else {
+        frameStyle = "lg:w-[480px] w-[320px] ";
+        contentStyle = "lg:w-[480px] lg:h-[720px] w-[320px] h-[480px] ";
+    }
 
-    function Card(url: string) {
-        return (
+    return (
+        <div
+            className={frameStyle + "flex flex-col w-full items-center justify-center"}
+            onClick={onClick}
+        >
+            <div
+                className={contentStyle + "relative rounded-lg overflow-hidden"}>
+                <Image src={imageUrl} alt="imagebox" fill/>
+            </div>
+        </div>
+    )
+}
+
+function ImageModal({showModal, setShowModal, imageUrl}: {
+    showModal: boolean,
+    setShowModal: (x: boolean) => void,
+    imageUrl: string
+}) {
+    const buttonStyle =
+        "h-10 px-8 m-2 text-white transition-colors duration-150 " +
+        "bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg focus:ring-4 hover:bg-gradient-to-bl";
+
+    return (
+        <div>
+            {showModal ? (
+                <div
+                    className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+                    onClick={() => setShowModal(false)}
+                >
+                    <div
+                        className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
+                        rounded-lg shadow-xl"
+                    >
+                        <Content
+                            imageUrl={imageUrl}
+                            isSmall={false}
+                            onClick={() => null}
+                        />
+                    </div>
+                </div>
+            ) : null}
+        </div>
+    );
+}
+
+function Card(url: string) {
+    const [showModal, setShowModal] = useState(false);
+
+    return (
+        <div>
             <motion.div
                 className="flex flex-col items-center justify-center
-                    lg:w-[256px] w-[160px] lg:h-[384px] h-[240px]
-                    rounded-lg bg-slate-300 overflow-hidden relative"
+                        lg:w-[256px] w-[160px] lg:h-[384px] h-[240px]
+                        rounded-lg bg-slate-300 overflow-hidden relative"
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
-                    scale: 1.1  ,
+                    scale: 1.1,
                     transition: {
                         duration: .2
                     }
                 }}
             >
-                <Image src={url} alt="imagebox" fill/>
+                <div className="hover:cursor-pointer">
+                    <Content
+                        imageUrl={url}
+                        isSmall={true}
+                        onClick={() => setShowModal(true)}
+                    />
+                </div>
             </motion.div>
-        )
-    }
+            <ImageModal
+                showModal={showModal}
+                setShowModal={(x: boolean) => setShowModal(x)}
+                imageUrl={url}
+            />
+        </div>
+    )
+}
 
-    let cards =
-        shuffle(examples).map(img => Card("/images/" + img));
+export function GalleryExample() {
+    useEffect(() => {
+        shuffle(examples);
+    }, [])
 
+    let cards = examples.map(img => Card("/images/" + img));
     return (
         <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-3">
             <div
