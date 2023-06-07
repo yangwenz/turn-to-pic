@@ -19,7 +19,15 @@ export default function Footer() {
                     target="_blank"
                     className="text-gray-300 font-bold transition hover:text-gray-300/50"
                 >
-                    Vercel.
+                    Vercel{" "}
+                </a>
+                and{" "}
+                <a
+                    href="https://https://replicate.com/"
+                    target="_blank"
+                    className="text-gray-300 font-bold transition hover:text-gray-300/50"
+                >
+                    Replicate.
                 </a>
             </div>
         </footer>
