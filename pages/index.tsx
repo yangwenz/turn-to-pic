@@ -15,20 +15,20 @@ export default function Home() {
             <Header session={session} status={status}/>
             <main className="flex w-full flex-col items-center justify-center text-center px-4 mt-8 sm:mb-0 mb-auto">
                 <h1 className="mx-auto font-display text-4xl font-bold
-                    tracking-normal text-slate-900 sm:text-6xl mb-5 drop-shadow-xl"
+                    tracking-normal text-slate-900 sm:text-5xl mb-5 drop-shadow-xl"
                     style={{fontFamily: "ABC"}}
                 >
-                    <span className="animate-text bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800
+                    <span className="animate-text bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400
                         bg-clip-text text-transparent font-black">
-                        Playing Magic with Your Pictures
+                        Creating Amazing Pictures of Dota 2 Heroes
                     </span>
                 </h1>
                 <h2 className="mx-auto font-display text-3xl font-semibold
-                    tracking-normal text-slate-600 mb-8 drop-shadow-xl"
+                    tracking-normal text-slate-500 mb-8 drop-shadow-xl"
                     style={{fontFamily: "ABC"}}
                 >
                     <span>
-                        Generating Amazing Pictures using AI
+                        Transform Your Love for Dota 2 into Stunning Visual Art
                     </span>
                 </h2>
             </main>

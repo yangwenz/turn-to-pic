@@ -6,19 +6,17 @@ import Tilt from "react-parallax-tilt";
 import {useState} from "react";
 import Settings from "@/components/Settings";
 
+const buttonStyle =
+    "h-10 px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent border-slate-500 " +
+    "rounded-lg border hover:bg-gray-300 hover:text-black";
+
 
 function signButtons(session: Session | null, status: string) {
-    const buttonStyle =
-        "h-10 px-3 m-2 text-white transition-colors duration-150 lg:text-base text-xs " +
-        "bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg focus:ring-4 hover:bg-gradient-to-bl";
-
     if (status === "loading") {
         return <div className="flex justify-end">
             <p>Validating session ...</p>
         </div>
-    }
-
-    if (!session) {
+    } else if (status != "authenticated") {
         return <div className="flex justify-end">
             <Link href={"/signin"}>
                 <button className={buttonStyle}>
@@ -58,9 +56,9 @@ export default function Header(
                     <h1 className="lg:text-4xl text-2xl font-bold ml-2 tracking-tight
                         antialiased mt-1 drop-shadow-xl"
                         style={{fontFamily: "ABC"}}>
-                        <span className="text-slate-800">Turn</span>
-                        <span className="text-slate-700">To</span>
-                        <span className="text-slate-600">Pic</span>
+                        <span className="text-slate-400">Turn</span>
+                        <span className="text-slate-400">2</span>
+                        <span className="text-slate-300">Pic</span>
                     </h1>
                 </Link>
             </Tilt>
@@ -77,9 +75,7 @@ export default function Header(
                 {status === "authenticated" && (
                     <button
                         onClick={() => setShowModal(true)}
-                        className="h-10 px-3 ml-2 text-white transition-colors duration-150
-                        lg:text-base text-xs bg-gradient-to-br from-purple-600 to-blue-500
-                        rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
+                        className={buttonStyle}
                     >
                         Settings
                     </button>
