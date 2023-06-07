@@ -56,10 +56,6 @@ function ImageModal({showModal, setShowModal, imageUrl}: {
     setShowModal: (x: boolean) => void,
     imageUrl: string
 }) {
-    const buttonStyle =
-        "h-10 px-8 m-2 text-white transition-colors duration-150 " +
-        "bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg focus:ring-4 hover:bg-gradient-to-bl";
-
     return (
         <div>
             {showModal ? (
