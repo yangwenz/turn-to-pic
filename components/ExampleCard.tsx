@@ -115,18 +115,20 @@ function Card(url: string) {
 }
 
 export function GalleryExample() {
+    const [images, setImages] = useState<string[]>([...examples]);
+
     useEffect(() => {
         shuffle(examples);
+        setImages([...examples]);
     }, [])
 
-    let cards = examples.map(img => Card("/images/" + img));
     return (
         <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-3">
             <div
                 className="grid md:grid-cols-4 grid-cols-2"
                 style={{gridGap: "10px"}}
             >
-                {cards}
+                {images.map(img => Card("/images/" + img))}
             </div>
         </div>
     )
