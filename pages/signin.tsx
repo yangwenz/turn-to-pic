@@ -9,8 +9,8 @@ import {router} from "next/client";
 
 
 export default function SignIn() {
-    const buttonStyle = "bg-slate-100 text-black py-3 px-6 " +
-        "rounded-2xl flex items-center font-normal hover:bg-slate-200 shadow-lg"
+    const buttonStyle = " bg-transparent border border-slate-500 text-gray-300 py-3 px-6 " +
+        "rounded-2xl flex items-center font-normal hover:bg-gray-300 hover:text-black shadow-lg"
     const {error} = useRouter().query;
     const {data: session, status} = useSession();
 
@@ -27,15 +27,18 @@ export default function SignIn() {
             <Header session={session} status={status}/>
             <main
                 className="flex flex-1 w-full flex-col items-center justify-center text-center sm:mb-0 mb-auto">
-                <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5">
-                    <span className="animate-text bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800
+                <h1
+                    className="mx-auto font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-5xl mb-5"
+                    style={{fontFamily: "ABC"}}
+                >
+                    <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
                         bg-clip-text text-transparent font-black">
-                        Playing Magic with Your Pictures
+                        Creating Amazing Pictures of Dota 2 Heroes
                     </span>
                 </h1>
                 <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[750px] mt-4 mb-80">
-                    <div className="max-w-xl text-gray-600">
-                        Sign in below to create a free account and generate beautiful images today.
+                    <div className="max-w-xl text-slate-400 text-xl">
+                        Sign in below to create a free account and make stunning images today.
                     </div>
                     {error && <SignInError error={error}/>}
                     <button
