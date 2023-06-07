@@ -83,7 +83,7 @@ function Card(url: string) {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <div>
+        <div key={url}>
             <motion.div
                 className="flex flex-col items-center justify-center
                         lg:w-[256px] w-[160px] lg:h-[384px] h-[240px]
