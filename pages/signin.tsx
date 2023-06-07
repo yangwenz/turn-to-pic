@@ -6,7 +6,27 @@ import {signIn, useSession} from "next-auth/react";
 import {useRouter} from 'next/router';
 import React from "react";
 import {router} from "next/client";
+import { motion } from "framer-motion";
 
+function Card(url: string) {
+    return (
+        <motion.div
+            className="flex flex-col items-center justify-center
+                    lg:w-[256px] w-[160px] lg:h-[256px] h-[160px]
+                    rounded-lg bg-slate-300 overflow-hidden relative"
+            whileHover={{
+                position: 'relative',
+                zIndex: 1,
+                scale: 1.1  ,
+                transition: {
+                    duration: .2
+                }
+            }}
+        >
+            <Image src={url} alt="imagebox" fill/>
+        </motion.div>
+    )
+}
 
 export default function SignIn() {
     const buttonStyle = " bg-transparent border border-slate-500 text-gray-300 py-3 px-6 " +
@@ -36,7 +56,7 @@ export default function SignIn() {
                         Creating Amazing Pictures of Dota 2 Heroes
                     </span>
                 </h1>
-                <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[750px] mt-4 mb-80">
+                <div className="flex flex-col items-center space-y-6 max-w-[750px] mt-4 mb-40">
                     <div className="max-w-xl text-slate-400 text-xl">
                         Sign in below to create a free account and make stunning images today.
                     </div>
@@ -54,6 +74,15 @@ export default function SignIn() {
                         />
                         <span>Sign in with Google</span>
                     </button>
+                </div>
+                <div
+                    className="grid md:grid-cols-4 grid-cols-2"
+                    style={{gridGap: "10px"}}
+                >
+                    {Card("/images/0.png")}
+                    {Card("/images/1.png")}
+                    {Card("/images/2.png")}
+                    {Card("/images/3.png")}
                 </div>
                 <Footer/>
             </main>
