@@ -1,14 +1,31 @@
 import {useEffect, useState} from "react";
 import {FaBars} from "react-icons/fa";
 import clsx from "clsx";
+import {
+    defaultGuidanceScale,
+    defaultNegativePrompt,
+    defaultNumInferenceSteps,
+    defaultRandomSeed
+} from "@/configs/default";
 
-export default function Drawer({negativePrompt, setNegativePrompt}: {
+export default function Drawer({
+        negativePrompt, setNegativePrompt,
+        numSteps, setNumSteps,
+        guidanceScale, setGuidanceScale,
+        seed, setSeed}: {
     negativePrompt: string,
-    setNegativePrompt: (x: string) => void
+    setNegativePrompt: (x: string) => void,
+    numSteps: number,
+    setNumSteps: (x: number) => void,
+    guidanceScale: number,
+    setGuidanceScale: (x: number) => void,
+    seed: number | string,
+    setSeed: (x: number | string) => void
 }) {
     const [showDrawer, setShowDrawer] = useState(true);
 
     useEffect(() => {
+        reset();
         // Function to check if the screen width is for desktop or tablet
         const checkScreenWidth = () => {
             const screenWidth = window.innerWidth;
@@ -32,6 +49,13 @@ export default function Drawer({negativePrompt, setNegativePrompt}: {
     const toggleDrawer = () => {
         setShowDrawer((prevState) => !prevState);
     };
+
+    const reset = () => {
+        setNegativePrompt(defaultNegativePrompt);
+        setNumSteps(defaultNumInferenceSteps);
+        setGuidanceScale(defaultGuidanceScale);
+        setSeed(defaultRandomSeed);
+    }
 
     return (
         <>
@@ -62,17 +86,15 @@ export default function Drawer({negativePrompt, setNegativePrompt}: {
                         </button>
                     </div>
                     <div className="border-b border-slate-500 mt-2 mb-4"></div>
-                    <NegativePrompt
-                        prompt={negativePrompt}
-                        setPrompt={setNegativePrompt}
-                    />
-                    <InferenceSteps/>
-                    <GuidanceScale/>
-                    <RandomSeed/>
+                    <NegativePrompt prompt={negativePrompt} setPrompt={setNegativePrompt}/>
+                    <InferenceSteps numSteps={numSteps} setNumSteps={setNumSteps}/>
+                    <GuidanceScale guidanceScale={guidanceScale} setGuidanceScale={setGuidanceScale}/>
+                    <RandomSeed seed={seed} setSeed={setSeed}/>
                     <div className="w-full flex justify-center">
                         <button
                             className="w-auto h-10 px-10 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                            border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                            onClick={reset}
                         >
                             Reset
                         </button>
@@ -99,7 +121,7 @@ function NegativePrompt({prompt, setPrompt}: {
                     border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
                 placeholder="Write negative prompt here..."
                 maxLength={1500}
-                defaultValue={prompt}
+                value={prompt}
                 onChange={(event) => {setPrompt(event.target.value)}}
             >
             </textarea>
@@ -110,7 +132,10 @@ function NegativePrompt({prompt, setPrompt}: {
     )
 }
 
-function InferenceSteps() {
+function InferenceSteps({numSteps, setNumSteps}: {
+    numSteps: number,
+    setNumSteps: (x: number) => void}
+) {
     return (
         <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-300">
@@ -124,7 +149,8 @@ function InferenceSteps() {
                         rounded border bg-gray-300 px-3 py-1 mr-1"
                     min={1}
                     max={200}
-                    defaultValue={50}
+                    value={numSteps}
+                    onChange={(event) => {setNumSteps(Number(event.target.value))}}
                 />
                 <input
                     id="step-range"
@@ -133,7 +159,8 @@ function InferenceSteps() {
                     min={1}
                     max={200}
                     step={1}
-                    defaultValue={50}
+                    value={numSteps}
+                    onChange={(event) => {setNumSteps(Number(event.target.value))}}
                 />
             </div>
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
@@ -143,7 +170,10 @@ function InferenceSteps() {
     )
 }
 
-function GuidanceScale() {
+function GuidanceScale({guidanceScale, setGuidanceScale}:{
+    guidanceScale: number,
+    setGuidanceScale: (x: number) => void}
+) {
     return (
         <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-300">
@@ -158,7 +188,8 @@ function GuidanceScale() {
                     min={1}
                     max={20}
                     step={0.1}
-                    defaultValue={7.5}
+                    value={guidanceScale}
+                    onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
                 />
                 <input
                     id="guidance-range"
@@ -167,7 +198,8 @@ function GuidanceScale() {
                     min={1}
                     max={20}
                     step={0.1}
-                    defaultValue={7.5}
+                    value={guidanceScale}
+                    onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
                 />
             </div>
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
@@ -177,7 +209,10 @@ function GuidanceScale() {
     )
 }
 
-function RandomSeed() {
+function RandomSeed({seed, setSeed}: {
+    seed: number | string,
+    setSeed: (x: number | string) => void}
+) {
     return (
         <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-300">
@@ -188,6 +223,9 @@ function RandomSeed() {
                 type="number"
                 className="block min-h-[auto] w-full text-sm text-gray-900
                     rounded border bg-gray-300 px-3 py-1 mr-1"
+                value={seed}
+                onChange={(event) => {
+                    setSeed(event.target.value === ""? "": Number(event.target.value))}}
             />
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Leave blank to randomize the seed.

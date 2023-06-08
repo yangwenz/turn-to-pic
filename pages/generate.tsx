@@ -10,7 +10,10 @@ export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
 
-    const [negativePrompt, setNegativePrompt] = useState<string>("abc");
+    const [negativePrompt, setNegativePrompt] = useState<string>("");
+    const [numSteps, setNumSteps] = useState<number>(50);
+    const [guidanceScale, setGuidanceScale] = useState<number>(7.5);
+    const [seed, setSeed] = useState<number | string>("");
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -29,6 +32,12 @@ export default function Generate() {
             <Drawer
                 negativePrompt={negativePrompt}
                 setNegativePrompt={(x: string) => {setNegativePrompt(x)}}
+                numSteps={numSteps}
+                setNumSteps={(x: number) => {setNumSteps(x)}}
+                guidanceScale={guidanceScale}
+                setGuidanceScale={(x: number) => setGuidanceScale(x)}
+                seed={seed}
+                setSeed={(x: number | string) => setSeed(x)}
             />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>
