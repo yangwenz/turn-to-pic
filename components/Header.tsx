@@ -10,7 +10,7 @@ import Settings from "@/components/Settings";
 function signButtons(session: Session | null, status: string) {
     const buttonStyle =
         "h-10 px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent border-slate-500 " +
-        "rounded-lg border hover:bg-gray-300 hover:text-black";
+        "rounded-lg border-2 hover:bg-gray-300 hover:text-black";
 
     if (status === "loading") {
         return <div className="flex justify-end">
@@ -43,7 +43,7 @@ export default function Header(
     const [showModal, setShowModal] = useState(false);
     const buttonStyle =
         "h-10 px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent border-slate-500 " +
-        "rounded-lg border hover:bg-gray-300 hover:text-black";
+        "rounded-lg border-2 hover:bg-gray-300 hover:text-black";
 
     return (
         <header className="flex w-full justify-between items-center border-b border-slate-500 p-3">
