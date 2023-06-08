@@ -5,15 +5,21 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
 import {useState} from "react";
+import {
+    defaultGuidanceScale,
+    defaultNegativePrompt,
+    defaultNumInferenceSteps,
+    defaultRandomSeed
+} from "@/configs/default";
 
 export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
 
-    const [negativePrompt, setNegativePrompt] = useState<string>("");
-    const [numSteps, setNumSteps] = useState<number>(50);
-    const [guidanceScale, setGuidanceScale] = useState<number>(7.5);
-    const [seed, setSeed] = useState<number | string>("");
+    const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
+    const [numSteps, setNumSteps] = useState<number>(defaultNumInferenceSteps);
+    const [guidanceScale, setGuidanceScale] = useState<number>(defaultGuidanceScale);
+    const [seed, setSeed] = useState<number | string>(defaultRandomSeed);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -22,6 +28,13 @@ export default function Generate() {
         return <div className="flex justify-end">
             <p>Validating session ...</p>
         </div>
+    }
+
+    const reset = () => {
+        setNegativePrompt(defaultNegativePrompt);
+        setNumSteps(defaultNumInferenceSteps);
+        setGuidanceScale(defaultGuidanceScale);
+        setSeed(defaultRandomSeed);
     }
 
     return (
@@ -38,6 +51,7 @@ export default function Generate() {
                 setGuidanceScale={(x: number) => setGuidanceScale(x)}
                 seed={seed}
                 setSeed={(x: number | string) => setSeed(x)}
+                reset={reset}
             />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>

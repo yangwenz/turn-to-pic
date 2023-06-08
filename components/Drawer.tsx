@@ -1,18 +1,12 @@
 import {useEffect, useState} from "react";
 import {FaBars} from "react-icons/fa";
 import clsx from "clsx";
-import {
-    defaultGuidanceScale,
-    defaultNegativePrompt,
-    defaultNumInferenceSteps,
-    defaultRandomSeed
-} from "@/configs/default";
 
 export default function Drawer({
         negativePrompt, setNegativePrompt,
         numSteps, setNumSteps,
         guidanceScale, setGuidanceScale,
-        seed, setSeed}: {
+        seed, setSeed, reset}: {
     negativePrompt: string,
     setNegativePrompt: (x: string) => void,
     numSteps: number,
@@ -20,12 +14,12 @@ export default function Drawer({
     guidanceScale: number,
     setGuidanceScale: (x: number) => void,
     seed: number | string,
-    setSeed: (x: number | string) => void
+    setSeed: (x: number | string) => void,
+    reset: () => void
 }) {
     const [showDrawer, setShowDrawer] = useState(true);
 
     useEffect(() => {
-        reset();
         // Function to check if the screen width is for desktop or tablet
         const checkScreenWidth = () => {
             const screenWidth = window.innerWidth;
@@ -49,13 +43,6 @@ export default function Drawer({
     const toggleDrawer = () => {
         setShowDrawer((prevState) => !prevState);
     };
-
-    const reset = () => {
-        setNegativePrompt(defaultNegativePrompt);
-        setNumSteps(defaultNumInferenceSteps);
-        setGuidanceScale(defaultGuidanceScale);
-        setSeed(defaultRandomSeed);
-    }
 
     return (
         <>
