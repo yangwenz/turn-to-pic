@@ -57,7 +57,7 @@ export default function Drawer({
             >
                 <div className="flex flex-col gap-1 overflow-y-auto">
                     <div className="mb-2 flex justify-center gap-2">
-                        <span className="font-bold">
+                        <span className="font-bold text-lg">
                             Advanced Settings
                         </span>
                         <button
