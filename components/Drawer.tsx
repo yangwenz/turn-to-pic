@@ -98,7 +98,7 @@ function NegativePrompt({prompt, setPrompt}: {
 }) {
     return (
         <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-300">
+            <label className="block mb-2 text-base font-medium text-gray-300">
                 Negative Prompt
             </label>
             <textarea
@@ -125,7 +125,7 @@ function InferenceSteps({numSteps, setNumSteps}: {
 ) {
     return (
         <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-300">
+            <label className="block mb-2 text-base font-medium text-gray-300">
                 Number of Inference Steps
             </label>
             <div className="flex flex-row items-center justify-center">
@@ -163,7 +163,7 @@ function GuidanceScale({guidanceScale, setGuidanceScale}:{
 ) {
     return (
         <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-300">
+            <label className="block mb-2 text-base font-medium text-gray-300">
                 Guidance Scale
             </label>
             <div className="flex flex-row items-center justify-center">
@@ -202,7 +202,7 @@ function RandomSeed({seed, setSeed}: {
 ) {
     return (
         <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-300">
+            <label className="block mb-2 text-base font-medium text-gray-300">
                 Random Seed
             </label>
             <input
