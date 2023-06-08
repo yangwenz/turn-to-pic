@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {FaBars} from "react-icons/fa";
+import {FaBars, FaMinus, FaPlus} from "react-icons/fa";
 import clsx from "clsx";
 
 export default function Drawer({
@@ -96,12 +96,18 @@ function NegativePrompt({prompt, setPrompt}: {
     prompt: string,
     setPrompt: (x: string) => void
 }) {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
 
     return (
-        <div className="mb-4">
-            <label className="block mb-2 text-base font-medium text-gray-300">
-                Negative Prompt
+        <div className="mb-5">
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShow(!show)}}
+            >
+                <span>Negative Prompt</span>
+                {show && (<FaMinus/>)}
+                {!show && (<FaPlus/>)}
             </label>
             {show && (
                 <textarea
@@ -128,7 +134,7 @@ function InferenceSteps({numSteps, setNumSteps}: {
     setNumSteps: (x: number) => void}
 ) {
     return (
-        <div className="mb-4">
+        <div className="mb-5">
             <label className="block mb-2 text-base font-medium text-gray-300">
                 Number of Inference Steps
             </label>
@@ -166,7 +172,7 @@ function GuidanceScale({guidanceScale, setGuidanceScale}:{
     setGuidanceScale: (x: number) => void}
 ) {
     return (
-        <div className="mb-4">
+        <div className="mb-5">
             <label className="block mb-2 text-base font-medium text-gray-300">
                 Guidance Scale
             </label>
@@ -205,7 +211,7 @@ function RandomSeed({seed, setSeed}: {
     setSeed: (x: number | string) => void}
 ) {
     return (
-        <div className="mb-4">
+        <div className="mb-5">
             <label className="block mb-2 text-base font-medium text-gray-300">
                 Random Seed
             </label>
