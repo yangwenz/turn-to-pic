@@ -4,10 +4,13 @@ import {useRouter} from "next/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
+import {useState} from "react";
 
 export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
+
+    const [negativePrompt, setNegativePrompt] = useState<string>("abc");
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -23,7 +26,10 @@ export default function Generate() {
             <Head>
                 <title>Turn2Pic</title>
             </Head>
-            <Drawer/>
+            <Drawer
+                negativePrompt={negativePrompt}
+                setNegativePrompt={(x: string) => {setNegativePrompt(x)}}
+            />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>
                 <main className="flex flex-col items-center justify-center

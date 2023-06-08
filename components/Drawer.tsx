@@ -2,7 +2,10 @@ import {useEffect, useState} from "react";
 import {FaBars} from "react-icons/fa";
 import clsx from "clsx";
 
-export default function Drawer() {
+export default function Drawer({negativePrompt, setNegativePrompt}: {
+    negativePrompt: string,
+    setNegativePrompt: (x: string) => void
+}) {
     const [showDrawer, setShowDrawer] = useState(true);
 
     useEffect(() => {
@@ -59,7 +62,10 @@ export default function Drawer() {
                         </button>
                     </div>
                     <div className="border-b border-slate-500 mt-2 mb-4"></div>
-                    <NegativePrompt/>
+                    <NegativePrompt
+                        prompt={negativePrompt}
+                        setPrompt={setNegativePrompt}
+                    />
                     <InferenceSteps/>
                     <GuidanceScale/>
                     <RandomSeed/>
@@ -77,7 +83,10 @@ export default function Drawer() {
     )
 }
 
-function NegativePrompt() {
+function NegativePrompt({prompt, setPrompt}: {
+    prompt: string,
+    setPrompt: (x: string) => void
+}) {
     return (
         <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-300">
@@ -88,7 +97,11 @@ function NegativePrompt() {
                 rows={12}
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-300 rounded border
                     border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                placeholder="Write negative prompt here...">
+                placeholder="Write negative prompt here..."
+                maxLength={1500}
+                defaultValue={prompt}
+                onChange={(event) => {setPrompt(event.target.value)}}
+            >
             </textarea>
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Specify things to not see in the output

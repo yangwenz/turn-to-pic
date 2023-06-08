@@ -80,7 +80,7 @@ export default function Header(
                         onClick={() => setShowModal(true)}
                         className={buttonStyle}
                     >
-                        Settings
+                        API Key
                     </button>
                 )}
                 {status === "authenticated" && (
