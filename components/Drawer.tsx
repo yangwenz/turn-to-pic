@@ -25,12 +25,7 @@ export default function Drawer({
     const [showDrawer, setShowDrawer] = useState(true);
 
     useEffect(() => {
-        // Set default parameters
-        setNegativePrompt(defaultNegativePrompt);
-        setNumSteps(defaultNumInferenceSteps);
-        setGuidanceScale(defaultGuidanceScale);
-        setSeed(defaultRandomSeed);
-
+        reset();
         // Function to check if the screen width is for desktop or tablet
         const checkScreenWidth = () => {
             const screenWidth = window.innerWidth;
