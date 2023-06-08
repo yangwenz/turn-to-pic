@@ -57,7 +57,15 @@ export default function Generate() {
                 <Header session={session} status={status}/>
                 <main className="flex flex-col items-center justify-center
                 text-center px-4 mt-8 sm:mb-0 mb-auto w-full">
-                    Test
+                    <h1 className="mx-auto font-display text-4xl font-bold
+                    tracking-normal text-slate-900 sm:text-5xl mb-5 drop-shadow-xl"
+                        style={{fontFamily: "ABC"}}
+                    >
+                    <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
+                        bg-clip-text text-transparent font-black">
+                        Creating Amazing Pictures of Dota 2 Heroes
+                    </span>
+                    </h1>
                 </main>
                 <Footer/>
             </div>
