@@ -1,10 +1,11 @@
 import Head from "next/head";
+import {useState} from "react";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
-import {useState} from "react";
+import DefaultLayout from "@/layout/default";
 import {
     defaultGuidanceScale,
     defaultNegativePrompt,
@@ -38,10 +39,7 @@ export default function Generate() {
     }
 
     return (
-        <div className="flex flex-row">
-            <Head>
-                <title>Turn2Pic</title>
-            </Head>
+        <DefaultLayout>
             <Drawer
                 negativePrompt={negativePrompt}
                 setNegativePrompt={(x: string) => {setNegativePrompt(x)}}
@@ -69,6 +67,6 @@ export default function Generate() {
                 </main>
                 <Footer/>
             </div>
-        </div>
+        </DefaultLayout>
     )
 }
