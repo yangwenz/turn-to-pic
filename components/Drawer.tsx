@@ -225,7 +225,7 @@ function RandomSeed({seed, setSeed}: {
                     setSeed(event.target.value === ""? "": Number(event.target.value))}}
             />
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
-                Leave blank to randomize the seed.
+                Leave blank to randomize the seed
             </label>
         </div>
     )
