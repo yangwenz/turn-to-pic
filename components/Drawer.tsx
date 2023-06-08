@@ -96,22 +96,26 @@ function NegativePrompt({prompt, setPrompt}: {
     prompt: string,
     setPrompt: (x: string) => void
 }) {
+    const [show, setShow] = useState(true);
+
     return (
         <div className="mb-4">
             <label className="block mb-2 text-base font-medium text-gray-300">
                 Negative Prompt
             </label>
-            <textarea
-                id="message"
-                rows={12}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-300 rounded border
+            {show && (
+                <textarea
+                    id="message"
+                    rows={12}
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-300 rounded border
                     border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                placeholder="Write negative prompt here..."
-                maxLength={1500}
-                value={prompt}
-                onChange={(event) => {setPrompt(event.target.value)}}
-            >
-            </textarea>
+                    placeholder="Write negative prompt here..."
+                    maxLength={1500}
+                    value={prompt}
+                    onChange={(event) => {setPrompt(event.target.value)}}
+                >
+                </textarea>
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Specify things to not see in the output
             </label>
