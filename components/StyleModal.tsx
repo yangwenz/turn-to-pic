@@ -9,7 +9,7 @@ function StyleCard({style, setStyle, setShowModal}: {
 }) {
     const styles = getStyles();
     const [selectedStyle, setSelectedStyle] = useState<string>(style);
-    let imgUrl = selectedStyle != "None"? "/styles/" + selectedStyle + ".png": "/styles/none.png";
+    let imgUrl = selectedStyle != "None"? "/styles/" + selectedStyle + ".png": "";
 
     return (
         <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
@@ -21,27 +21,31 @@ function StyleCard({style, setStyle, setShowModal}: {
             <div className="w-full flex justify-center mt-2">
                 <select
                     id="stylelist"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                        focus:border-blue-500 block w-4/5 p-2.5 min-w-40"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                        focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 min-w-40"
                     value={selectedStyle}
                     onChange={(event) => setSelectedStyle(event.target.value)}
                 >
                     {styles.map(style => (<option value={style} key={style}>{style}</option>))}
                 </select>
             </div>
-            <div
-                className={"flex flex-col md:w-[320px] w-[240px] items-center justify-center mt-2"}
-            >
-                <div
-                    className={"relative md:w-[320px] md:h-[480px] w-[240px] h-[360px] rounded-lg overflow-hidden"}
-                >
-                    <Image
-                        src={imgUrl}
-                        alt="imagebox"
-                        title={selectedStyle}
-                        fill
-                        sizes="(max-width: 240px), (max-width: 320px)"
-                    />
+            <div className="flex flex-col md:w-[320px] w-[240px] items-center justify-center mt-2">
+                <div className="relative md:w-[320px] md:h-[480px] w-[240px] h-[360px]
+                    rounded-lg overflow-hidden flex items-center">
+                    {imgUrl && (
+                        <Image
+                            src={imgUrl}
+                            alt="imagebox"
+                            title={selectedStyle}
+                            fill
+                            sizes="(max-width: 240px), (max-width: 320px)"
+                        />
+                    )}
+                    {imgUrl === "" && (
+                        <div className="text-gray-300 font-semibold text-lg">
+                            Please edit prompt to create your own style
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="w-full flex justify-center mt-2">
