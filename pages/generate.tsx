@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
 import DefaultLayout from "@/layout/default";
+import HeroCard from "@/components/HeroCard";
+
 import {
     defaultGuidanceScale,
     defaultNegativePrompt,
@@ -63,6 +65,7 @@ export default function Generate() {
                         Creating Amazing Pictures of Dota 2 Heroes
                     </span>
                     </h1>
+                    <HeroCard/>
                 </main>
                 <Footer/>
             </div>

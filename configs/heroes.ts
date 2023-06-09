@@ -51,3 +51,9 @@ export const heroAttributes = new Map<string, string[]>([
         'winter-wyvern'
     ]]
 ])
+
+export function label2name(label: string) {
+    return label.split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
