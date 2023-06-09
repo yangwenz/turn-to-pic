@@ -1,11 +1,11 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
 import DefaultLayout from "@/layout/default";
-import HeroCard from "@/components/HeroCard";
+import HeroModal from "@/components/HeroModal";
 
 import {
     defaultGuidanceScale,
@@ -13,15 +13,50 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
+import Image from "next/image";
+import {label2name} from "@/configs/heroes";
+
+function ControlPanel({hero, setShowHeroModal}: {
+    hero: string,
+    setShowHeroModal: (x: boolean) => void}
+) {
+    let heroUrl = hero != ""? "/heroes/" + hero + ".jpg": "/heroes/question_mark.png";
+    return (
+        <div className="flex flex-row w-full items-center justify-center border-slate-500 rounded p-2">
+            <div className="flex flex-row">
+                <button
+                    className="w-auto h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
+                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                    onClick={() => setShowHeroModal(true)}
+                >
+                    Choose a Hero
+                </button>
+                <div className={"flex flex-col w-[64px] items-center justify-center ml-1"}>
+                    <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden"}>
+                        <Image
+                            src={heroUrl}
+                            alt="imagebox"
+                            title={label2name(hero)}
+                            fill
+                            sizes="(max-width: 96px), (max-width: 64px)"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
 
+    const [hero, setHero] = useState<string>("");
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
     const [numSteps, setNumSteps] = useState<number>(defaultNumInferenceSteps);
     const [guidanceScale, setGuidanceScale] = useState<number>(defaultGuidanceScale);
     const [seed, setSeed] = useState<number | string>(defaultRandomSeed);
+    const [showHeroModal, setShowHeroModal] = useState(false);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -65,7 +100,15 @@ export default function Generate() {
                         Creating Amazing Pictures of Dota 2 Heroes
                     </span>
                     </h1>
-                    <HeroCard/>
+                    <ControlPanel
+                        hero={hero}
+                        setShowHeroModal={setShowHeroModal}
+                    />
+                    <HeroModal
+                        showModal={showHeroModal}
+                        setShowModal={setShowHeroModal}
+                        hero={hero} setHero={(x: string) => setHero(x)}
+                    />
                 </main>
                 <Footer/>
             </div>

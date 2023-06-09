@@ -32,11 +32,11 @@ function Content({imageUrl, isSmall, onClick}: {
     let frameStyle: string;
     let contentStyle: string;
     if (isSmall) {
-        frameStyle = "lg:w-[256px] w-[160px] ";
-        contentStyle = "lg:w-[256px] lg:h-[384px] w-[160px] h-[240px] ";
+        frameStyle = "lg:w-[256px] w-[120px] ";
+        contentStyle = "lg:w-[256px] lg:h-[384px] w-[120px] h-[180px] ";
     } else {
-        frameStyle = "lg:w-[480px] w-[320px] ";
-        contentStyle = "lg:w-[480px] lg:h-[720px] w-[320px] h-[480px] ";
+        frameStyle = "lg:w-[480px] w-[240px] ";
+        contentStyle = "lg:w-[480px] lg:h-[720px] w-[240px] h-[360px] ";
     }
 
     return (
@@ -46,7 +46,13 @@ function Content({imageUrl, isSmall, onClick}: {
         >
             <div
                 className={contentStyle + "relative rounded-lg overflow-hidden"}>
-                <Image src={imageUrl} alt="imagebox" fill/>
+                <Image
+                    src={imageUrl}
+                    alt="imagebox"
+                    fill
+                    sizes="(max-width: 120px), (max-width: 240px),
+                    (max-width: 256px), (max-width: 480px)"
+                />
             </div>
         </div>
     )
@@ -87,7 +93,7 @@ function Card(url: string) {
         <div key={url}>
             <motion.div
                 className="flex flex-col items-center justify-center
-                        lg:w-[256px] w-[160px] lg:h-[384px] h-[240px]
+                        lg:w-[256px] w-[120px] lg:h-[384px] h-[180px]
                         rounded-lg bg-slate-300 overflow-hidden relative"
                 whileHover={{
                     position: 'relative',

@@ -50,7 +50,7 @@ export default function Drawer({
                 id="drawer"
                 className={clsx(
                     showDrawer ? "translate-x-0" : "-translate-x-full",
-                    "z-30 m-0 flex h-screen w-80 flex-col justify-between bg-gray-900 p-3 " +
+                    "z-30 m-0 flex h-screen md:w-80 w-64 flex-col justify-between bg-gray-900 p-3 " +
                     "text-gray-300 shadow-3xl transition-all",
                     "fixed top-0 "
                 )}
