@@ -15,11 +15,14 @@ import {
 } from "@/configs/default";
 import Image from "next/image";
 import {label2name} from "@/configs/heroes";
+import StyleModal from "@/components/StyleModal";
 
-function ControlPanel({hero, setShowHeroModal}: {
+function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal}: {
     hero: string,
-    setShowHeroModal: (x: boolean) => void}
-) {
+    setShowHeroModal: (x: boolean) => void,
+    style: string,
+    setShowStyleModal: (x: boolean) => void
+}) {
     let heroUrl = hero != ""? "/heroes/" + hero + ".jpg": "/heroes/question_mark.png";
     return (
         <div className="flex flex-row w-full items-center justify-center border-slate-500 rounded p-2">
@@ -43,6 +46,15 @@ function ControlPanel({hero, setShowHeroModal}: {
                     </div>
                 </div>
             </div>
+            <div className="flex flex-row ml-4">
+                <button
+                    className="w-auto h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
+                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                    onClick={() => {setShowStyleModal(true)}}
+                >
+                    Choose a Style
+                </button>
+            </div>
         </div>
     )
 }
@@ -52,11 +64,13 @@ export default function Generate() {
     const router = useRouter();
 
     const [hero, setHero] = useState<string>("");
+    const [style, setStyle] = useState<string>("Default");
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
     const [numSteps, setNumSteps] = useState<number>(defaultNumInferenceSteps);
     const [guidanceScale, setGuidanceScale] = useState<number>(defaultGuidanceScale);
     const [seed, setSeed] = useState<number | string>(defaultRandomSeed);
     const [showHeroModal, setShowHeroModal] = useState(false);
+    const [showStyleModal, setShowStyleModal] = useState(false);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -103,11 +117,19 @@ export default function Generate() {
                     <ControlPanel
                         hero={hero}
                         setShowHeroModal={setShowHeroModal}
+                        style={style}
+                        setShowStyleModal={setShowStyleModal}
                     />
                     <HeroModal
                         showModal={showHeroModal}
                         setShowModal={setShowHeroModal}
                         hero={hero} setHero={(x: string) => setHero(x)}
+                    />
+                    <StyleModal
+                        showModal={showStyleModal}
+                        setShowModal={setShowStyleModal}
+                        style={style}
+                        setStyle={setStyle}
                     />
                 </main>
                 <Footer/>
