@@ -1,5 +1,5 @@
 
-const heroes = [
+export const heroes = [
     'abaddon', 'alchemist', 'ancient-apparition', 'anti-mage', 'arc-warden', 'axe',
     'bane', 'batrider', 'beastmaster', 'bloodseeker', 'bounty-hunter', 'brewmaster',
     'bristleback', 'broodmother', 'centaur-warrunner', 'chaos-knight', 'chen', 'clinkz',
@@ -21,7 +21,7 @@ const heroes = [
     'warlock', 'weaver', 'windranger', 'winter-wyvern', 'witch-doctor', 'wraith-king', 'zeus'
 ]
 
-const heroAttributes = new Map<string, string[]>([
+export const heroAttributes = new Map<string, string[]>([
     ["strength", [
         'alchemist', 'axe', 'bristleback', 'centaur-warrunner', 'chaos-knight', 'dawnbreaker',
         'doom', 'dragon-knight', 'earth-spirit', 'earthshaker', 'elder-titan', 'huskar', 'kunkka',
