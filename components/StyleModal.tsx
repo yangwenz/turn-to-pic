@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {getStyles, label2name} from "@/configs/heroes";
+import {getStyles} from "@/configs/heroes";
 import Image from "next/image";
 
 function StyleCard({style, setStyle, setShowModal}: {
