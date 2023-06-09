@@ -6,7 +6,7 @@ import {
     label2name
 } from "@/configs/heroes";
 
-function Card(url: string) {
+function Card(label: string, url: string) {
     return (
         <div className="hover:cursor-pointer" key={url}>
             <div
@@ -14,7 +14,7 @@ function Card(url: string) {
             >
                 <div
                     className={"relative lg:w-[96px] lg:h-[54px] w-[64px] h-[36px] rounded-lg overflow-hidden"}>
-                    <Image src={url} alt="imagebox" fill/>
+                    <Image src={url} alt="imagebox" title={label2name(label)} fill/>
                 </div>
             </div>
         </div>
@@ -23,11 +23,11 @@ function Card(url: string) {
 
 export default function HeroCard() {
     const [attribute, setAttribute] = useState<string>("");
-    let heroList = attribute === ""? heroes: heroAttributes.get(attribute)!;
+    let heroList = attribute === "" ? heroes : heroAttributes.get(attribute)!;
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-col items-center justify-center bg-gray-900 rounded-lg shadow-xl px-2">
+            <div className="flex flex-row items-center justify-center mt-2">
                 <select
                     id="herolist"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
@@ -54,10 +54,10 @@ export default function HeroCard() {
                 </button>
             </div>
             <div
-                className="grid grid-cols-4 mt-4"
+                className="grid grid-cols-4 mt-2 mb-2 lg:h-96 h-64 overflow-y-scroll"
                 style={{gridGap: "5px"}}
             >
-                {heroList.map(hero => Card("/heroes/" + hero + ".jpg"))}
+                {heroList.map(hero => Card(hero, "/heroes/" + hero + ".jpg"))}
             </div>
         </div>
     )
