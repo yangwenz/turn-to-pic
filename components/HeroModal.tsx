@@ -46,6 +46,9 @@ function HeroCard({hero, setHero, setShowModal}: {
         <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
             flex flex-col items-center justify-center bg-gray-900 rounded-lg shadow-xl px-2 min-w-[300px]"
         >
+            <div className="text-gray-300 font-semibold text-lg mt-2">
+                Choose a Hero
+            </div>
             <div className="flex flex-row items-center justify-center mt-2 w-full">
                 <select
                     id="herolist"

@@ -62,8 +62,8 @@ export function label2name(label: string) {
         .join(' ');
 }
 
-export function getStyles(): [string[], Map<string, string>] {
-    const styles = [
+export function getStyles() {
+    return [
         "None",
         "Default",
         "Realistic",
@@ -86,28 +86,30 @@ export function getStyles(): [string[], Map<string, string>] {
         "Ukiyo-e",
         "Vincent van Gogh"
     ];
-    const style2prompt = new Map<string, string>([
+}
+
+export function getStylePrompts() {
+    return new Map<string, string>([
         ["None", ""],
-        ["Default", "beautiful detailed eyes, cinematic lighting, trending on artstation, award-winning, 8k wallpaper, highres, superb"],
-        ["Realistic", "ultra realistic, beautiful detailed eyes, cinematic lighting, 8k wallpaper, highres, superb"],
-        ["Statue", "(porcelain statue)++"],
-        ["Alma Thomas", "(Alma Thomas)++"],
-        ["Alphonse Mucha", "(Alphonse Mucha)++"],
-        ["Amrita Sher-Gil", "(Amrita Sher-Gil)++"],
-        ["Andrew Warhol", "(Andrew Warhol)++"],
-        ["Android Jones", "(Android Jones)++"],
-        ["Brad Rigney", "(Brad Rigney)++"],
-        ["Jacob Lawrence", "(Jacob Lawrence)++"],
-        ["John Collier", "(John Collier)++"],
-        ["John Singer Sargent", "(John Singer Sargent)++"],
-        ["Kawanabe Kyosai", "(Kawanabe Kyosai)++"],
-        ["Margaret Macdonald Mackintosh", "(Margaret Macdonald Mackintosh)++"],
-        ["Pablo Picasso", "(Pablo Picasso)++"],
-        ["Ravi Varma", "(Ravi Varma)++"],
-        ["Salvador Dali", "(Salvador Dali)++"],
-        ["Takashi Murakami", "(Takashi Murakami)++"],
-        ["Ukiyo-e", "(Ukiyo-e)++"],
-        ["Vincent van Gogh", "(Vincent van Gogh)++"]
+        ["Default", "(beautiful detailed eyes, cinematic lighting, trending on artstation, award-winning, 8k wallpaper, highres, superb)"],
+        ["Realistic", "(ultra realistic, beautiful detailed eyes, cinematic lighting, 8k wallpaper, highres, superb)"],
+        ["Statue", "(porcelain statue)"],
+        ["Alma Thomas", "(Alma Thomas)"],
+        ["Alphonse Mucha", "(Alphonse Mucha)"],
+        ["Amrita Sher-Gil", "(Amrita Sher-Gil)"],
+        ["Andrew Warhol", "(Andrew Warhol)"],
+        ["Android Jones", "(Android Jones)"],
+        ["Brad Rigney", "(Brad Rigney)"],
+        ["Jacob Lawrence", "(Jacob Lawrence)"],
+        ["John Collier", "(John Collier)"],
+        ["John Singer Sargent", "(John Singer Sargent)"],
+        ["Kawanabe Kyosai", "(Kawanabe Kyosai)"],
+        ["Margaret Macdonald Mackintosh", "(Margaret Macdonald Mackintosh)"],
+        ["Pablo Picasso", "(Pablo Picasso)"],
+        ["Ravi Varma", "(Ravi Varma)"],
+        ["Salvador Dali", "(Salvador Dali)"],
+        ["Takashi Murakami", "(Takashi Murakami)"],
+        ["Ukiyo-e", "(Ukiyo-e)"],
+        ["Vincent van Gogh", "(Vincent van Gogh)"]
     ]);
-    return [styles, style2prompt];
 }
