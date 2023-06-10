@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import Drawer from "@/components/Drawer";
 import DefaultLayout from "@/layout/default";
 import HeroModal from "@/components/HeroModal";
+import StyleModal from "@/components/StyleModal";
+import ControlPanel from "@/components/ControlPanel";
 
 import {
     defaultGuidanceScale,
@@ -15,55 +17,7 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
-import Image from "next/image";
-import {label2name} from "@/configs/heroes";
-import StyleModal from "@/components/StyleModal";
 
-function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal}: {
-    hero: string,
-    setShowHeroModal: (x: boolean) => void,
-    style: string,
-    setShowStyleModal: (x: boolean) => void
-}) {
-    let heroUrl = hero != ""? "/heroes/" + hero + ".jpg": "/heroes/question_mark.png";
-    return (
-        <div className="flex flex-row w-full items-center justify-center border-slate-500 rounded p-2">
-            <div className="flex flex-row">
-                <button
-                    className="w-auto h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
-                    onClick={() => setShowHeroModal(true)}
-                >
-                    Choose a Hero
-                </button>
-                <div className={"flex flex-col w-[64px] items-center justify-center ml-1"}>
-                    <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden"}>
-                        <Image
-                            src={heroUrl}
-                            alt="imagebox"
-                            title={label2name(hero)}
-                            fill
-                            sizes="(max-width: 96px), (max-width: 64px)"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-row ml-4">
-                <button
-                    className="w-auto min-h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
-                    onClick={() => {setShowStyleModal(true)}}
-                >
-                    Choose a Style
-                </button>
-                <div className="w-auto min-h-[36px] px-3 ml-1 rounded-lg border-2 border-slate-500 text-center
-                    bg-gray-900 text-gray-300 font-bold flex items-center italic lg:text-base text-xs">
-                    {style}
-                </div>
-            </div>
-        </div>
-    )
-}
 
 export default function Generate() {
     const {data: session, status} = useSession();
@@ -75,6 +29,8 @@ export default function Generate() {
     // The selected style
     const [style, setStyle] = useState<string>("Default");
     const [styleWeight, setStyleWeight] = useState<number>(2);
+    // Prompt
+    const [prompt, setPrompt] = useState<string>("");
     // The other parameters
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
     const [width, setWidth] = useState<number>(defaultWidth);
@@ -139,6 +95,8 @@ export default function Generate() {
                         setShowHeroModal={setShowHeroModal}
                         style={style}
                         setShowStyleModal={setShowStyleModal}
+                        prompt={prompt}
+                        setPrompt={(x: string) => setPrompt(x)}
                     />
                     <HeroModal
                         showModal={showHeroModal}

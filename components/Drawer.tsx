@@ -121,11 +121,11 @@ function NegativePrompt({prompt, setPrompt}: {
                     id="message"
                     rows={12}
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-300 rounded border
-                    border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                        border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
                     placeholder="Write negative prompt here..."
                     maxLength={1500}
                     value={prompt}
-                    onChange={(event) => {setPrompt(event.target.value)}}
+                    onChange={(event) => setPrompt(event.target.value)}
                 >
                 </textarea>
             )}
