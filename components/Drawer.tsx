@@ -189,33 +189,43 @@ function InferenceSteps({numSteps, setNumSteps}: {
     numSteps: number,
     setNumSteps: (x: number) => void}
 ) {
+    const [show, setShow] = useState(false);
+
     return (
         <div className="mb-5">
-            <label className="block mb-2 text-base font-medium text-gray-300">
-                Number of Inference Steps
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShow(!show)}}
+            >
+                <span>Number of Inference Steps</span>
+                {show && (<FaMinus/>)}
+                {!show && (<FaPlus/>)}
             </label>
-            <div className="flex flex-row items-center justify-center">
-                <input
-                    id="step-number"
-                    type="number"
-                    className="block min-h-[auto] w-16 text-sm text-gray-900
+            {show && (
+                <div className="flex flex-row items-center justify-center">
+                    <input
+                        id="step-number"
+                        type="number"
+                        className="block min-h-[auto] w-16 text-sm text-gray-900
                         rounded border bg-gray-300 px-3 py-1 mr-1"
-                    min={1}
-                    max={200}
-                    value={numSteps}
-                    onChange={(event) => {setNumSteps(Number(event.target.value))}}
-                />
-                <input
-                    id="step-range"
-                    type="range"
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    min={1}
-                    max={200}
-                    step={1}
-                    value={numSteps}
-                    onChange={(event) => {setNumSteps(Number(event.target.value))}}
-                />
-            </div>
+                        min={1}
+                        max={200}
+                        value={numSteps}
+                        onChange={(event) => {setNumSteps(Number(event.target.value))}}
+                    />
+                    <input
+                        id="step-range"
+                        type="range"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                        min={1}
+                        max={200}
+                        step={1}
+                        value={numSteps}
+                        onChange={(event) => {setNumSteps(Number(event.target.value))}}
+                    />
+                </div>
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Number of denoising steps (min: 1; max: 200)
             </label>
@@ -227,34 +237,44 @@ function GuidanceScale({guidanceScale, setGuidanceScale}:{
     guidanceScale: number,
     setGuidanceScale: (x: number) => void}
 ) {
+    const [show, setShow] = useState(false);
+
     return (
         <div className="mb-5">
-            <label className="block mb-2 text-base font-medium text-gray-300">
-                Guidance Scale
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShow(!show)}}
+            >
+                <span>Guidance Scale</span>
+                {show && (<FaMinus/>)}
+                {!show && (<FaPlus/>)}
             </label>
-            <div className="flex flex-row items-center justify-center">
-                <input
-                    id="guidance-number"
-                    type="number"
-                    className="block min-h-[auto] w-16 text-sm text-gray-900
+            {show && (
+                <div className="flex flex-row items-center justify-center">
+                    <input
+                        id="guidance-number"
+                        type="number"
+                        className="block min-h-[auto] w-16 text-sm text-gray-900
                         rounded border bg-gray-300 px-3 py-1 mr-1"
-                    min={1}
-                    max={20}
-                    step={0.1}
-                    value={guidanceScale}
-                    onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
-                />
-                <input
-                    id="guidance-range"
-                    type="range"
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    min={1}
-                    max={20}
-                    step={0.1}
-                    value={guidanceScale}
-                    onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
-                />
-            </div>
+                        min={1}
+                        max={20}
+                        step={0.1}
+                        value={guidanceScale}
+                        onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
+                    />
+                    <input
+                        id="guidance-range"
+                        type="range"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                        min={1}
+                        max={20}
+                        step={0.1}
+                        value={guidanceScale}
+                        onChange={(event) => {setGuidanceScale(Number(event.target.value))}}
+                    />
+                </div>
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Classifier-free guidance (min: 1; max: 20)
             </label>
@@ -266,20 +286,30 @@ function RandomSeed({seed, setSeed}: {
     seed: number | string,
     setSeed: (x: number | string) => void}
 ) {
+    const [show, setShow] = useState(false);
+
     return (
         <div className="mb-5">
-            <label className="block mb-2 text-base font-medium text-gray-300">
-                Random Seed
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShow(!show)}}
+            >
+                <span>Random Seed</span>
+                {show && (<FaMinus/>)}
+                {!show && (<FaPlus/>)}
             </label>
-            <input
-                id="guidance-number"
-                type="number"
-                className="block min-h-[auto] w-full text-sm text-gray-900
+            {show && (
+                <input
+                    id="guidance-number"
+                    type="number"
+                    className="block min-h-[auto] w-full text-sm text-gray-900
                     rounded border bg-gray-300 px-3 py-1 mr-1"
-                value={seed}
-                onChange={(event) => {
-                    setSeed(event.target.value === ""? "": Number(event.target.value))}}
-            />
+                    value={seed}
+                    onChange={(event) => {
+                        setSeed(event.target.value === ""? "": Number(event.target.value))}}
+                />
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Leave blank to randomize the seed
             </label>
