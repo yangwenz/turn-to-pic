@@ -11,5 +11,7 @@ export const defaultNegativePrompt =
     "long neck, malformed limbs, morbid, mutated hands, mutation, mutilated";
 
 export const defaultNumInferenceSteps: number = 50;
+export const defaultWidth: number = 480;
+export const defaultHeight: number = 720;
 export const defaultGuidanceScale: number = 7.5;
 export const defaultRandomSeed: number | string = "";

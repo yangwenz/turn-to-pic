@@ -9,6 +9,8 @@ import HeroModal from "@/components/HeroModal";
 
 import {
     defaultGuidanceScale,
+    defaultWidth,
+    defaultHeight,
     defaultNegativePrompt,
     defaultNumInferenceSteps,
     defaultRandomSeed
@@ -67,14 +69,18 @@ export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
 
+    // The selected hero
     const [hero, setHero] = useState<string>("");
+    // The selected style
     const [style, setStyle] = useState<string>("Default");
+    // The other parameters
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
-    const [width, setWidth] = useState<number>(480);
-    const [height, setHeight] = useState<number>(720);
+    const [width, setWidth] = useState<number>(defaultWidth);
+    const [height, setHeight] = useState<number>(defaultHeight);
     const [numSteps, setNumSteps] = useState<number>(defaultNumInferenceSteps);
     const [guidanceScale, setGuidanceScale] = useState<number>(defaultGuidanceScale);
     const [seed, setSeed] = useState<number | string>(defaultRandomSeed);
+    // Modal related
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
 
@@ -89,8 +95,8 @@ export default function Generate() {
 
     const reset = () => {
         setNegativePrompt(defaultNegativePrompt);
-        setWidth(480);
-        setHeight(720);
+        setWidth(defaultWidth);
+        setHeight(defaultHeight);
         setNumSteps(defaultNumInferenceSteps);
         setGuidanceScale(defaultGuidanceScale);
         setSeed(defaultRandomSeed);
