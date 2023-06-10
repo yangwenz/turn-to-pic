@@ -28,13 +28,16 @@ function Card(label: string, url: string, setHero: (x: string) => void) {
     )
 }
 
-function HeroCard({hero, setHero, setShowModal}: {
+function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
     hero: string,
     setHero: (x: string) => void,
+    weight: number,
+    setWeight: (x: number) => void,
     setShowModal: (x: boolean) => void
 }) {
     const [heroes, heroAttributes] = getHeroes();
     const [selectedHero, setSelectedHero] = useState<string>(hero);
+    const [selectedWeight, setSelectedWeight] = useState<number>(weight);
     const [attribute, setAttribute] = useState<string>("");
     let heroList = attribute === "" ? heroes : heroAttributes.get(attribute)!;
 
@@ -103,12 +106,28 @@ function HeroCard({hero, setHero, setShowModal}: {
             >
                 {heroList.map(hero => Card(hero, "/heroes/" + hero + ".jpg", setSelectedHero))}
             </div>
+            <div className="w-full flex flex-row items-center justify-center mb-2">
+                <div className="text-gray-300 px-2 text-center font-semibold">
+                    Weight
+                </div>
+                <input
+                    id="step-range"
+                    type="range"
+                    className="w-4/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer px-2 mr-2"
+                    min={1}
+                    max={3}
+                    step={1}
+                    value={selectedWeight}
+                    onChange={(event) => setSelectedWeight(Number(event.target.value))}
+                />
+            </div>
             <div className="w-full flex justify-center">
                 <button
                     className="w-auto h-10 px-10 ml-1 mb-2 text-gray-300 lg:text-base text-xs bg-transparent
                                 border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
                     onClick={() => {
                         setHero(selectedHero);
+                        setWeight(selectedWeight);
                         setShowModal(false);
                     }}
                 >
@@ -119,17 +138,25 @@ function HeroCard({hero, setHero, setShowModal}: {
     )
 }
 
-export default function HeroModal({showModal, setShowModal, hero, setHero}: {
+export default function HeroModal({showModal, setShowModal, hero, setHero, weight, setWeight}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
     hero: string,
-    setHero: (x: string) => void
+    setHero: (x: string) => void,
+    weight: number,
+    setWeight: (x: number) => void,
 }) {
     return (
         <div>
             {showModal ? (
                 <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
-                    <HeroCard hero={hero} setHero={setHero} setShowModal={setShowModal}/>
+                    <HeroCard
+                        hero={hero}
+                        setHero={setHero}
+                        weight={weight}
+                        setWeight={setWeight}
+                        setShowModal={setShowModal}
+                    />
                 </div>
             ) : null}
         </div>

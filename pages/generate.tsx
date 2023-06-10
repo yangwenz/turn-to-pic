@@ -71,8 +71,10 @@ export default function Generate() {
 
     // The selected hero
     const [hero, setHero] = useState<string>("");
+    const [heroWeight, setHeroWeight] = useState<number>(2);
     // The selected style
     const [style, setStyle] = useState<string>("Default");
+    const [styleWeight, setStyleWeight] = useState<number>(2);
     // The other parameters
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
     const [width, setWidth] = useState<number>(defaultWidth);
@@ -141,13 +143,18 @@ export default function Generate() {
                     <HeroModal
                         showModal={showHeroModal}
                         setShowModal={setShowHeroModal}
-                        hero={hero} setHero={(x: string) => setHero(x)}
+                        hero={hero}
+                        setHero={(x: string) => setHero(x)}
+                        weight={heroWeight}
+                        setWeight={(x: number) => setHeroWeight(x)}
                     />
                     <StyleModal
                         showModal={showStyleModal}
                         setShowModal={setShowStyleModal}
                         style={style}
                         setStyle={setStyle}
+                        weight={styleWeight}
+                        setWeight={(x: number) => setStyleWeight(x)}
                     />
                 </main>
                 <Footer/>

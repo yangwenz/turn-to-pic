@@ -2,13 +2,16 @@ import React, {useState} from "react";
 import {getStyles} from "@/configs/heroes";
 import Image from "next/image";
 
-function StyleCard({style, setStyle, setShowModal}: {
+function StyleCard({style, setStyle, weight, setWeight, setShowModal}: {
     style: string,
     setStyle: (x: string) => void,
+    weight: number,
+    setWeight: (x: number) => void,
     setShowModal: (x: boolean) => void
 }) {
     const styles = getStyles();
     const [selectedStyle, setSelectedStyle] = useState<string>(style);
+    const [selectedWeight, setSelectedWeight] = useState<number>(weight);
     let imgUrl = selectedStyle != "None"? "/styles/" + selectedStyle + ".png": "";
 
     return (
@@ -48,12 +51,28 @@ function StyleCard({style, setStyle, setShowModal}: {
                     )}
                 </div>
             </div>
+            <div className="w-full flex flex-row items-center justify-center mt-2">
+                <div className="text-gray-300 px-2 text-center font-semibold">
+                    Weight
+                </div>
+                <input
+                    id="step-range"
+                    type="range"
+                    className="w-4/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer px-2 mr-2"
+                    min={1}
+                    max={3}
+                    step={1}
+                    value={selectedWeight}
+                    onChange={(event) => setSelectedWeight(Number(event.target.value))}
+                />
+            </div>
             <div className="w-full flex justify-center mt-2">
                 <button
                     className="w-auto h-10 px-10 ml-1 mb-2 text-gray-300 lg:text-base text-xs bg-transparent
                         border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
                     onClick={() => {
                         setStyle(selectedStyle);
+                        setWeight(selectedWeight);
                         setShowModal(false);
                     }}
                 >
@@ -64,17 +83,25 @@ function StyleCard({style, setStyle, setShowModal}: {
     )
 }
 
-export default function StyleModal({showModal, setShowModal, style, setStyle}: {
+export default function StyleModal({showModal, setShowModal, style, setStyle, weight, setWeight}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
     style: string,
-    setStyle: (x: string) => void
+    setStyle: (x: string) => void,
+    weight: number,
+    setWeight: (x: number) => void,
 }) {
     return (
         <div>
             {showModal ? (
                 <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
-                    <StyleCard style={style} setStyle={setStyle} setShowModal={setShowModal}/>
+                    <StyleCard
+                        style={style}
+                        setStyle={setStyle}
+                        weight={weight}
+                        setWeight={setWeight}
+                        setShowModal={setShowModal}
+                    />
                 </div>
             ) : null}
         </div>
