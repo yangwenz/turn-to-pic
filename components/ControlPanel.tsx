@@ -19,7 +19,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                                 border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
                         onClick={() => setShowHeroModal(true)}
                     >
-                        Choose a Hero
+                        Hero
                     </button>
                     <div className={"flex flex-col w-[64px] items-center justify-center ml-1"}>
                         <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden"}>
@@ -41,7 +41,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                             setShowStyleModal(true)
                         }}
                     >
-                        Choose a Style
+                        Style
                     </button>
                     <div className="w-auto min-h-[36px] px-3 ml-1 rounded-lg text-center
                     bg-gray-900 text-gray-300 font-bold flex items-center italic lg:text-base text-xs">

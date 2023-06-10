@@ -46,7 +46,7 @@ export default function Generate() {
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
     // App states
-    const [generatedImage, setGeneratedImage] = useState<string>("");
+    const [generatedImage, setGeneratedImage] = useState<string>("/images/test_32.png");
     const [loading, setLoading] = useState<boolean>(false);
 
     if (status === "unauthenticated") {
@@ -69,7 +69,7 @@ export default function Generate() {
 
     async function onClickDownload() {
         if (!loading && !generatedImage) {
-            downloadImage(generatedImage!, "hero.jpg")
+            downloadImage(generatedImage!, "hero.jpg");
         }
     }
 
@@ -112,7 +112,7 @@ export default function Generate() {
                     />
                     <div className="flex w-full flex-col items-center text-center mt-2">
                         {generatedImage && (
-                            <ImageCard url={generatedImage}/>
+                            <ImageCard url={generatedImage} width={width} height={height}/>
                         )}
                         {!generatedImage && (
                             <div className="border border-slate-500 md:w-[512px] w-[320px]
@@ -124,6 +124,7 @@ export default function Generate() {
                     <ButtonList
                         onClickDownload={onClickDownload}
                         onClickHelp={() => {}}
+                        onClickHistory={() => {}}
                     />
                     <HeroModal
                         showModal={showHeroModal}
