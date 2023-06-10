@@ -2,12 +2,11 @@ import Image from "next/image";
 import {label2name} from "@/configs/heroes";
 import React from "react";
 
-export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, prompt, setPrompt}: {
+export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, setPrompt}: {
     hero: string,
     setShowHeroModal: (x: boolean) => void,
     style: string,
     setShowStyleModal: (x: boolean) => void,
-    prompt: string,
     setPrompt: (x: string) => void
 }) {
     let heroUrl = hero != "" ? "/heroes/" + hero + ".jpg" : "/heroes/question_mark.png";
