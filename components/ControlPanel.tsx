@@ -16,7 +16,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                 <div className="flex flex-row">
                     <button
                         className="w-auto h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                                border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
                         onClick={() => setShowHeroModal(true)}
                     >
                         Choose a Hero
@@ -36,14 +36,14 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                 <div className="flex flex-row ml-5">
                     <button
                         className="w-auto min-h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                                border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
                         onClick={() => {
                             setShowStyleModal(true)
                         }}
                     >
                         Choose a Style
                     </button>
-                    <div className="w-auto min-h-[36px] px-3 ml-1 rounded-lg border-2 border-slate-500 text-center
+                    <div className="w-auto min-h-[36px] px-3 ml-1 rounded-lg text-center
                     bg-gray-900 text-gray-300 font-bold flex items-center italic lg:text-base text-xs">
                         {style}
                     </div>

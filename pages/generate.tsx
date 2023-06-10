@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Image from "next/image";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import Header from "@/components/Header";
@@ -9,6 +10,7 @@ import HeroModal from "@/components/HeroModal";
 import StyleModal from "@/components/StyleModal";
 import ControlPanel from "@/components/ControlPanel";
 import ImageCard from "@/components/ImageCard";
+import ButtonList from "@/components/ButtonList";
 
 import {
     defaultGuidanceScale,
@@ -18,7 +20,6 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
-import Image from "next/image";
 
 
 export default function Generate() {
@@ -112,6 +113,10 @@ export default function Generate() {
                             </div>
                         )}
                     </div>
+                    <ButtonList
+                        onClickDownload={() => {}}
+                        onClickHelp={() => {}}
+                    />
                     <HeroModal
                         showModal={showHeroModal}
                         setShowModal={setShowHeroModal}
