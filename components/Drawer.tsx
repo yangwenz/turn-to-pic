@@ -120,40 +120,58 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
 }) {
     const widths = [256, 384, 480, 512, 720, 768, 960];
     const heights = [256, 384, 480, 512, 720, 768, 960];
+    const [showWidth, setShowWidth] = useState(false);
+    const [showHeight, setShowHeight] = useState(false);
 
     return (
         <div className="w-full mb-5">
-            <label className="block mb-2 text-base font-medium text-gray-300">
-                Image Width
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShowWidth(!showWidth)}}
+            >
+                <span>Image Width</span>
+                {showWidth && (<FaMinus/>)}
+                {!showWidth && (<FaPlus/>)}
             </label>
-            <div className="flex justify-center mt-2">
-                <select
-                    id="widthlist"
-                    className="bg-gray-300 text-gray-900 text-sm rounded
+            {showWidth && (
+                <div className="flex justify-center mt-2">
+                    <select
+                        id="widthlist"
+                        className="bg-gray-300 text-gray-900 text-sm rounded
                         block w-full px-3 py-2 min-h-[auto]"
-                    value={width}
-                    onChange={(event) => setWidth(Number(event.target.value))}
-                >
-                    {widths.map(w => (<option value={w} key={w}>{w}</option>))}
-                </select>
-            </div>
+                        value={width}
+                        onChange={(event) => setWidth(Number(event.target.value))}
+                    >
+                        {widths.map(w => (<option value={w} key={w}>{w}</option>))}
+                    </select>
+                </div>
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60 mb-5">
                 Maximum size is 960x768 or 768x960
             </label>
-            <label className="block mt-2 mb-2 text-base font-medium text-gray-300">
-                Image Height
+            <label
+                className="flex flex-row items-center justify-between
+                    mb-2 text-base font-medium text-gray-300 hover:cursor-pointer"
+                onClick={() => {setShowHeight(!showHeight)}}
+            >
+                <span>Image Height</span>
+                {showHeight && (<FaMinus/>)}
+                {!showHeight && (<FaPlus/>)}
             </label>
-            <div className="flex justify-center mt-2">
-                <select
-                    id="heightlist"
-                    className="bg-gray-300 text-gray-900 text-sm rounded
+            {showHeight && (
+                <div className="flex justify-center mt-2">
+                    <select
+                        id="heightlist"
+                        className="bg-gray-300 text-gray-900 text-sm rounded
                         block w-full px-3 py-2 min-h-[auto]"
-                    value={height}
-                    onChange={(event) => setHeight(Number(event.target.value))}
-                >
-                    {heights.map(w => (<option value={w} key={w}>{w}</option>))}
-                </select>
-            </div>
+                        value={height}
+                        onChange={(event) => setHeight(Number(event.target.value))}
+                    >
+                        {heights.map(w => (<option value={w} key={w}>{w}</option>))}
+                    </select>
+                </div>
+            )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Maximum size is 960x768 or 768x960
             </label>
