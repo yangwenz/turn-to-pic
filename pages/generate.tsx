@@ -70,6 +70,8 @@ export default function Generate() {
     const [hero, setHero] = useState<string>("");
     const [style, setStyle] = useState<string>("Default");
     const [negativePrompt, setNegativePrompt] = useState<string>(defaultNegativePrompt);
+    const [width, setWidth] = useState<number>(480);
+    const [height, setHeight] = useState<number>(720);
     const [numSteps, setNumSteps] = useState<number>(defaultNumInferenceSteps);
     const [guidanceScale, setGuidanceScale] = useState<number>(defaultGuidanceScale);
     const [seed, setSeed] = useState<number | string>(defaultRandomSeed);
@@ -87,6 +89,8 @@ export default function Generate() {
 
     const reset = () => {
         setNegativePrompt(defaultNegativePrompt);
+        setWidth(480);
+        setHeight(720);
         setNumSteps(defaultNumInferenceSteps);
         setGuidanceScale(defaultGuidanceScale);
         setSeed(defaultRandomSeed);
@@ -96,9 +100,13 @@ export default function Generate() {
         <DefaultLayout>
             <Drawer
                 negativePrompt={negativePrompt}
-                setNegativePrompt={(x: string) => {setNegativePrompt(x)}}
+                setNegativePrompt={(x: string) => setNegativePrompt(x)}
+                width={width}
+                setWidth={(x: number) => setWidth(x)}
+                height={height}
+                setHeight={(x: number) => setHeight(x)}
                 numSteps={numSteps}
-                setNumSteps={(x: number) => {setNumSteps(x)}}
+                setNumSteps={(x: number) => setNumSteps(x)}
                 guidanceScale={guidanceScale}
                 setGuidanceScale={(x: number) => setGuidanceScale(x)}
                 seed={seed}

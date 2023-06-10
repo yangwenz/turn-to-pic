@@ -1,14 +1,20 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FaBars, FaMinus, FaPlus} from "react-icons/fa";
 import clsx from "clsx";
 
 export default function Drawer({
         negativePrompt, setNegativePrompt,
+        width, setWidth,
+        height, setHeight,
         numSteps, setNumSteps,
         guidanceScale, setGuidanceScale,
         seed, setSeed, reset}: {
     negativePrompt: string,
     setNegativePrompt: (x: string) => void,
+    width: number,
+    setWidth: (x: number) => void,
+    height: number,
+    setHeight: (x: number) => void
     numSteps: number,
     setNumSteps: (x: number) => void,
     guidanceScale: number,
@@ -74,6 +80,7 @@ export default function Drawer({
                     </div>
                     <div className="border-b border-slate-500 mt-2 mb-4"></div>
                     <NegativePrompt prompt={negativePrompt} setPrompt={setNegativePrompt}/>
+                    <WidthAndHeight width={width} height={height} setWidth={setWidth} setHeight={setHeight}/>
                     <InferenceSteps numSteps={numSteps} setNumSteps={setNumSteps}/>
                     <GuidanceScale guidanceScale={guidanceScale} setGuidanceScale={setGuidanceScale}/>
                     <RandomSeed seed={seed} setSeed={setSeed}/>
@@ -124,6 +131,55 @@ function NegativePrompt({prompt, setPrompt}: {
             )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
                 Specify things to not see in the output
+            </label>
+        </div>
+    )
+}
+
+function WidthAndHeight({width, height, setWidth, setHeight}: {
+    width: number,
+    height: number,
+    setWidth: (x: number) => void,
+    setHeight: (x: number) => void
+}) {
+    const widths = [256, 384, 480, 512, 720, 768, 960, 1024];
+    const heights = [256, 384, 480, 512, 720, 768, 960, 1024];
+
+    return (
+        <div className="w-full mb-5">
+            <label className="block mb-2 text-base font-medium text-gray-300">
+                Image Width
+            </label>
+            <div className="flex justify-center mt-2">
+                <select
+                    id="widthlist"
+                    className="bg-gray-300 text-gray-900 text-sm rounded
+                        block w-full px-3 py-2 min-h-[auto]"
+                    value={width}
+                    onChange={(event) => setWidth(Number(event.target.value))}
+                >
+                    {widths.map(w => (<option value={w} key={w}>{w}</option>))}
+                </select>
+            </div>
+            <label className="block mt-1 text-sm font-medium text-gray-300/60 mb-5">
+                Maximum size is 1024x768 or 768x1024
+            </label>
+            <label className="block mt-2 mb-2 text-base font-medium text-gray-300">
+                Image Height
+            </label>
+            <div className="flex justify-center mt-2">
+                <select
+                    id="heightlist"
+                    className="bg-gray-300 text-gray-900 text-sm rounded
+                        block w-full px-3 py-2 min-h-[auto]"
+                    value={height}
+                    onChange={(event) => setHeight(Number(event.target.value))}
+                >
+                    {heights.map(w => (<option value={w} key={w}>{w}</option>))}
+                </select>
+            </div>
+            <label className="block mt-1 text-sm font-medium text-gray-300/60">
+                Maximum size is 1024x768 or 768x1024
             </label>
         </div>
     )
