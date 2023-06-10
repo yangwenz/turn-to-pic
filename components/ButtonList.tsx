@@ -22,8 +22,7 @@ export default function ButtonList({onClickDownload, onClickHelp, onClickHistory
                 </svg>
             </button>
             <button
-                onClick={() => {
-                }}
+                onClick={onClickHistory}
                 className={buttonStyle}>
                 <svg
                     className="fill-current w-6 h-6"

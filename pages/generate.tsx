@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
@@ -21,12 +21,16 @@ import {
     defaultRandomSeed
 } from "@/configs/default";
 import {downloadImage} from "@/utils/file";
+import History from "@/components/History";
 
 
 export default function Generate() {
     const {data: session, status} = useSession();
     const router = useRouter();
 
+    // Menu:
+    const [showDrawer, setShowDrawer] = useState(true);
+    const [showHistory, setShowHistory] = useState(true);
     // The selected hero
     const [hero, setHero] = useState<string>("");
     const [heroWeight, setHeroWeight] = useState<number>(2);
@@ -48,6 +52,29 @@ export default function Generate() {
     // App states
     const [generatedImage, setGeneratedImage] = useState<string>("/images/test_32.png");
     const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        // Function to check if the screen width is for desktop or tablet
+        const checkScreenWidth = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth >= 768) {
+                // 768px is the breakpoint for tablet devices
+                setShowDrawer(true);
+                setShowHistory(true);
+            } else {
+                setShowDrawer(false);
+                setShowHistory(false);
+            }
+        };
+        // Call the checkScreenWidth function initially
+        checkScreenWidth();
+        // Set up an event listener for window resize events
+        window.addEventListener("resize", checkScreenWidth);
+        // Clean up the event listener on unmount
+        return () => {
+            window.removeEventListener("resize", checkScreenWidth);
+        };
+    }, []);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -76,6 +103,8 @@ export default function Generate() {
     return (
         <DefaultLayout>
             <Drawer
+                showDrawer={showDrawer}
+                setShowDrawer={setShowDrawer}
                 negativePrompt={negativePrompt}
                 setNegativePrompt={(x: string) => setNegativePrompt(x)}
                 width={width}
@@ -89,6 +118,10 @@ export default function Generate() {
                 seed={seed}
                 setSeed={(x: number | string) => setSeed(x)}
                 reset={reset}
+            />
+            <History
+                showHistory={showHistory}
+                setShowHistory={setShowHistory}
             />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>
@@ -124,7 +157,7 @@ export default function Generate() {
                     <ButtonList
                         onClickDownload={onClickDownload}
                         onClickHelp={() => {}}
-                        onClickHistory={() => {}}
+                        onClickHistory={() => {setShowHistory(!showHistory)}}
                     />
                     <HeroModal
                         showModal={showHeroModal}

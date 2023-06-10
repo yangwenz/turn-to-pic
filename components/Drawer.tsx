@@ -1,14 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {FaBars, FaMinus, FaPlus} from "react-icons/fa";
 import clsx from "clsx";
 
 export default function Drawer({
+        showDrawer, setShowDrawer,
         negativePrompt, setNegativePrompt,
         width, setWidth,
         height, setHeight,
         numSteps, setNumSteps,
         guidanceScale, setGuidanceScale,
         seed, setSeed, reset}: {
+    showDrawer: boolean,
+    setShowDrawer: (x: boolean) => void,
     negativePrompt: string,
     setNegativePrompt: (x: string) => void,
     width: number,
@@ -23,33 +26,6 @@ export default function Drawer({
     setSeed: (x: number | string) => void,
     reset: () => void
 }) {
-    const [showDrawer, setShowDrawer] = useState(true);
-
-    useEffect(() => {
-        // Function to check if the screen width is for desktop or tablet
-        const checkScreenWidth = () => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth >= 768) {
-                // 768px is the breakpoint for tablet devices
-                setShowDrawer(true);
-            } else {
-                setShowDrawer(false);
-            }
-        };
-        // Call the checkScreenWidth function initially
-        checkScreenWidth();
-        // Set up an event listener for window resize events
-        window.addEventListener("resize", checkScreenWidth);
-        // Clean up the event listener on unmount
-        return () => {
-            window.removeEventListener("resize", checkScreenWidth);
-        };
-    }, []);
-
-    const toggleDrawer = () => {
-        setShowDrawer((prevState) => !prevState);
-    };
-
     return (
         <>
             <div
@@ -73,7 +49,7 @@ export default function Drawer({
                                 "bg-transparent p-2 text-gray-300 transition-all hover:bg-gray-300 " +
                                 "hover:text-black"
                             )}
-                            onClick={toggleDrawer}
+                            onClick={() => setShowDrawer(!showDrawer)}
                         >
                             <FaBars />
                         </button>
