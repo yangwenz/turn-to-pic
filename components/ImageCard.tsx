@@ -2,19 +2,34 @@ import Image from "next/image";
 import React, {useState} from "react";
 import {motion} from "framer-motion";
 
-export default function ImageCard({url, width, height}: {
+function computeSize(
+    isTablet: boolean,
+    width: number,
+    height: number
+): [number, number] {
+    const maxWidth = isTablet? 360: 1024;
+    const maxHeight = isTablet? 360: 560;
+    const a = maxWidth / width;
+    const b = maxHeight / height;
+    const r = a > b? b: a;
+    return [Math.floor(r * width), Math.floor(r * height)]
+}
+
+export default function ImageCard({url, isTablet, width, height}: {
     url: string,
+    isTablet: boolean,
     width: number,
     height: number
 }) {
     const [showModal, setShowModal] = useState(false);
+    const [newWidth, newHeight] = computeSize(isTablet, width, height);
 
     return (
         <div>
             <motion.div
                 className="border-slate-500 border m-3 relative shadow-xl
-                md:w-[512px] w-[320px] md:h-[512px] h-[320px]
                 rounded-lg bg-slate-300 overflow-hidden"
+                style={{"width": newWidth, "height": newHeight}}
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
@@ -28,7 +43,11 @@ export default function ImageCard({url, width, height}: {
                     className="hover:cursor-pointer"
                     onClick={() => setShowModal(true)}
                 >
-                    <Image src={url} alt="generated" fill/>
+                    <Image
+                        src={url}
+                        alt="generated"
+                        fill
+                    />
                 </div>
             </motion.div>
             <div>

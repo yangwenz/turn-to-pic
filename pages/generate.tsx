@@ -29,6 +29,7 @@ export default function Generate() {
     const router = useRouter();
 
     // Menu:
+    const [isTablet, setIsTablet] = useState<boolean>(false);
     const [showDrawer, setShowDrawer] = useState(true);
     const [showHistory, setShowHistory] = useState(true);
     // The selected hero
@@ -59,9 +60,11 @@ export default function Generate() {
             const screenWidth = window.innerWidth;
             if (screenWidth >= 768) {
                 // 768px is the breakpoint for tablet devices
+                setIsTablet(false);
                 setShowDrawer(true);
                 setShowHistory(true);
             } else {
+                setIsTablet(true);
                 setShowDrawer(false);
                 setShowHistory(false);
             }
@@ -145,7 +148,12 @@ export default function Generate() {
                     />
                     <div className="flex w-full flex-col items-center text-center mt-2">
                         {generatedImage && (
-                            <ImageCard url={generatedImage} width={width} height={height}/>
+                            <ImageCard
+                                url={generatedImage}
+                                isTablet={isTablet}
+                                width={width}
+                                height={height}
+                            />
                         )}
                         {!generatedImage && (
                             <div className="border border-slate-500 md:w-[512px] w-[320px]
