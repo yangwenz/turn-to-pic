@@ -142,8 +142,8 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
     setWidth: (x: number) => void,
     setHeight: (x: number) => void
 }) {
-    const widths = [256, 384, 480, 512, 720, 768, 960, 1024];
-    const heights = [256, 384, 480, 512, 720, 768, 960, 1024];
+    const widths = [256, 384, 480, 512, 720, 768, 960];
+    const heights = [256, 384, 480, 512, 720, 768, 960];
 
     return (
         <div className="w-full mb-5">
@@ -162,7 +162,7 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
                 </select>
             </div>
             <label className="block mt-1 text-sm font-medium text-gray-300/60 mb-5">
-                Maximum size is 1024x768 or 768x1024
+                Maximum size is 960x768 or 768x960
             </label>
             <label className="block mt-2 mb-2 text-base font-medium text-gray-300">
                 Image Height
@@ -179,7 +179,7 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
                 </select>
             </div>
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
-                Maximum size is 1024x768 or 768x1024
+                Maximum size is 960x768 or 768x960
             </label>
         </div>
     )

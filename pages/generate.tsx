@@ -8,6 +8,7 @@ import DefaultLayout from "@/layout/default";
 import HeroModal from "@/components/HeroModal";
 import StyleModal from "@/components/StyleModal";
 import ControlPanel from "@/components/ControlPanel";
+import ImageCard from "@/components/ImageCard";
 
 import {
     defaultGuidanceScale,
@@ -17,6 +18,7 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
+import Image from "next/image";
 
 
 export default function Generate() {
@@ -41,6 +43,8 @@ export default function Generate() {
     // Modal related
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
+    // The generated image
+    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -97,6 +101,17 @@ export default function Generate() {
                         setShowStyleModal={setShowStyleModal}
                         setPrompt={(x: string) => setPrompt(x)}
                     />
+                    <div className="flex w-full flex-col items-center text-center mt-2">
+                        {generatedImage && (
+                            <ImageCard url={generatedImage}/>
+                        )}
+                        {!generatedImage && (
+                            <div className="border border-slate-500 md:w-[512px] w-[320px]
+                                md:h-[512px] h-[320px] rounded-lg m-3 flex flex-col items-center justify-center">
+                                <Image src="/picture.png" alt="pic_logo" width={100} height={100}/>
+                            </div>
+                        )}
+                    </div>
                     <HeroModal
                         showModal={showHeroModal}
                         setShowModal={setShowHeroModal}
