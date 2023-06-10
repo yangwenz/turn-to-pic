@@ -57,7 +57,7 @@ function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal}: {
                     Choose a Style
                 </button>
                 <div className="w-auto min-h-[36px] px-3 ml-1 rounded-lg border-2 border-slate-500 text-center
-                    bg-gray-900 text-gray-300 font-bold flex items-center italic">
+                    bg-gray-900 text-gray-300 font-bold flex items-center italic lg:text-base text-xs">
                     {style}
                 </div>
             </div>
