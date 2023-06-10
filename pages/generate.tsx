@@ -20,6 +20,7 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
+import {downloadImage} from "@/utils/file";
 
 
 export default function Generate() {
@@ -44,8 +45,9 @@ export default function Generate() {
     // Modal related
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
-    // The generated image
-    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+    // App states
+    const [generatedImage, setGeneratedImage] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     if (status === "unauthenticated") {
         router.push("/signin");
@@ -63,6 +65,12 @@ export default function Generate() {
         setNumSteps(defaultNumInferenceSteps);
         setGuidanceScale(defaultGuidanceScale);
         setSeed(defaultRandomSeed);
+    }
+
+    async function onClickDownload() {
+        if (!loading && !generatedImage) {
+            downloadImage(generatedImage!, "hero.jpg")
+        }
     }
 
     return (
@@ -114,7 +122,7 @@ export default function Generate() {
                         )}
                     </div>
                     <ButtonList
-                        onClickDownload={() => {}}
+                        onClickDownload={onClickDownload}
                         onClickHelp={() => {}}
                     />
                     <HeroModal
