@@ -20,7 +20,7 @@ export default async function handler(
     const errorMessage =
         "Failed to get image. Please check the history later.";
 
-    while (!generatedImage && i < 180) {
+    while (!generatedImage && i < 30) {
         try {
             // Loop in 1s intervals until the alt text is ready
             let finalResponse = await fetch(req.body.endpointUrl, {
