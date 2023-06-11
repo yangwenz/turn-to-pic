@@ -26,6 +26,18 @@ interface GenerateRequest extends NextApiRequest {
     };
 }
 
+interface InputData {
+    hero: string;
+    hero_weight: number;
+    prompt: string;
+    negative_prompt: string;
+    width: number;
+    height: number;
+    num_inference_steps: number;
+    guidance_scale: number;
+    seed?: number;
+}
+
 // Create a new ratelimiter, that allows 20 requests per minute
 const rateLimit = redis
     ? new Ratelimit({
@@ -56,6 +68,20 @@ export default async function handler(
             return res.status(500).json("Please set your Replicate API Key");
         }
 
+        const data: InputData = {
+            hero: req.body.hero,
+            hero_weight: req.body.heroWeight,
+            prompt: req.body.prompt,
+            negative_prompt: req.body.negativePrompt,
+            width: req.body.width,
+            height: req.body.height,
+            num_inference_steps: req.body.numInferenceSteps,
+            guidance_scale: req.body.guidanceScale
+        }
+        if (req.body.seed) {
+            data.seed = Number(req.body.seed);
+        }
+
         let startResponse = await fetch(
             "https://api.replicate.com/v1/predictions",
             {
@@ -67,31 +93,27 @@ export default async function handler(
                 body: JSON.stringify({
                     version:
                         "313fc2e6f045d7f64ce72d4e2c7da6eb4f4e1a4431156b5885b3102ff9c09eac",
-                    input: {
-                        hero: req.body.hero,
-                        hero_weight: req.body.heroWeight,
-                        prompt: req.body.prompt,
-                        negative_prompt: req.body.negativePrompt,
-                        width: req.body.width,
-                        height: req.body.height,
-                        num_inference_steps: req.body.numInferenceSteps,
-                        guidance_scale: req.body.guidanceScale,
-                        seed: (req.body.seed === ""? null: req.body.seed)
-                    },
+                    input: data,
                 }),
             }
         );
 
         let jsonStartResponse = await startResponse.json();
-        if (jsonStartResponse.status !== 200) {
-            console.log(jsonStartResponse);
+        if (jsonStartResponse.status === 404) {
+            let message = jsonStartResponse.detail;
+            message = message + " Please check if your API Key is correct."
+            return res.status(500).json(message);
+
+        } else if (jsonStartResponse.status !== 200 && jsonStartResponse.status !== "starting") {
             return res.status(500).json(jsonStartResponse.detail);
+
+        } else {
+            res.status(200).json({
+                endpointUrl: jsonStartResponse.urls.get,
+                cancelUrl: jsonStartResponse.urls.cancel,
+                id: jsonStartResponse.id
+            });
         }
-        res.status(200).json({
-            endpointUrl: jsonStartResponse.urls.get,
-            cancelUrl: jsonStartResponse.urls.cancel,
-            id: jsonStartResponse.id
-        });
 
     } catch (error) {
         console.log(error);

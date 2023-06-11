@@ -9,7 +9,7 @@ const DEFAULT_SETTINGS: UserSettings = {
     apikey: undefined,
 };
 
-function loadSettings() {
+export function loadSettings() {
     if (typeof window === "undefined") {
         return DEFAULT_SETTINGS;
     }
