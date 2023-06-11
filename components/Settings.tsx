@@ -62,7 +62,7 @@ export default function Settings({showModal, setShowModal}: {
                             </div>
                         </div>
                         <div className="text-gray-300 mb-2 text-left px-4">
-                            Your API key will be encrypted and stored exclusively on your local device
+                            Your API key will be stored exclusively on your local device
                         </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
