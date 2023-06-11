@@ -283,6 +283,7 @@ export default function Generate() {
                                     </p>
                                     <span className="text-xs opacity-30">
                                         This can sometimes take around 3 to 5 minutes while the model boots up.
+                                        After the model is loaded, it will take around 5 seconds.
                                     </span>
                                 </div>
                             </div>
