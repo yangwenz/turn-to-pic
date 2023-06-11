@@ -23,10 +23,12 @@ import ImageCard from "@/components/ImageCard";
 import ButtonList from "@/components/ButtonList";
 import {downloadImage} from "@/utils/file";
 import History from "@/components/History";
-import {useSettings} from "@/hooks/useSettings";
+import {loadSettings} from "@/hooks/useSettings";
 import {buildPrompt} from "@/utils/prompt";
 import {label2name} from "@/configs/heroes";
 import {GenerateResponse} from "@/pages/api/generate";
+import {AccessResponse} from "@/pages/api/access";
+import Spinner from "@/components/Spinner";
 
 
 export default function Generate() {
@@ -56,7 +58,6 @@ export default function Generate() {
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
     // App states
-    const {settings: settings} = useSettings();
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -117,6 +118,7 @@ export default function Generate() {
     async function onClickGenerate() {
         setLoading(true);
         setError(null);
+        const settings = loadSettings();
 
         if (!settings.apikey) {
             setError("Please set your Replicate API Key")
@@ -125,19 +127,21 @@ export default function Generate() {
             setError("Please select a Dota2 hero")
         }
 
-        const body = {
-            hero: label2name(hero),
-            heroWeight: heroWeight,
-            prompt: buildPrompt(prompt, style, styleWeight),
-            negativePrompt: negativePrompt,
-            width: width,
-            height: height,
-            numInferenceSteps: numSteps,
-            guidanceScale: guidanceScale,
-            seed: seed,
-            token: settings.apikey
-        };
+        let endpointUrl: string = "";
+        // Submit a request
         try {
+            const body = {
+                hero: label2name(hero),
+                heroWeight: heroWeight,
+                prompt: buildPrompt(prompt, style, styleWeight),
+                negativePrompt: negativePrompt,
+                width: width,
+                height: height,
+                numInferenceSteps: numSteps,
+                guidanceScale: guidanceScale,
+                seed: seed,
+                token: settings.apikey
+            };
             const res = await fetch("/api/generate", {
                 method: "POST",
                 headers: {
@@ -149,10 +153,33 @@ export default function Generate() {
                 setError(await res.json());
             } else {
                 let response = (await res.json()) as GenerateResponse;
-                console.log(response);
+                endpointUrl = response.endpointUrl;
+                // Add to history...
             }
         } catch (error) {
             setError("Failed to generate image");
+        }
+
+        // Check the generated image
+        if (endpointUrl !== "") {
+            const body = {
+                endpointUrl: endpointUrl,
+                token: settings.apikey!
+            }
+            const res = await fetch("/api/access", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            if (res.status !== 200) {
+                setError(await res.json());
+            } else {
+                let response = (await res.json()) as AccessResponse;
+                setGeneratedImage(response.generated);
+                // Update the history...
+            }
         }
         setLoading(false);
     }
@@ -219,8 +246,11 @@ export default function Generate() {
                     </div>
                     <ButtonList
                         onClickDownload={onClickDownload}
-                        onClickHelp={() => {}}
-                        onClickHistory={() => {setShowHistory(!showHistory)}}
+                        onClickHelp={() => {
+                        }}
+                        onClickHistory={() => {
+                            setShowHistory(!showHistory)
+                        }}
                     />
                     <HeroModal
                         showModal={showHeroModal}
@@ -238,6 +268,21 @@ export default function Generate() {
                         weight={styleWeight}
                         setWeight={(x: number) => setStyleWeight(x)}
                     />
+                    {loading && (
+                        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+                            <div
+                                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                                style={{zIndex: 100}}
+                            >
+                                <div className="p-4 w-40 bg-white text-center rounded-lg animate-in zoom-in">
+                                    <Spinner/>
+                                    <p className="pt-3 opacity-30 text-center text-sm">
+                                        Loading ...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     {error && (
                         <div
                             className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
@@ -245,7 +290,7 @@ export default function Generate() {
                         >
                             <div
                                 className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-                                style={{ zIndex: 200 }}
+                                style={{zIndex: 200}}
                                 role="alert"
                             >
                                 <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">

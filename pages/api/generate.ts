@@ -98,7 +98,7 @@ export default async function handler(
             }
         );
 
-        let jsonStartResponse = await startResponse.json();
+        const jsonStartResponse = await startResponse.json();
         if (jsonStartResponse.status === 404) {
             let message = jsonStartResponse.detail;
             message = message + " Please check if your API Key is correct."
