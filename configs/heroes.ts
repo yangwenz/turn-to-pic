@@ -57,9 +57,14 @@ export function getHeroes(): [string[], Map<string, string[]>] {
 export function label2name(label: string) {
     if (label === "natures-prophet")
         label = "nature's-prophet"
-    return label.split("-")
+    let name = label.split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
+    if (name == "Anti Mage") {
+        return "Anti-Mage";
+    } else {
+        return name;
+    }
 }
 
 export function getStyles() {

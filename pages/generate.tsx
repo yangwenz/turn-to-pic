@@ -106,7 +106,8 @@ export default function Generate() {
     }
 
     async function onClickDownload() {
-        if (!loading && !generatedImage) {
+        if (!loading && generatedImage) {
+            console.log(generatedImage);
             downloadImage(generatedImage!, "hero.jpg");
         }
     }
