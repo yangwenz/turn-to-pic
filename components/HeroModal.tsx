@@ -35,6 +35,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
     setWeight: (x: number) => void,
     setShowModal: (x: boolean) => void
 }) {
+    const hasWeight = false;
     const [heroes, heroAttributes] = getHeroes();
     const [selectedHero, setSelectedHero] = useState<string>(hero);
     const [selectedWeight, setSelectedWeight] = useState<number>(weight);
@@ -106,21 +107,23 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
             >
                 {heroList.map(hero => Card(hero, "/heroes/" + hero + ".jpg", setSelectedHero))}
             </div>
-            <div className="w-full flex flex-row items-center justify-center mb-2">
-                <div className="text-gray-300 px-2 text-center font-semibold">
-                    Weight
+            {hasWeight && (
+                <div className="w-full flex flex-row items-center justify-center mb-2">
+                    <div className="text-gray-300 px-2 text-center font-semibold">
+                        Weight
+                    </div>
+                    <input
+                        id="step-range"
+                        type="range"
+                        className="w-4/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer px-2 mr-2"
+                        min={1}
+                        max={3}
+                        step={1}
+                        value={selectedWeight}
+                        onChange={(event) => setSelectedWeight(Number(event.target.value))}
+                    />
                 </div>
-                <input
-                    id="step-range"
-                    type="range"
-                    className="w-4/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer px-2 mr-2"
-                    min={1}
-                    max={3}
-                    step={1}
-                    value={selectedWeight}
-                    onChange={(event) => setSelectedWeight(Number(event.target.value))}
-                />
-            </div>
+            )}
             <div className="w-full flex justify-center">
                 <button
                     className="w-auto h-10 px-10 ml-1 mb-2 text-gray-300 lg:text-base text-xs bg-transparent
