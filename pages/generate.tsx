@@ -34,7 +34,7 @@ export default function Generate() {
     const [showHistory, setShowHistory] = useState(true);
     // The selected hero
     const [hero, setHero] = useState<string>("");
-    const [heroWeight, setHeroWeight] = useState<number>(2);
+    const [heroWeight, setHeroWeight] = useState<number>(0);
     // The selected style
     const [style, setStyle] = useState<string>("Default");
     const [styleWeight, setStyleWeight] = useState<number>(2);

@@ -35,7 +35,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
     setWeight: (x: number) => void,
     setShowModal: (x: boolean) => void
 }) {
-    const hasWeight = false;
+    const hasWeight = true;
     const [heroes, heroAttributes] = getHeroes();
     const [selectedHero, setSelectedHero] = useState<string>(hero);
     const [selectedWeight, setSelectedWeight] = useState<number>(weight);
@@ -116,8 +116,8 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                         id="step-range"
                         type="range"
                         className="w-4/5 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer px-2 mr-2"
-                        min={1}
-                        max={3}
+                        min={-1}
+                        max={1}
                         step={1}
                         value={selectedWeight}
                         onChange={(event) => setSelectedWeight(Number(event.target.value))}
