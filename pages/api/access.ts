@@ -32,6 +32,9 @@ export default async function handler(
             });
             const jsonFinalResponse = await finalResponse.json();
             if (jsonFinalResponse.status === "succeeded") {
+                if (!jsonFinalResponse.output) {
+                    return res.status(500).json("Failed to get image");
+                }
                 generatedImage = jsonFinalResponse.output[0] as string;
             } else if (jsonFinalResponse.status === "failed") {
                 break;
