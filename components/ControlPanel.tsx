@@ -2,12 +2,13 @@ import Image from "next/image";
 import {label2name} from "@/configs/heroes";
 import React from "react";
 
-export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, setPrompt}: {
+export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, setPrompt, onClickGenerate}: {
     hero: string,
     setShowHeroModal: (x: boolean) => void,
     style: string,
     setShowStyleModal: (x: boolean) => void,
-    setPrompt: (x: string) => void
+    setPrompt: (x: string) => void,
+    onClickGenerate: () => void
 }) {
     let heroUrl = hero != "" ? "/heroes/" + hero + ".jpg" : "/heroes/question_mark.png";
     return (
@@ -64,6 +65,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                 <button
                     className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white rounded-lg
                         px-1 hover:bg-gradient-to-bl focus:ring-4 font-bold lg:text-base text-sm"
+                    onClick={onClickGenerate}
                 >
                     Generate Image
                 </button>

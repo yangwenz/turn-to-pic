@@ -2,15 +2,6 @@ import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Drawer from "@/components/Drawer";
-import DefaultLayout from "@/layout/default";
-import HeroModal from "@/components/HeroModal";
-import StyleModal from "@/components/StyleModal";
-import ControlPanel from "@/components/ControlPanel";
-import ImageCard from "@/components/ImageCard";
-import ButtonList from "@/components/ButtonList";
 
 import {
     defaultGuidanceScale,
@@ -20,8 +11,22 @@ import {
     defaultNumInferenceSteps,
     defaultRandomSeed
 } from "@/configs/default";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Drawer from "@/components/Drawer";
+import DefaultLayout from "@/layout/default";
+import HeroModal from "@/components/HeroModal";
+import StyleModal from "@/components/StyleModal";
+import ControlPanel from "@/components/ControlPanel";
+import ImageCard from "@/components/ImageCard";
+import ButtonList from "@/components/ButtonList";
 import {downloadImage} from "@/utils/file";
 import History from "@/components/History";
+import {useSettings} from "@/hooks/useSettings";
+import {buildPrompt} from "@/utils/prompt";
+import {label2name} from "@/configs/heroes";
+import {GenerateResponse} from "@/pages/api/generate";
 
 
 export default function Generate() {
@@ -51,8 +56,10 @@ export default function Generate() {
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
     // App states
-    const [generatedImage, setGeneratedImage] = useState<string>("/images/test_32.png");
+    const {settings: settings} = useSettings();
+    const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -103,6 +110,53 @@ export default function Generate() {
         }
     }
 
+    async function onClickError() {
+        setError(null);
+    }
+
+    async function onClickGenerate() {
+        setLoading(true);
+        setError(null);
+
+        if (!settings.apikey) {
+            setError("Please set your Replicate API Key")
+        }
+        if (!hero) {
+            setError("Please select a Dota2 hero")
+        }
+
+        const body = {
+            hero: label2name(hero),
+            heroWeight: heroWeight,
+            prompt: buildPrompt(prompt, style, styleWeight),
+            negativePrompt: negativePrompt,
+            width: width,
+            height: height,
+            numInferenceSteps: numSteps,
+            guidanceScale: guidanceScale,
+            seed: seed,
+            token: settings.apikey
+        };
+        try {
+            const res = await fetch("/api/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            if (res.status !== 200) {
+                setError(await res.json());
+            } else {
+                let response = (await res.json()) as GenerateResponse;
+                console.log(response);
+            }
+        } catch (error) {
+            setError("Failed to generate image");
+        }
+        setLoading(false);
+    }
+
     return (
         <DefaultLayout>
             <Drawer
@@ -145,6 +199,7 @@ export default function Generate() {
                         style={style}
                         setShowStyleModal={setShowStyleModal}
                         setPrompt={(x: string) => setPrompt(x)}
+                        onClickGenerate={onClickGenerate}
                     />
                     <div className="flex w-full flex-col items-center text-center mt-2">
                         {generatedImage && (
@@ -183,6 +238,26 @@ export default function Generate() {
                         weight={styleWeight}
                         setWeight={(x: number) => setStyleWeight(x)}
                     />
+                    {error && (
+                        <div
+                            className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+                            onClick={() => onClickError()}
+                        >
+                            <div
+                                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                                style={{ zIndex: 200 }}
+                                role="alert"
+                            >
+                                <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                                    ERROR
+                                </div>
+                                <div className="border border-t-0 border-red-400 rounded-b
+                                    bg-red-100 px-4 py-4 text-red-700">
+                                    {error}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </main>
                 <Footer/>
             </div>
