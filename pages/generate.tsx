@@ -275,11 +275,15 @@ export default function Generate() {
                                 className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
                                 style={{zIndex: 100}}
                             >
-                                <div className="p-4 w-40 bg-white text-center rounded-lg animate-in zoom-in">
+                                <div className="p-4 w-80 bg-white text-center rounded-lg animate-in zoom-in
+                                    flex flex-col items-center justify-center">
                                     <Spinner/>
-                                    <p className="pt-3 opacity-30 text-center text-sm">
+                                    <p className="pt-3 opacity-50 text-center text-base mb-2">
                                         Loading ...
                                     </p>
+                                    <span className="text-xs opacity-30">
+                                        This can sometimes take around 3 to 5 minutes while the model boots up.
+                                    </span>
                                 </div>
                             </div>
                         </div>
