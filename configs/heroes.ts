@@ -54,17 +54,16 @@ export function getHeroes(): [string[], Map<string, string[]>] {
     return [heroes, heroAttributes];
 }
 
-export function label2name(label: string) {
+export function label2name(label: string, lower: boolean = false) {
     if (label === "natures-prophet")
         label = "nature's-prophet"
     let name = label.split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
     if (name == "Anti Mage") {
-        return "Anti-Mage";
-    } else {
-        return name;
+        name = "Anti-Mage";
     }
+    return lower? name.toLowerCase(): name;
 }
 
 export function getStyles() {

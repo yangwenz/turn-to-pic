@@ -132,7 +132,7 @@ export default function Generate() {
         // Submit a request
         try {
             const body = {
-                hero: label2name(hero),
+                hero: label2name(hero, true),
                 heroWeight: heroWeight,
                 prompt: buildPrompt(prompt, style, styleWeight),
                 negativePrompt: negativePrompt,
