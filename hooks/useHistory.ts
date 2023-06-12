@@ -4,6 +4,7 @@ export type UserHistoryRecord = {
     // Task info
     id: string;
     createdAt: string;
+    createdTimestamp: number;
     endpointUrl: string;
     cancelUrl: string;
     status: string;

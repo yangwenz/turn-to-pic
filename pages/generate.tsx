@@ -115,6 +115,7 @@ export default function Generate() {
         addRecord({
             id: id,
             createdAt: Date().toLocaleString(),
+            createdTimestamp: Date.now(),
             endpointUrl: endpointUrl,
             cancelUrl: cancelUrl,
             status: status,
