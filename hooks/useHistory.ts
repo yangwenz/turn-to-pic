@@ -22,6 +22,7 @@ export type UserHistoryRecord = {
     seed: number | string;
     // Image info
     imageUrl?: string;
+    dataUrl?: string;
 }
 
 const HISTORY_KEY = "USER_HISTORY";
