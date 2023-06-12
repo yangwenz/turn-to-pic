@@ -15,11 +15,9 @@ export function downloadImage(url: string, filename: string) {
         mode: "cors",
     })
         .then((response) => {
-            console.log(response);
             return response.blob();
         })
         .then((blob) => {
-            console.log(blob);
             let blobUrl = window.URL.createObjectURL(blob);
             file(blobUrl, filename);
         })
