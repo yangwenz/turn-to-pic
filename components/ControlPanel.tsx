@@ -19,6 +19,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                         className="w-auto h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
                                 border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
                         onClick={() => setShowHeroModal(true)}
+                        title="Choose a hero"
                     >
                         Hero
                     </button>
@@ -38,9 +39,8 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                     <button
                         className="w-auto min-h-[36px] px-3 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
                                 border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
-                        onClick={() => {
-                            setShowStyleModal(true)
-                        }}
+                        onClick={() => setShowStyleModal(true)}
+                        title="Choose a style"
                     >
                         Style
                     </button>

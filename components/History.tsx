@@ -16,7 +16,7 @@ function HistoryCard(record: UserHistoryRecord) {
             onMouseOut={() => {setIsHovering(false)}}
         >
             {hasDataUrl && (
-                <div className="relative flex items-center justify-end">
+                <div className="relative flex items-center justify-center">
                     <div
                         className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
                     >

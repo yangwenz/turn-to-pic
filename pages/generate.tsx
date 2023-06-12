@@ -261,8 +261,11 @@ export default function Generate() {
                             />
                         )}
                         {!generatedImage && (
-                            <div className="border border-slate-500 md:w-[512px] w-[320px]
-                                md:h-[512px] h-[320px] rounded-lg m-3 flex flex-col items-center justify-center">
+                            <div
+                                className="border border-slate-500 md:w-[512px] w-[320px]
+                                md:h-[512px] h-[320px] rounded-lg m-3 flex flex-col items-center justify-center"
+                                title="The generated hero image will be shown here"
+                            >
                                 <ImageIcon/>
                             </div>
                         )}
@@ -387,7 +390,6 @@ function ImageIcon() {
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <title>image</title>
             <path
                 d="M0 26.016q0 2.496 1.76 4.224t4.256 1.76h20q2.464 0
                 4.224-1.76t1.76-4.224v-20q0-2.496-1.76-4.256t-4.224-1.76h-20q-2.496 0-4.256
