@@ -3,8 +3,13 @@ import React, {useState} from "react";
 import Image from "next/image";
 import {FaBars} from "react-icons/fa";
 import {UserHistoryRecord} from "@/hooks/useHistory";
+import InfoCard from "@/components/InfoCard";
 
-function HistoryCard(record: UserHistoryRecord) {
+function HistoryCard(
+    record: UserHistoryRecord,
+    setShowInfo: (x: boolean) => void,
+    setRecord: (x: UserHistoryRecord) => void
+) {
     const hasDataUrl = !!record.dataUrl;
     const [isHovering, setIsHovering] = useState(false);
 
@@ -32,7 +37,14 @@ function HistoryCard(record: UserHistoryRecord) {
                             <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Load">
                                 <OpenIcon/>
                             </button>
-                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Info">
+                            <button
+                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                                title="Info"
+                                onClick={() => {
+                                    setShowInfo(true);
+                                    setRecord(record);
+                                }}
+                            >
                                 <InfoIcon/>
                             </button>
                         </div>
@@ -75,6 +87,9 @@ export default function History({showHistory, setShowHistory, historyRecords}: {
     setShowHistory: (x: boolean) => void,
     historyRecords: UserHistoryRecord[]
 }) {
+    const [showInfo, setShowInfo] = useState(false);
+    const [record, setRecord] = useState<UserHistoryRecord | null>(null);
+
     return (
         <>
             <div
@@ -108,10 +123,14 @@ export default function History({showHistory, setShowHistory, historyRecords}: {
                         <div className="font-semibold italic">No Records</div>
                     )}
                     {historyRecords.length > 0 && (
-                        historyRecords.slice(0).reverse().map((record) => HistoryCard(record))
+                        historyRecords.slice(0).reverse().map(
+                            (record) => HistoryCard(record, setShowInfo, setRecord))
                     )}
                 </div>
             </div>
+            {showInfo && (
+                <InfoCard record={record} setShowInfo={setShowInfo}/>
+            )}
         </>
     )
 }
