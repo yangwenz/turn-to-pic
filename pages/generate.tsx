@@ -61,7 +61,7 @@ export default function Generate() {
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const {history, saveHistory, addRecord, updateRecord, clearHistory} = useHistory();
+    const {history, saveHistory, addRecord, updateRecordStatus, clearHistory} = useHistory();
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -106,6 +106,32 @@ export default function Generate() {
         setSeed(defaultRandomSeed);
     }
 
+    const addToHistory = (
+        id: string,
+        endpointUrl: string,
+        cancelUrl: string,
+        status: string
+    ) => {
+        addRecord({
+            id: id,
+            createdAt: Date().toLocaleString(),
+            endpointUrl: endpointUrl,
+            cancelUrl: cancelUrl,
+            status: status,
+            hero: hero,
+            heroWeight: heroWeight,
+            style: style,
+            styleWeight: styleWeight,
+            prompt: prompt,
+            negativePrompt: negativePrompt,
+            width: width,
+            height: height,
+            numInferenceSteps: numSteps,
+            guidanceScale: guidanceScale,
+            seed: seed
+        })
+    }
+
     async function onClickDownload() {
         if (!loading && generatedImage) {
             console.log(generatedImage);
@@ -129,6 +155,7 @@ export default function Generate() {
             setError("Please select a Dota2 hero")
         }
 
+        let requestId: string = "";
         let endpointUrl: string = "";
         // Submit a request
         try {
@@ -155,8 +182,9 @@ export default function Generate() {
                 setError(await res.json());
             } else {
                 let response = (await res.json()) as GenerateResponse;
+                requestId = response.id;
                 endpointUrl = response.endpointUrl;
-                // Add to history...
+                addToHistory(requestId, endpointUrl, response.cancelUrl, "starting");
             }
         } catch (error) {
             setError("Failed to generate image");
@@ -175,12 +203,23 @@ export default function Generate() {
                 },
                 body: JSON.stringify(body),
             });
-            if (res.status !== 200) {
+            if (res.status === 501) {
+                // Failed
+                updateRecordStatus(requestId, "failed");
+            } else if (res.status === 502) {
+                // Image was deleted
+                updateRecordStatus(requestId, "image unavailable");
+            } else if (res.status === 503) {
+                // Other errors
+                updateRecordStatus(requestId, "unknown");
+            } else if (res.status !== 200) {
+                // Running
                 setError(await res.json());
             } else {
+                // Success
                 let response = (await res.json()) as AccessResponse;
                 setGeneratedImage(response.generated);
-                // Update the history...
+                updateRecordStatus(requestId, "succeeded", response.generated);
             }
         }
         setLoading(false);

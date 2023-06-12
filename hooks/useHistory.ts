@@ -16,9 +16,11 @@ export type UserHistoryRecord = {
     negativePrompt: string;
     width: number;
     height: number;
-    numSteps: number;
+    numInferenceSteps: number;
     guidanceScale: number;
     seed: number | string;
+    // Image info
+    imageUrl?: string;
 }
 
 const HISTORY_KEY = "USER_HISTORY";
@@ -57,11 +59,13 @@ export function useHistory() {
         saveHistory(newHistory);
     }
 
-    const updateRecord = (id: string, record: UserHistoryRecord) => {
+    const updateRecordStatus = (id: string, status: string, imageUrl?: string) => {
         let newHistory: UserHistoryRecord[] = [...history];
         for (let i = 0; i < history.length; i++) {
             if (newHistory[i].id === id) {
-                newHistory[i] = {...record}
+                newHistory[i].status = status;
+                newHistory[i].imageUrl = imageUrl;
+                break;
             }
         }
         saveHistory(newHistory);
@@ -75,7 +79,7 @@ export function useHistory() {
         history,
         saveHistory,
         addRecord,
-        updateRecord,
+        updateRecordStatus,
         clearHistory
     }
 }

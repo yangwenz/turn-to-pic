@@ -15,10 +15,7 @@ export default async function handler(
     req: AccessRequest,
     res: NextApiResponse<AccessResponse | string>
 ) {
-    let i: number = 0;
-    let generatedImage: string | null = null;
-
-    while (!generatedImage && i < 30) {
+    for (let i = 0; i < 30; i++) {
         try {
             // Loop in 1s intervals until the alt text is ready
             let finalResponse = await fetch(req.body.endpointUrl, {
@@ -28,26 +25,24 @@ export default async function handler(
                     Authorization: "Token " + req.body.token
                 },
             });
-            const jsonFinalResponse = await finalResponse.json();
-            if (jsonFinalResponse.status === "succeeded") {
-                if (!jsonFinalResponse.output) {
-                    return res.status(500).json("Failed to download the image");
+            const response = await finalResponse.json();
+
+            if (response.status === "succeeded") {
+                if (!response.output) {
+                    return res.status(502).json("Failed to download the image");
                 }
-                generatedImage = jsonFinalResponse.output[0] as string;
-            } else if (jsonFinalResponse.status === "failed") {
-                return res.status(500).json("Failed to generate the image");
+                let imageUrl = response.output[0] as string;
+                return res.status(200).json({generated: imageUrl});
+
+            } else if (response.status === "failed") {
+                return res.status(501).json("Failed to generate the image");
+
             } else {
                 await new Promise((resolve) => setTimeout(resolve, 1000));
-                i += 1;
             }
         } catch (error) {
-            return res.status(500).json("Failed to get the image");
+            return res.status(503).json("Failed to generate the image");
         }
     }
-    if (!generatedImage) {
-        return res.status(500).json("Timeout. Please check the history later.");
-    }
-    res.status(200).json(
-        generatedImage? {generated: generatedImage}: "Failed to generate the image"
-    );
+    return res.status(500).json("Timeout. Please check the history later.");
 }
