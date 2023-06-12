@@ -28,7 +28,9 @@ function HistoryCard(record: UserHistoryRecord) {
                         />
                     </div>
                     {isHovering && (
-                        <button>Test</button>
+                        <div>
+                            <button>Test</button>
+                        </div>
                     )}
                 </div>
             )}
@@ -43,7 +45,9 @@ function HistoryCard(record: UserHistoryRecord) {
                         </span>
                     </div>
                     {isHovering && (
-                        <button>Test</button>
+                        <div>
+                            <button>Test</button>
+                        </div>
                     )}
                 </div>
             )}
