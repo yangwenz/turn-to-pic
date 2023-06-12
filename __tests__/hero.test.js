@@ -132,6 +132,7 @@ describe("Hero", () => {
     it("test hero names", () => {
         const [heroes , heroAttributes] = getHeroes();
         heroAttributes.forEach((value, key) => {
+            console.log(key);
             for (let x of value) {
                 expect(heroes.includes(x)).toEqual(true);
             }
