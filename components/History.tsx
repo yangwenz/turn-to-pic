@@ -5,21 +5,23 @@ import {FaBars} from "react-icons/fa";
 import {UserHistoryRecord} from "@/hooks/useHistory";
 
 function HistoryCard(record: UserHistoryRecord) {
+    const hasDataUrl = !!record.dataUrl;
+
     return (
         <div className="p-2 rounded-lg bg-gray-700 m-1" key={record.id}>
-            {record.dataUrl && (
+            {hasDataUrl && (
                 <div
                     className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
                 >
                     <Image
-                        src={record.dataUrl}
+                        src={record.dataUrl!}
                         alt={record.id}
                         fill
-                        blurDataURL={record.dataUrl}
+                        blurDataURL={record.dataUrl!}
                     />
                 </div>
             )}
-            {!record.dataUrl && (
+            {!hasDataUrl && (
                 <div
                     className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
                     flex flex-col items-center justify-center"
