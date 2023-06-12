@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {downloadImageAsDataURL} from "@/utils/file";
 
 export type UserHistoryRecord = {
     // Task info
@@ -52,7 +53,7 @@ export function useHistory() {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     }
 
-    const addRecord = (record: UserHistoryRecord, maxLength: number = 50) => {
+    const addRecord = (record: UserHistoryRecord, maxLength: number = 30) => {
         let newHistory: UserHistoryRecord[] = [...history];
         if (newHistory.length >= maxLength) {
             newHistory.shift();
@@ -61,12 +62,15 @@ export function useHistory() {
         saveHistory(newHistory);
     }
 
-    const updateRecordStatus = (id: string, status: string, imageUrl?: string) => {
+    const updateRecordStatus = async (id: string, status: string, imageUrl?: string) => {
         let newHistory: UserHistoryRecord[] = [...history];
         for (let i = 0; i < history.length; i++) {
             if (newHistory[i].id === id) {
                 newHistory[i].status = status;
-                newHistory[i].imageUrl = imageUrl;
+                if (imageUrl) {
+                    newHistory[i].imageUrl = imageUrl;
+                    newHistory[i].dataUrl = await downloadImageAsDataURL(imageUrl);
+                }
                 break;
             }
         }

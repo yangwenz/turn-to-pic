@@ -207,13 +207,13 @@ export default function Generate() {
             });
             if (res.status === 501) {
                 // Failed
-                updateRecordStatus(requestId, "failed");
+                await updateRecordStatus(requestId, "failed");
             } else if (res.status === 502) {
                 // Image was deleted
-                updateRecordStatus(requestId, "image unavailable");
+                await updateRecordStatus(requestId, "image unavailable");
             } else if (res.status === 503) {
                 // Other errors
-                updateRecordStatus(requestId, "unknown");
+                await updateRecordStatus(requestId, "unknown");
             } else if (res.status !== 200) {
                 // Running
                 setError(await res.json());
@@ -221,7 +221,7 @@ export default function Generate() {
                 // Success
                 let response = (await res.json()) as AccessResponse;
                 setGeneratedImage(response.generated);
-                updateRecordStatus(requestId, "succeeded", response.generated);
+                await updateRecordStatus(requestId, "succeeded", response.generated);
             }
         }
         setLoading(false);

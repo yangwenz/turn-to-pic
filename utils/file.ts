@@ -34,3 +34,26 @@ export function readAsDataURL(file: Blob) {
         fr.readAsDataURL(file);
     });
 }
+
+export async function downloadImageAsDataURL(url: string) {
+    let dataUrl: string = "";
+
+    await fetch(url, {
+        headers: new Headers({
+            Origin: location.origin
+        }),
+        mode: "cors",
+    })
+        .then((response) => {
+            return response.blob();
+        })
+        .then((blob) => {
+            return readAsDataURL(blob);
+        })
+        .then((result) => {
+            dataUrl = result as string;
+        })
+        .catch((e) => console.error(e));
+
+    return dataUrl;
+}
