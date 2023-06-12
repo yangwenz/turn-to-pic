@@ -17,8 +17,6 @@ export default async function handler(
 ) {
     let i: number = 0;
     let generatedImage: string | null = null;
-    const errorMessage =
-        "Failed to get image. Please check the history later.";
 
     while (!generatedImage && i < 30) {
         try {
@@ -33,23 +31,23 @@ export default async function handler(
             const jsonFinalResponse = await finalResponse.json();
             if (jsonFinalResponse.status === "succeeded") {
                 if (!jsonFinalResponse.output) {
-                    return res.status(500).json("Failed to get image");
+                    return res.status(500).json("Failed to download the image");
                 }
                 generatedImage = jsonFinalResponse.output[0] as string;
             } else if (jsonFinalResponse.status === "failed") {
-                break;
+                return res.status(500).json("Failed to generate the image");
             } else {
                 await new Promise((resolve) => setTimeout(resolve, 1000));
                 i += 1;
             }
         } catch (error) {
-            return res.status(500).json(errorMessage);
+            return res.status(500).json("Failed to get the image");
         }
     }
     if (!generatedImage) {
-        return res.status(500).json(errorMessage);
+        return res.status(500).json("Timeout. Please check the history later.");
     }
     res.status(200).json(
-        generatedImage? {generated: generatedImage}: errorMessage
+        generatedImage? {generated: generatedImage}: "Failed to generate the image"
     );
 }
