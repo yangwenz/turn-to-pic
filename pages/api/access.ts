@@ -8,6 +8,7 @@ interface AccessRequest extends NextApiRequest {
     body: {
         endpointUrl: string;
         token: string;
+        numTrials: number;
     };
 }
 
@@ -15,7 +16,8 @@ export default async function handler(
     req: AccessRequest,
     res: NextApiResponse<AccessResponse | string>
 ) {
-    for (let i = 0; i < 30; i++) {
+    let n = Math.min(req.body.numTrials, 60);
+    for (let i = 0; i < n; i++) {
         try {
             // Loop in 1s intervals until the alt text is ready
             let finalResponse = await fetch(req.body.endpointUrl, {
@@ -31,8 +33,7 @@ export default async function handler(
                 if (!response.output) {
                     return res.status(502).json("Failed to download the image");
                 }
-                let imageUrl = response.output[0] as string;
-                return res.status(200).json({generated: imageUrl});
+                return res.status(200).json({generated: response.output[0] as string});
 
             } else if (response.status === "failed") {
                 return res.status(501).json("Failed to generate the image");
