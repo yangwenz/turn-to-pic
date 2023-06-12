@@ -227,28 +227,6 @@ export default function Generate() {
 
     return (
         <DefaultLayout>
-            <Drawer
-                showDrawer={showDrawer}
-                setShowDrawer={setShowDrawer}
-                negativePrompt={negativePrompt}
-                setNegativePrompt={(x: string) => setNegativePrompt(x)}
-                width={width}
-                setWidth={(x: number) => setWidth(x)}
-                height={height}
-                setHeight={(x: number) => setHeight(x)}
-                numSteps={numSteps}
-                setNumSteps={(x: number) => setNumSteps(x)}
-                guidanceScale={guidanceScale}
-                setGuidanceScale={(x: number) => setGuidanceScale(x)}
-                seed={seed}
-                setSeed={(x: number | string) => setSeed(x)}
-                reset={reset}
-            />
-            <History
-                showHistory={showHistory}
-                setShowHistory={setShowHistory}
-                historyRecords={history}
-            />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>
                 <main className="flex flex-col items-center justify-center
@@ -285,6 +263,15 @@ export default function Generate() {
                                 <ImageIcon/>
                             </div>
                         )}
+                        {loading && (
+                            <LoadingWindow/>
+                        )}
+                        {error && (
+                            <ErrorWindow
+                                error={error}
+                                onClickError={onClickError}
+                            />
+                        )}
                     </div>
                     <ButtonList
                         onClickDownload={onClickDownload}
@@ -310,18 +297,31 @@ export default function Generate() {
                         weight={styleWeight}
                         setWeight={(x: number) => setStyleWeight(x)}
                     />
-                    {loading && (
-                        <LoadingWindow/>
-                    )}
-                    {error && (
-                        <ErrorWindow
-                            error={error}
-                            onClickError={onClickError}
-                        />
-                    )}
                 </main>
                 <Footer/>
             </div>
+            <Drawer
+                showDrawer={showDrawer}
+                setShowDrawer={setShowDrawer}
+                negativePrompt={negativePrompt}
+                setNegativePrompt={(x: string) => setNegativePrompt(x)}
+                width={width}
+                setWidth={(x: number) => setWidth(x)}
+                height={height}
+                setHeight={(x: number) => setHeight(x)}
+                numSteps={numSteps}
+                setNumSteps={(x: number) => setNumSteps(x)}
+                guidanceScale={guidanceScale}
+                setGuidanceScale={(x: number) => setGuidanceScale(x)}
+                seed={seed}
+                setSeed={(x: number | string) => setSeed(x)}
+                reset={reset}
+            />
+            <History
+                showHistory={showHistory}
+                setShowHistory={setShowHistory}
+                historyRecords={history}
+            />
         </DefaultLayout>
     )
 }
