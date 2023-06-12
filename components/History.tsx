@@ -29,10 +29,10 @@ function HistoryCard(record: UserHistoryRecord) {
                     </div>
                     {isHovering && (
                         <div className="absolute top-full -translate-y-full flex flex-row">
-                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500">
+                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Load">
                                 <OpenIcon/>
                             </button>
-                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500">
+                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Info">
                                 <InfoIcon/>
                             </button>
                         </div>
@@ -59,7 +59,7 @@ function HistoryCard(record: UserHistoryRecord) {
                     </div>
                     {isHovering && (
                         <div className="absolute top-full -translate-y-full flex flex-row">
-                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500">
+                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Refresh">
                                 <RefreshIcon/>
                             </button>
                         </div>
