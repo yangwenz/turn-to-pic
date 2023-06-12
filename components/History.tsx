@@ -66,8 +66,13 @@ export default function History({showHistory, setShowHistory, historyRecords}: {
                             <FaBars />
                         </button>
                     </div>
-                    <div className="border-b border-slate-500 mt-2 mb-2"></div>
-                    {historyRecords.slice(0).reverse().map((record) => HistoryCard(record))}
+                    <div className="border-b border-slate-500 mt-2 mb-2 w-full"></div>
+                    {historyRecords.length == 0 && (
+                        <div className="font-semibold italic">No Records</div>
+                    )}
+                    {historyRecords.length > 0 && (
+                        historyRecords.slice(0).reverse().map((record) => HistoryCard(record))
+                    )}
                 </div>
             </div>
         </>
