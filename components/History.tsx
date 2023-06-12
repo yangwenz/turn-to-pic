@@ -1,34 +1,50 @@
 import clsx from "clsx";
-import React from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import {FaBars} from "react-icons/fa";
 import {UserHistoryRecord} from "@/hooks/useHistory";
 
 function HistoryCard(record: UserHistoryRecord) {
     const hasDataUrl = !!record.dataUrl;
+    const [isHovering, setIsHovering] = useState(false);
 
     return (
-        <div className="p-2 rounded-lg bg-gray-700 m-1" key={record.id}>
+        <div
+            className="p-2 rounded-lg bg-gray-700 m-1"
+            key={record.id}
+            onMouseOver={() => {setIsHovering(true)}}
+            onMouseOut={() => {setIsHovering(false)}}
+        >
             {hasDataUrl && (
-                <div
-                    className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
-                >
-                    <Image
-                        src={record.dataUrl!}
-                        alt={record.id}
-                        fill
-                        blurDataURL={record.dataUrl!}
-                    />
+                <div>
+                    <div
+                        className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
+                    >
+                        <Image
+                            src={record.dataUrl!}
+                            alt={record.id}
+                            fill
+                            blurDataURL={record.dataUrl!}
+                        />
+                    </div>
+                    {isHovering && (
+                        <button>Test</button>
+                    )}
                 </div>
             )}
             {!hasDataUrl && (
-                <div
-                    className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
-                    flex flex-col items-center justify-center"
-                >
-                    <span className="font-semibold italic">
-                        {record.status == "starting"? "Generating ...": "Failed"}
-                    </span>
+                <div>
+                    <div
+                        className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
+                        flex flex-col items-center justify-center"
+                    >
+                        <span className="font-semibold italic">
+                            {record.status == "starting"? "Generating ...": "Failed"}
+                        </span>
+                    </div>
+                    {isHovering && (
+                        <button>Test</button>
+                    )}
                 </div>
             )}
         </div>
