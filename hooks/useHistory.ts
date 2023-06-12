@@ -50,14 +50,14 @@ export function loadHistory() {
 
 export function useHistory() {
     const [history, setHistory] = useState<UserHistoryRecord[]>(loadHistory);
+    let historyRecords = [...history];
 
-    const saveHistory = (history: UserHistoryRecord[]) => {
-        setHistory(history);
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    const saveHistory = () => {
+        setHistory(historyRecords);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(historyRecords));
     }
 
     const addRecord = (
-        historyRecords: UserHistoryRecord[],
         record: UserHistoryRecord,
         maxLength: number = 30
     ) => {
@@ -65,10 +65,10 @@ export function useHistory() {
             historyRecords.shift();
         }
         historyRecords.push(record);
+        saveHistory();
     }
 
-    const updateRecordStatus = async (
-        historyRecords: UserHistoryRecord[],
+    const updateRecord = async (
         id: string,
         status: string,
         imageUrl?: string
@@ -83,12 +83,12 @@ export function useHistory() {
                 break;
             }
         }
+        saveHistory();
     }
 
     return {
         history,
-        saveHistory,
         addRecord,
-        updateRecordStatus
+        updateRecord
     }
 }
