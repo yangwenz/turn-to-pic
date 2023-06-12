@@ -39,7 +39,10 @@ export function loadHistory() {
     }
 
     try {
-        return JSON.parse(data) as UserHistoryRecord[];
+        const obj = JSON.parse(data);
+        return Object.keys(obj).map(function(index){
+            return obj[index];
+        }) as UserHistoryRecord[];
     } catch (error) {}
 
     return DEFAULT_HISTORY;
@@ -53,38 +56,39 @@ export function useHistory() {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     }
 
-    const addRecord = (record: UserHistoryRecord, maxLength: number = 30) => {
-        let newHistory: UserHistoryRecord[] = [...history];
-        if (newHistory.length >= maxLength) {
-            newHistory.shift();
+    const addRecord = (
+        historyRecords: UserHistoryRecord[],
+        record: UserHistoryRecord,
+        maxLength: number = 30
+    ) => {
+        if (historyRecords.length >= maxLength) {
+            historyRecords.shift();
         }
-        newHistory.push(record);
-        saveHistory(newHistory);
+        historyRecords.push(record);
     }
 
-    const updateRecordStatus = async (id: string, status: string, imageUrl?: string) => {
-        let newHistory: UserHistoryRecord[] = [...history];
-        for (let i = 0; i < history.length; i++) {
-            if (newHistory[i].id === id) {
-                newHistory[i].status = status;
+    const updateRecordStatus = async (
+        historyRecords: UserHistoryRecord[],
+        id: string,
+        status: string,
+        imageUrl?: string
+    ) => {
+        for (let i = 0; i < historyRecords.length; i++) {
+            if (historyRecords[i].id === id) {
+                historyRecords[i].status = status;
                 if (imageUrl) {
-                    newHistory[i].imageUrl = imageUrl;
-                    newHistory[i].dataUrl = await downloadImageAsDataURL(imageUrl);
+                    historyRecords[i].imageUrl = imageUrl;
+                    historyRecords[i].dataUrl = await downloadImageAsDataURL(imageUrl);
                 }
                 break;
             }
         }
-        saveHistory(newHistory);
-    }
-
-    const clearHistory = () => {
-        saveHistory([]);
     }
 
     return {
         history,
+        saveHistory,
         addRecord,
-        updateRecordStatus,
-        clearHistory
+        updateRecordStatus
     }
 }

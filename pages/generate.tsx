@@ -28,7 +28,7 @@ import {label2name} from "@/configs/heroes";
 import {GenerateResponse} from "@/pages/api/generate";
 import {AccessResponse} from "@/pages/api/access";
 import Spinner from "@/components/Spinner";
-import {useHistory} from "@/hooks/useHistory";
+import {loadHistory, useHistory, UserHistoryRecord} from "@/hooks/useHistory";
 
 
 export default function Generate() {
@@ -61,7 +61,8 @@ export default function Generate() {
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const {history, addRecord, updateRecordStatus, clearHistory} = useHistory();
+    const {history, saveHistory, addRecord, updateRecordStatus} = useHistory();
+    let historyRecords: UserHistoryRecord[] = [...history];
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -112,7 +113,7 @@ export default function Generate() {
         cancelUrl: string,
         status: string
     ) => {
-        addRecord({
+        addRecord(historyRecords,{
             id: id,
             createdAt: Date().toLocaleString(),
             createdTimestamp: Date.now(),
@@ -131,6 +132,16 @@ export default function Generate() {
             guidanceScale: guidanceScale,
             seed: seed
         })
+        saveHistory(historyRecords);
+    }
+
+    const updateHistory = async (
+        id: string,
+        status: string,
+        imageUrl?: string
+    ) => {
+        await updateRecordStatus(historyRecords, id, status, imageUrl);
+        saveHistory(historyRecords);
     }
 
     async function onClickDownload() {
@@ -188,6 +199,7 @@ export default function Generate() {
                 addToHistory(requestId, endpointUrl, response.cancelUrl, "starting");
             }
         } catch (error) {
+            console.log(error);
             setError("Failed to generate image");
         }
 
@@ -207,13 +219,13 @@ export default function Generate() {
             });
             if (res.status === 501) {
                 // Failed
-                await updateRecordStatus(requestId, "failed");
+                await updateHistory(requestId, "failed");
             } else if (res.status === 502) {
                 // Image was deleted
-                await updateRecordStatus(requestId, "image unavailable");
+                await updateHistory(requestId, "image unavailable");
             } else if (res.status === 503) {
                 // Other errors
-                await updateRecordStatus(requestId, "unknown");
+                await updateHistory(requestId, "unknown");
             } else if (res.status !== 200) {
                 // Running
                 setError(await res.json());
@@ -221,7 +233,7 @@ export default function Generate() {
                 // Success
                 let response = (await res.json()) as AccessResponse;
                 setGeneratedImage(response.generated);
-                await updateRecordStatus(requestId, "succeeded", response.generated);
+                await updateHistory(requestId, "succeeded", response.generated);
             }
         }
         setLoading(false);
