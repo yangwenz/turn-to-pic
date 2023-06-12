@@ -61,7 +61,7 @@ export default function Generate() {
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const {history, saveHistory, addHistoryRecord, clearHistory} = useHistory();
+    const {history, saveHistory, addRecord, updateRecord, clearHistory} = useHistory();
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet

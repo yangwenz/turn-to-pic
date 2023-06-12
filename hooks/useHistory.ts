@@ -48,12 +48,22 @@ export function useHistory() {
         localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     }
 
-    const addHistoryRecord = (record: UserHistoryRecord, maxLength: number = 50) => {
+    const addRecord = (record: UserHistoryRecord, maxLength: number = 50) => {
         let newHistory: UserHistoryRecord[] = [...history];
         if (newHistory.length >= maxLength) {
             newHistory.shift();
         }
         newHistory.push(record);
+        saveHistory(newHistory);
+    }
+
+    const updateRecord = (id: string, record: UserHistoryRecord) => {
+        let newHistory: UserHistoryRecord[] = [...history];
+        for (let i = 0; i < history.length; i++) {
+            if (newHistory[i].id === id) {
+                newHistory[i] = {...record}
+            }
+        }
         saveHistory(newHistory);
     }
 
@@ -64,7 +74,8 @@ export function useHistory() {
     return {
         history,
         saveHistory,
-        addHistoryRecord,
+        addRecord,
+        updateRecord,
         clearHistory
     }
 }
