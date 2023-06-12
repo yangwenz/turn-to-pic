@@ -57,9 +57,14 @@ export function useHistory() {
         saveHistory(newHistory);
     }
 
+    const clearHistory = () => {
+        saveHistory([]);
+    }
+
     return {
         history,
         saveHistory,
-        addHistoryRecord
+        addHistoryRecord,
+        clearHistory
     }
 }
