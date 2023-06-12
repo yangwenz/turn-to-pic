@@ -28,7 +28,7 @@ import {label2name} from "@/configs/heroes";
 import {GenerateResponse} from "@/pages/api/generate";
 import {AccessResponse} from "@/pages/api/access";
 import Spinner from "@/components/Spinner";
-import {useHistory, UserHistoryRecord} from "@/hooks/useHistory";
+import {useHistory} from "@/hooks/useHistory";
 
 
 export default function Generate() {
