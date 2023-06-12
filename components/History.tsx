@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import React from "react";
 import {FaBars} from "react-icons/fa";
+import {UserHistoryRecord} from "@/hooks/useHistory";
 
-export default function History({showHistory, setShowHistory}: {
+export default function History({showHistory, setShowHistory, historyRecords}: {
     showHistory: boolean,
-    setShowHistory: (x: boolean) => void
+    setShowHistory: (x: boolean) => void,
+    historyRecords: UserHistoryRecord[]
 }) {
     return (
         <>

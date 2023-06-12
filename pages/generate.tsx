@@ -28,6 +28,7 @@ import {label2name} from "@/configs/heroes";
 import {GenerateResponse} from "@/pages/api/generate";
 import {AccessResponse} from "@/pages/api/access";
 import Spinner from "@/components/Spinner";
+import {useHistory} from "@/hooks/useHistory";
 
 
 export default function Generate() {
@@ -60,6 +61,7 @@ export default function Generate() {
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const {history, saveHistory, addHistoryRecord, clearHistory} = useHistory();
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -206,6 +208,7 @@ export default function Generate() {
             <History
                 showHistory={showHistory}
                 setShowHistory={setShowHistory}
+                historyRecords={history}
             />
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
                 <Header session={session} status={status}/>
@@ -269,50 +272,67 @@ export default function Generate() {
                         setWeight={(x: number) => setStyleWeight(x)}
                     />
                     {loading && (
-                        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
-                            <div
-                                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-                                style={{zIndex: 100}}
-                            >
-                                <div className="p-4 w-80 bg-white text-center rounded-lg animate-in zoom-in
-                                    flex flex-col items-center justify-center">
-                                    <Spinner/>
-                                    <p className="pt-3 opacity-50 text-center text-base mb-2">
-                                        Loading ...
-                                    </p>
-                                    <span className="text-xs opacity-30">
-                                        This can sometimes take around 3 to 5 minutes while the model boots up.
-                                        After the model is loaded, it will take around 5 seconds.
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        <LoadingWindow/>
                     )}
                     {error && (
-                        <div
-                            className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
-                            onClick={() => onClickError()}
-                        >
-                            <div
-                                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-                                style={{zIndex: 200}}
-                                role="alert"
-                            >
-                                <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-                                    ERROR
-                                </div>
-                                <div className="border border-t-0 border-red-400 rounded-b
-                                    bg-red-100 px-4 py-4 text-red-700">
-                                    {error}
-                                </div>
-                            </div>
-                        </div>
+                        <ErrorWindow
+                            error={error}
+                            onClickError={onClickError}
+                        />
                     )}
                 </main>
                 <Footer/>
             </div>
         </DefaultLayout>
     )
+}
+
+function LoadingWindow() {
+    return (
+        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+            <div
+                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                style={{zIndex: 100}}
+            >
+                <div className="p-4 w-80 bg-white text-center rounded-lg animate-in zoom-in
+                                    flex flex-col items-center justify-center">
+                    <Spinner/>
+                    <p className="pt-3 opacity-50 text-center text-base mb-2">
+                        Loading ...
+                    </p>
+                    <span className="text-xs opacity-30">
+                        This can sometimes take around 3 to 5 minutes while the model boots up.
+                        After the model is loaded, it will take much less time.
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ErrorWindow({error, onClickError}: {
+    error: string,
+    onClickError: () => void}
+) {
+    return (
+        <div
+            className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+            onClick={() => onClickError()}
+        >
+            <div
+                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                style={{zIndex: 200}}
+                role="alert"
+            >
+                <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                    ERROR
+                </div>
+                <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-4 text-red-700">
+                    {error}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 function ImageIcon() {
