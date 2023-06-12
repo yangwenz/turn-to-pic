@@ -77,7 +77,6 @@ export function useHistory() {
 
     return {
         history,
-        saveHistory,
         addRecord,
         updateRecordStatus,
         clearHistory
