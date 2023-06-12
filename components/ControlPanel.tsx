@@ -23,7 +23,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                         Hero
                     </button>
                     <div className={"flex flex-col w-[64px] items-center justify-center ml-1"}>
-                        <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden"}>
+                        <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden bg-gray-900"}>
                             <Image
                                 src={heroUrl}
                                 alt="imagebox"
