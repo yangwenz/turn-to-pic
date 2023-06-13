@@ -31,7 +31,6 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     itemsPerPage: number
 }) {
     const [isTablet, setIsTablet] = useState<boolean>(false);
-    const [screenWidth, setScreenWidth] = useState<number>(0);
     const [numColumns, setNumColumns] = useState<number>(1);
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [page, setPage] = useState(0);
@@ -46,7 +45,6 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
                 setIsTablet(true);
             }
             const width = window.innerWidth;
-            setScreenWidth(width)
             if (width >= 1280) {
                 setNumColumns(4);
             } else if (width < 1280 && width >= 768) {
@@ -82,7 +80,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         return (
             <div className="flex flex-col" key={col}>
                 {images.filter((_, i) => {return (i % numColumns) === col})
-                    .map((image, i) => {
+                    .map(image => {
                     return (
                         <div key={image.id}>
                             <GalleryCard isTablet={isTablet} image={image}/>
