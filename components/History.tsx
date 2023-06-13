@@ -10,7 +10,7 @@ function HistoryCard(
     setShowInfo: (x: boolean) => void,
     setRecord: (x: UserHistoryRecord) => void,
     loadHistoryRecord: (x: UserHistoryRecord) => void,
-    deleteRecord: (x: string) => void,
+    setDeleteRecord: (x: string) => void,
     isHovering: string,
     setIsHovering: (x: string) => void
 ) {
@@ -56,7 +56,7 @@ function HistoryCard(
                             <button
                                 className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
                                 title="Delete"
-                                onClick={() => deleteRecord(record.id)}
+                                onClick={() => setDeleteRecord(record.id)}
                             >
                                 <DeleteIcon/>
                             </button>
@@ -105,6 +105,7 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
     const [showInfo, setShowInfo] = useState(false);
     const [record, setRecord] = useState<UserHistoryRecord | null>(null);
     const [isHovering, setIsHovering] = useState("");
+    const [showDelete, setShowDelete] = useState("");
 
     return (
         <>
@@ -141,7 +142,7 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
                     {historyRecords.length > 0 && (
                         historyRecords.slice(0).reverse().map((record) => HistoryCard(
                             record, setShowInfo, setRecord, loadHistoryRecord,
-                            deleteRecord, isHovering, setIsHovering
+                            setShowDelete, isHovering, setIsHovering
                         ))
                     )}
                 </div>
@@ -149,8 +150,55 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
             {showInfo && (
                 <InfoCard record={record} setShowInfo={setShowInfo}/>
             )}
+            {showDelete != "" && (
+                <DeleteModal
+                    showDelete={showDelete}
+                    setShowDelete={setShowDelete}
+                    deleteRecord={deleteRecord}
+                />
+            )}
         </>
     )
+}
+
+function DeleteModal({showDelete, setShowDelete, deleteRecord}: {
+    showDelete: string,
+    setShowDelete: (x: string) => void,
+    deleteRecord: (x: string) => void
+}) {
+    return (
+        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+            <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
+                rounded-lg shadow-xl bg-gray-900 flex flex-col items-center
+                justify-center p-1"
+            >
+                <div className="text-white text-center text-xl font-bold px-5 py-2">
+                    Are you sure to delete this record?
+                </div>
+                <div className="flex flex-row">
+                    <button
+                        className="h-10 px-2 m-2 text-white transition-colors duration-150
+                                bg-gradient-to-br from-gray-500 to-gray-700
+                                rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
+                        onClick={() => setShowDelete("")}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="h-10 px-5 m-2 text-white transition-colors duration-150
+                                bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
+                                rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
+                        onClick={() => {
+                            deleteRecord(showDelete);
+                            setShowDelete("")
+                        }}
+                    >
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 function OpenIcon() {
