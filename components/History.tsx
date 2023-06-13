@@ -156,7 +156,9 @@ export default function History(
                             <FaBars/>
                         </button>
                     </div>
-                    <div className="border-b border-slate-500 mt-2 mb-2 w-full"></div>
+                    <div className="border-b border-slate-500 mt-2 mb-2 w-full text-sm text-center text-gray-300/60">
+                        Up to 10 images are stored due to the local storage limit
+                    </div>
                     {historyRecords.length == 0 && (
                         <div className="font-semibold italic">No Records</div>
                     )}
