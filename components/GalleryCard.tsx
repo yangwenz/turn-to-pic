@@ -14,10 +14,11 @@ export type ImageInfo = {
 }
 
 function computeSize(
+    isTablet: boolean,
     width: number,
     height: number
 ): [number, number] {
-    const maxWidth: number = 256;
+    const maxWidth: number = isTablet? 256: 320;
     const r = maxWidth / width;
     return [Math.floor(r * width), Math.floor(r * height)]
 }
@@ -68,13 +69,14 @@ function LikeButton({numLikes, disabled, onClick}: {
     )
 }
 
-export default function GalleryCard({image}: {
+export default function GalleryCard({isTablet, image}: {
+    isTablet: boolean,
     image: ImageInfo
 }) {
     const [showModal, setShowModal] = useState(false);
     const [numLikes, setNumLikes] = useState(image.likes);
     const [disabled, setDisabled] = useState(image.userLiked);
-    const [newWidth, newHeight] = computeSize(image.width, image.height);
+    const [newWidth, newHeight] = computeSize(isTablet, image.width, image.height);
 
     useEffect(() => {
         setNumLikes(image.likes);

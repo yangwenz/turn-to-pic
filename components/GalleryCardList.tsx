@@ -30,9 +30,31 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     orderBy: string,
     itemsPerPage: number
 }) {
+    const [isTablet, setIsTablet] = useState<boolean>(false);
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
+
+    useEffect(() => {
+        // Function to check if the screen width is for desktop or tablet
+        const checkScreenWidth = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth >= 768) {
+                // 768px is the breakpoint for tablet devices
+                setIsTablet(false);
+            } else {
+                setIsTablet(true);
+            }
+        };
+        // Call the checkScreenWidth function initially
+        checkScreenWidth();
+        // Set up an event listener for window resize events
+        window.addEventListener("resize", checkScreenWidth);
+        // Clean up the event listener on unmount
+        return () => {
+            window.removeEventListener("resize", checkScreenWidth);
+        };
+    }, []);
 
     useEffect(() => {
         fetchData(page);
@@ -50,18 +72,18 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
 
     return (
         <div className="flex flex-col items-center justify-center w-full">
-            <div className="md:w-[1024px] w-full md:columns-4 columns-1 gap-0">
+            <div className="md:w-[1280px] w-full md:columns-4 columns-1 gap-0">
                 {images.map((image, i) => {
                     return (
                         <div key={`${i}`}>
-                            <GalleryCard image={images[i]}/>
+                            <GalleryCard isTablet={isTablet} image={images[i]}/>
                         </div>
                     )
                 })}
             </div>
             <button
-                className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white rounded-lg
-                    px-6 py-2 hover:bg-gradient-to-bl focus:ring-4 font-bold lg:text-base text-lg mt-6"
+                className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500
+                    w-1/2 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold mt-6"
                 onClick={() => setPage(page + 1)}>
                 Load More
             </button>

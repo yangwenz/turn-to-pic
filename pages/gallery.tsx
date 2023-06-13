@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import DefaultLayout from "@/layout/default";
 import GalleryCardList from "@/components/GalleryCardList";
 
@@ -59,7 +59,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     orderBy={"likes"}
-                                    itemsPerPage={1}
+                                    itemsPerPage={2}
                                 />
                             </div>
                         </div>
@@ -67,7 +67,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     orderBy={"createdAt"}
-                                    itemsPerPage={1}
+                                    itemsPerPage={2}
                                 />
                             </div>
                         </div>
