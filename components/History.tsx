@@ -12,7 +12,8 @@ function HistoryCard(
     loadHistoryRecord: (x: UserHistoryRecord) => void,
     setDeleteRecord: (x: string) => void,
     isHovering: string,
-    setIsHovering: (x: string) => void
+    setIsHovering: (x: string) => void,
+    refresh: (x: UserHistoryRecord) => void,
 ) {
     const hasDataUrl = !!record.dataUrl;
 
@@ -20,11 +21,15 @@ function HistoryCard(
         <div
             className="p-2 rounded-lg bg-gray-700 m-1"
             key={record.id}
-            onMouseOver={() => {setIsHovering(record.id)}}
-            onMouseOut={() => {setIsHovering("")}}
+            onMouseOver={() => {
+                setIsHovering(record.id)
+            }}
+            onMouseOut={() => {
+                setIsHovering("")
+            }}
         >
-            {hasDataUrl && (
-                <div className="relative flex items-center justify-center">
+            <div className="relative flex items-center justify-center">
+                {hasDataUrl && (
                     <div
                         className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
                     >
@@ -34,78 +39,91 @@ function HistoryCard(
                             fill
                         />
                     </div>
-                    {isHovering == record.id && (
-                        <div className="absolute top-full -translate-y-full flex flex-row">
-                            <button
-                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
-                                title="Load"
-                                onClick={() => loadHistoryRecord(record)}
-                            >
-                                <OpenIcon/>
-                            </button>
-                            <button
-                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
-                                title="Info"
-                                onClick={() => {
-                                    setShowInfo(true);
-                                    setRecord(record);
-                                }}
-                            >
-                                <InfoIcon/>
-                            </button>
-                            <button
-                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
-                                title="Delete"
-                                onClick={() => setDeleteRecord(record.id)}
-                            >
-                                <DeleteIcon/>
-                            </button>
-                        </div>
-                    )}
-                </div>
-            )}
-            {!hasDataUrl && (
-                <div className="relative flex items-center justify-end">
+                )}
+                {!hasDataUrl && (
                     <div
                         className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
-                        flex flex-col items-center justify-center"
+                    flex flex-col items-center justify-center"
                     >
-                        <span className="font-semibold">
-                            {record.status == "starting" && (
-                                <div className="flex flex-row items-center justify-center">
-                                    <span className="mr-1">Generating</span>
-                                    <LoadingIcon/>
-                                </div>
-                            )}
-                            {record.status != "starting" && (
-                                <span>Failed</span>
-                            )}
-                        </span>
+                    <span className="font-semibold">
+                        {record.status == "starting" && (
+                            <div className="flex flex-row items-center justify-center">
+                                <span className="mr-1">Generating</span>
+                                <LoadingIcon/>
+                            </div>
+                        )}
+                        {record.status == "image unavailable" && (
+                            <span>Image Unavailable</span>
+                        )}
+                        {record.status != "starting" && record.status != "image unavailable" && (
+                            <span>Failed</span>
+                        )}
+                    </span>
                     </div>
-                    {isHovering == record.id && (
-                        <div className="absolute top-full -translate-y-full flex flex-row">
-                            <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Refresh">
+                )}
+                {isHovering == record.id && (
+                    <div className="absolute top-full -translate-y-full flex flex-row">
+                        {!hasDataUrl && (
+                            <button
+                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                                title="Refresh"
+                                onClick={() => refresh(record)}
+                            >
                                 <RefreshIcon/>
                             </button>
-                        </div>
-                    )}
-                </div>
-            )}
+                        )}
+                        <button
+                            className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                            title="Load"
+                            onClick={() => loadHistoryRecord(record)}
+                        >
+                            <OpenIcon/>
+                        </button>
+                        <button
+                            className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                            title="Info"
+                            onClick={() => {
+                                setShowInfo(true);
+                                setRecord(record);
+                            }}
+                        >
+                            <InfoIcon/>
+                        </button>
+                        <button
+                            className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                            title="Delete"
+                            onClick={() => setDeleteRecord(record.id)}
+                        >
+                            <DeleteIcon/>
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
 
-export default function History({historyRecords, showHistory, setShowHistory, loadHistoryRecord, deleteRecord}: {
-    historyRecords: UserHistoryRecord[],
-    showHistory: boolean,
-    setShowHistory: (x: boolean) => void,
-    loadHistoryRecord: (x: UserHistoryRecord) => void,
-    deleteRecord: (x: string) => void
-}) {
-    const [showInfo, setShowInfo] = useState(false);
+export default function History(
+    {
+        historyRecords, showHistory, setShowHistory,
+        loadHistoryRecord, deleteRecord, refreshRecord
+    }: {
+        historyRecords: UserHistoryRecord[],
+        showHistory: boolean,
+        setShowHistory: (x: boolean) => void,
+        loadHistoryRecord: (x: UserHistoryRecord) => void,
+        deleteRecord: (x: string) => void,
+        refreshRecord: (x: UserHistoryRecord) => void
+    }
+) {
     const [record, setRecord] = useState<UserHistoryRecord | null>(null);
+    const [showInfo, setShowInfo] = useState(false);
     const [isHovering, setIsHovering] = useState("");
     const [showDelete, setShowDelete] = useState("");
+
+    async function refresh(record: UserHistoryRecord) {
+        await refreshRecord(record);
+    }
 
     return (
         <>
@@ -132,7 +150,7 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
                             )}
                             onClick={() => setShowHistory(!showHistory)}
                         >
-                            <FaBars />
+                            <FaBars/>
                         </button>
                     </div>
                     <div className="border-b border-slate-500 mt-2 mb-2 w-full"></div>
@@ -142,7 +160,7 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
                     {historyRecords.length > 0 && (
                         historyRecords.slice(0).reverse().map((record) => HistoryCard(
                             record, setShowInfo, setRecord, loadHistoryRecord,
-                            setShowDelete, isHovering, setIsHovering
+                            setShowDelete, isHovering, setIsHovering, refresh
                         ))
                     )}
                 </div>

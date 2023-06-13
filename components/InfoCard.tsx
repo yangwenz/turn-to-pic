@@ -26,13 +26,15 @@ export default function InfoCard({record, setShowInfo}: {
                     onMouseOver={() => {setIsHovering(true)}}
                     onMouseOut={() => {setIsHovering(false)}}
                 >
-                    <Image
-                        src={record.dataUrl!}
-                        alt="Generated image"
-                        fill={true}
-                        style={{objectFit: "contain"}}
-                        onClick={() => setShowInfo(false)}
-                    />
+                    {record.dataUrl && (
+                        <Image
+                            src={record.dataUrl!}
+                            alt="Generated image"
+                            fill={true}
+                            style={{objectFit: "contain"}}
+                            onClick={() => setShowInfo(false)}
+                        />
+                    )}
                     {isHovering && (
                         <div className="absolute top-full right-0 -translate-y-full flex flex-col
                             text-sm text-gray-300 font-semibold font-mono p-2 bg-white/20 rounded-lg">
@@ -45,18 +47,36 @@ export default function InfoCard({record, setShowInfo}: {
                     )}
                 </div>
                 <div className="flex flex-col w-full justify-center">
-                    <label className="text-gray-300 font-semibold mx-2 mb-1">
-                        Style
-                    </label>
-                    <textarea
-                        id="info_style"
-                        rows={1}
-                        value={record?.style}
-                        className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                    <div className="flex flex-row">
+                        <div className="flex flex-col w-1/2">
+                            <label className="text-gray-300 font-semibold mx-2 mb-1">
+                                Hero
+                            </label>
+                            <textarea
+                                id="info_hero"
+                                rows={1}
+                                value={record?.hero}
+                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
                         lg:text-base text-sm mx-2"
-                        disabled={true}
-                    />
+                                disabled={true}
+                            />
+                        </div>
+                        <div className="flex flex-col w-1/2">
+                            <label className="text-gray-300 font-semibold mx-2 mb-1">
+                                Style
+                            </label>
+                            <textarea
+                                id="info_style"
+                                rows={1}
+                                value={record?.style}
+                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                        focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
+                        lg:text-base text-sm mx-2"
+                                disabled={true}
+                            />
+                        </div>
+                    </div>
                     <label className="text-gray-300 font-semibold mx-2 mb-1 mt-1">
                         Input Prompt
                     </label>

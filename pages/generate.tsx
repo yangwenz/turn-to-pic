@@ -150,6 +150,14 @@ export default function Generate() {
         }
     }
 
+    const refreshRecord = async (r: UserHistoryRecord) => {
+        const settings = loadSettings();
+        if (!settings.apikey) {
+            setError("Please set your Replicate API Key")
+        }
+        await fetchTaskInfo(settings.apikey!, r.id, r.endpointUrl, updateRecord);
+    }
+
     async function onClickDownload() {
         if (!loading && generatedImage) {
             console.log(generatedImage);
@@ -347,9 +355,40 @@ export default function Generate() {
                 setShowHistory={setShowHistory}
                 loadHistoryRecord={loadHistoryRecord}
                 deleteRecord={deleteRecord}
+                refreshRecord={refreshRecord}
             />
         </DefaultLayout>
     )
+}
+
+async function fetchTaskInfo(
+    token: string,
+    id: string,
+    endpointUrl: string,
+    updateRecord: any
+) {
+    const body = {
+        endpointUrl: endpointUrl,
+        token: token,
+        numTrials: 1
+    }
+    const res = await fetch("/api/access", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    });
+    if (res.status === 501) {
+        await updateRecord(id, "failed");
+    } else if (res.status === 502) {
+        await updateRecord(id, "image unavailable");
+    } else if (res.status === 503) {
+        await updateRecord(id, "unknown");
+    } else if (res.status === 200) {
+        let response = (await res.json()) as AccessResponse;
+        await updateRecord(id, "succeeded", response.generated);
+    }
 }
 
 function LoadingWindow() {
