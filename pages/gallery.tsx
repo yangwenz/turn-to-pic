@@ -59,7 +59,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     orderBy={"likes"}
-                                    itemsPerPage={12}
+                                    itemsPerPage={1}
                                 />
                             </div>
                         </div>
@@ -67,7 +67,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     orderBy={"createdAt"}
-                                    itemsPerPage={12}
+                                    itemsPerPage={1}
                                 />
                             </div>
                         </div>

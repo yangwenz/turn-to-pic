@@ -1,6 +1,12 @@
-import React, {useState} from "react";
-import Pagination from "@/components/Pagination";
+import React, {useEffect, useState} from "react";
 import GalleryCard, {ImageInfo} from "@/components/GalleryCard";
+
+
+function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
 
 // For testing purpose
@@ -11,8 +17,8 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
             id: String(i),
             imageUrl: `https://robohash.org/${i}?200x200`,
             author: String(i),
-            width: 200,
-            height: 200,
+            width: getRandomInt(256, 512),
+            height: getRandomInt(256, 512),
             likes: i,
             userLiked: i % 2 === 0
         })
@@ -25,20 +31,26 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     itemsPerPage: number
 }) {
     const [images, setImages] = useState<ImageInfo[]>([]);
-    const [counts, setCounts] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
 
-    async function onPageChange(page: number) {
+    useEffect(() => {
+        fetchData(page);
+    }, [page])
+
+    const fetchData = async (page: number) => {
         const skip = page * itemsPerPage;
         const r = await getRecentImages(skip, itemsPerPage, orderBy);
-        setImages(r.images);
-        setCounts(r.counts);
-        setCurrentPage(page);
+        setImages([...images, ...r.images]);
+        setPage(page);
+        if (page === 100) {
+            setHasMore(false)
+        }
     }
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-wrap items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full">
+            <div className="md:w-[1024px] w-full md:columns-4 columns-1 gap-0">
                 {images.map((image, i) => {
                     return (
                         <div key={`${i}`}>
@@ -47,11 +59,12 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
                     )
                 })}
             </div>
-            <Pagination
-                pageCount={Math.ceil(counts / itemsPerPage)}
-                currentPage={currentPage}
-                onPageChange={onPageChange}
-            />
+            <button
+                className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white rounded-lg
+                    px-6 py-2 hover:bg-gradient-to-bl focus:ring-4 font-bold lg:text-base text-lg mt-6"
+                onClick={() => setPage(page + 1)}>
+                Load More
+            </button>
         </div>
     )
 }

@@ -17,11 +17,8 @@ function computeSize(
     width: number,
     height: number
 ): [number, number] {
-    const maxWidth = 300;
-    const maxHeight = 300;
-    const a = maxWidth / width;
-    const b = maxHeight / height;
-    const r = a > b? b: a;
+    const maxWidth: number = 256;
+    const r = maxWidth / width;
     return [Math.floor(r * width), Math.floor(r * height)]
 }
 
@@ -110,7 +107,7 @@ export default function GalleryCard({image}: {
     }
 
     return (
-        <div style={{"width": newWidth, "height": newHeight}}>
+        <div className="border border-slate-400 align-top inline-block" style={{"width": newWidth, "height": newHeight}}>
             <motion.div
                 className="flex flex-col w-full h-full items-start justify-center bg-white/40"
                 whileHover={{
