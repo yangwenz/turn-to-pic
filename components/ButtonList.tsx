@@ -12,7 +12,9 @@ export default function ButtonList({onClickDownload, onClickHelp, onClickHistory
         <div className="flex">
             <button
                 onClick={onClickDownload}
-                className={buttonStyle}>
+                className={buttonStyle}
+                title="Download"
+            >
                 <svg
                     className="fill-current w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +25,9 @@ export default function ButtonList({onClickDownload, onClickHelp, onClickHistory
             </button>
             <button
                 onClick={onClickHistory}
-                className={buttonStyle}>
+                className={buttonStyle}
+                title="View history"
+            >
                 <svg
                     className="fill-current w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +51,9 @@ export default function ButtonList({onClickDownload, onClickHelp, onClickHistory
             </button>
             <button
                 onClick={onClickHelp}
-                className={buttonStyle}>
+                className={buttonStyle}
+                title="Help"
+            >
                 <svg
                     className="fill-current w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
