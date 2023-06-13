@@ -79,6 +79,7 @@ export default function Header(
                     <button
                         onClick={() => setShowModal(true)}
                         className={buttonStyle}
+                        title="Set Replicate API Key"
                     >
                         API Key
                     </button>
