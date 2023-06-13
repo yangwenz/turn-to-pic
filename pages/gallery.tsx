@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import DefaultLayout from "@/layout/default";
 import GalleryCardList from "@/components/GalleryCardList";
 

@@ -33,7 +33,6 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     const [isTablet, setIsTablet] = useState<boolean>(false);
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [page, setPage] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -61,12 +60,11 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     }, [page])
 
     const fetchData = async (page: number) => {
-        const skip = page * itemsPerPage;
-        const r = await getRecentImages(skip, itemsPerPage, orderBy);
-        setImages([...images, ...r.images]);
-        setPage(page);
-        if (page === 100) {
-            setHasMore(false)
+        if (page < 100) {
+            const skip = page * itemsPerPage;
+            const r = await getRecentImages(skip, itemsPerPage, orderBy);
+            setImages([...images, ...r.images]);
+            setPage(page);
         }
     }
 
