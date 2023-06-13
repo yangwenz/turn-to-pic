@@ -9,17 +9,19 @@ function HistoryCard(
     record: UserHistoryRecord,
     setShowInfo: (x: boolean) => void,
     setRecord: (x: UserHistoryRecord) => void,
-    loadHistoryRecord: (x: UserHistoryRecord) => void
+    loadHistoryRecord: (x: UserHistoryRecord) => void,
+    deleteRecord: (x: string) => void,
+    isHovering: string,
+    setIsHovering: (x: string) => void
 ) {
     const hasDataUrl = !!record.dataUrl;
-    const [isHovering, setIsHovering] = useState(false);
 
     return (
         <div
             className="p-2 rounded-lg bg-gray-700 m-1"
             key={record.id}
-            onMouseOver={() => {setIsHovering(true)}}
-            onMouseOut={() => {setIsHovering(false)}}
+            onMouseOver={() => {setIsHovering(record.id)}}
+            onMouseOut={() => {setIsHovering("")}}
         >
             {hasDataUrl && (
                 <div className="relative flex items-center justify-center">
@@ -32,7 +34,7 @@ function HistoryCard(
                             fill
                         />
                     </div>
-                    {isHovering && (
+                    {isHovering == record.id && (
                         <div className="absolute top-full -translate-y-full flex flex-row">
                             <button
                                 className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
@@ -51,6 +53,13 @@ function HistoryCard(
                             >
                                 <InfoIcon/>
                             </button>
+                            <button
+                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                                title="Delete"
+                                onClick={() => deleteRecord(record.id)}
+                            >
+                                <DeleteIcon/>
+                            </button>
                         </div>
                     )}
                 </div>
@@ -61,7 +70,7 @@ function HistoryCard(
                         className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
                         flex flex-col items-center justify-center"
                     >
-                        <span className="font-semibold italic">
+                        <span className="font-semibold">
                             {record.status == "starting" && (
                                 <div className="flex flex-row items-center justify-center">
                                     <span className="mr-1">Generating</span>
@@ -73,7 +82,7 @@ function HistoryCard(
                             )}
                         </span>
                     </div>
-                    {isHovering && (
+                    {isHovering == record.id && (
                         <div className="absolute top-full -translate-y-full flex flex-row">
                             <button className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500" title="Refresh">
                                 <RefreshIcon/>
@@ -86,14 +95,16 @@ function HistoryCard(
     )
 }
 
-export default function History({historyRecords, showHistory, setShowHistory, loadHistoryRecord}: {
+export default function History({historyRecords, showHistory, setShowHistory, loadHistoryRecord, deleteRecord}: {
     historyRecords: UserHistoryRecord[],
     showHistory: boolean,
     setShowHistory: (x: boolean) => void,
     loadHistoryRecord: (x: UserHistoryRecord) => void,
+    deleteRecord: (x: string) => void
 }) {
     const [showInfo, setShowInfo] = useState(false);
     const [record, setRecord] = useState<UserHistoryRecord | null>(null);
+    const [isHovering, setIsHovering] = useState("");
 
     return (
         <>
@@ -129,7 +140,8 @@ export default function History({historyRecords, showHistory, setShowHistory, lo
                     )}
                     {historyRecords.length > 0 && (
                         historyRecords.slice(0).reverse().map((record) => HistoryCard(
-                            record, setShowInfo, setRecord, loadHistoryRecord
+                            record, setShowInfo, setRecord, loadHistoryRecord,
+                            deleteRecord, isHovering, setIsHovering
                         ))
                     )}
                 </div>
@@ -207,4 +219,22 @@ function LoadingIcon() {
             l-1.691,0.483c-0.651,0.186-1.088,0.766-1.088,1.442S17.064,17.257,17.716,17.442z"/>
         </svg>
     );
+}
+
+function DeleteIcon() {
+    return (
+        <svg width="30px" height="30px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <g id="Dribbble-Light-Preview" transform="translate(-179.000000, -360.000000)" fill="#000000">
+                    <g id="icons" transform="translate(56.000000, 160.000000)">
+                        <path d="M130.35,216 L132.45,216 L132.45,208 L130.35,208 L130.35,216 Z M134.55,216
+                        L136.65,216 L136.65,208 L134.55,208 L134.55,216 Z M128.25,218 L138.75,218 L138.75,206
+                        L128.25,206 L128.25,218 Z M130.35,204 L136.65,204 L136.65,202 L130.35,202 L130.35,204
+                        Z M138.75,204 L138.75,200 L128.25,200 L128.25,204 L123,204 L123,206 L126.15,206 L126.15,220
+                        L140.85,220 L140.85,206 L144,206 L144,204 L138.75,204 Z" id="delete-[#1487]"/>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    )
 }

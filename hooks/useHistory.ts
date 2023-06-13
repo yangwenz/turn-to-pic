@@ -86,9 +86,24 @@ export function useHistory() {
         saveHistory();
     }
 
+    const deleteRecord = (id: string) => {
+        let index: number = -1;
+        for (let i = 0; i < historyRecords.length; i++) {
+            if (historyRecords[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+            historyRecords.splice(index, 1);
+        }
+        saveHistory();
+    }
+
     return {
         history,
         addRecord,
-        updateRecord
+        updateRecord,
+        deleteRecord
     }
 }

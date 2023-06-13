@@ -61,7 +61,7 @@ export default function Generate() {
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const {history, addRecord, updateRecord} = useHistory();
+    const {history, addRecord, updateRecord, deleteRecord} = useHistory();
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
@@ -106,7 +106,7 @@ export default function Generate() {
         setSeed(defaultRandomSeed);
     }
 
-    const addToHistory = (
+    const addHistoryRecord = (
         id: string,
         endpointUrl: string,
         cancelUrl: string,
@@ -130,7 +130,7 @@ export default function Generate() {
             numInferenceSteps: numSteps,
             guidanceScale: guidanceScale,
             seed: seed
-        })
+        });
     }
 
     const loadHistoryRecord = (r: UserHistoryRecord) => {
@@ -202,7 +202,7 @@ export default function Generate() {
                 let response = (await res.json()) as GenerateResponse;
                 requestId = response.id;
                 endpointUrl = response.endpointUrl;
-                addToHistory(requestId, endpointUrl, response.cancelUrl, "starting");
+                addHistoryRecord(requestId, endpointUrl, response.cancelUrl, "starting");
             }
         } catch (error) {
             console.log(error);
@@ -346,6 +346,7 @@ export default function Generate() {
                 showHistory={showHistory}
                 setShowHistory={setShowHistory}
                 loadHistoryRecord={loadHistoryRecord}
+                deleteRecord={deleteRecord}
             />
         </DefaultLayout>
     )
