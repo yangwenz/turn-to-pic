@@ -265,6 +265,7 @@ export default function Generate() {
                         setShowHeroModal={setShowHeroModal}
                         style={style}
                         setShowStyleModal={setShowStyleModal}
+                        prompt={prompt}
                         setPrompt={(x: string) => setPrompt(x)}
                         onClickGenerate={onClickGenerate}
                     />

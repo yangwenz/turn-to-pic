@@ -2,11 +2,12 @@ import Image from "next/image";
 import {label2name} from "@/configs/heroes";
 import React from "react";
 
-export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, setPrompt, onClickGenerate}: {
+export default function ControlPanel({hero, setShowHeroModal, style, setShowStyleModal, prompt, setPrompt, onClickGenerate}: {
     hero: string,
     setShowHeroModal: (x: boolean) => void,
     style: string,
     setShowStyleModal: (x: boolean) => void,
+    prompt: string,
     setPrompt: (x: string) => void,
     onClickGenerate: () => void
 }) {
@@ -55,6 +56,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                     id="prompt"
                     rows={2}
                     name="prompt"
+                    value={prompt == ""? undefined: prompt}
                     placeholder="Enter a prompt e.g., standing, (full body)++..."
                     className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full resize-none font-semibold
