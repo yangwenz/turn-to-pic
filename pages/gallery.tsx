@@ -10,67 +10,65 @@ function Tabs() {
     const [openTab, setOpenTab] = useState(1);
 
     return (
-        <div className="flex flex-wrap">
-            <div className="w-full">
-                <ul
-                    className="grid grid-cols-2 mb-3"
-                    role="tablist"
-                >
-                    <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
-                        <a
-                            className={
-                                "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
-                                (openTab === 1
-                                    ? "text-white bg-gray-600/80"
-                                    : "text-blueGray-600 bg-slate-300/80")
-                            }
-                            onClick={e => {
-                                e.preventDefault();
-                                setOpenTab(1);
-                            }}
-                            data-toggle="tab"
-                            role="tablist"
-                        >
-                            Most Liked
-                        </a>
-                    </li>
-                    <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
-                        <a
-                            className={
-                                "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
-                                (openTab === 2
-                                    ? "text-white bg-gray-600/80"
-                                    : "text-blueGray-600 bg-slate-300/80")
-                            }
-                            onClick={e => {
-                                e.preventDefault();
-                                setOpenTab(2);
-                            }}
-                            data-toggle="tab"
-                            role="tablist"
-                        >
-                            Latest Shared
-                        </a>
-                    </li>
-                </ul>
-                <div className="relative flex flex-col break-words w-full rounded">
-                    <div className="flex-auto">
-                        <div className="tab-content tab-space">
-                            <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                                <div className="flex flex-col items-center justify-center">
-                                    <GalleryCardList
-                                        orderBy={"likes"}
-                                        itemsPerPage={12}
-                                    />
-                                </div>
+        <div className="flex flex-wrap w-full">
+            <ul
+                className="grid grid-cols-2 mb-3 w-full"
+                role="tablist"
+            >
+                <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
+                    <a
+                        className={
+                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
+                            (openTab === 1
+                                ? "text-white bg-gray-600/80"
+                                : "text-blueGray-600 bg-slate-300/80")
+                        }
+                        onClick={e => {
+                            e.preventDefault();
+                            setOpenTab(1);
+                        }}
+                        data-toggle="tab"
+                        role="tablist"
+                    >
+                        Most Liked
+                    </a>
+                </li>
+                <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
+                    <a
+                        className={
+                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
+                            (openTab === 2
+                                ? "text-white bg-gray-600/80"
+                                : "text-blueGray-600 bg-slate-300/80")
+                        }
+                        onClick={e => {
+                            e.preventDefault();
+                            setOpenTab(2);
+                        }}
+                        data-toggle="tab"
+                        role="tablist"
+                    >
+                        Latest Shared
+                    </a>
+                </li>
+            </ul>
+            <div className="relative flex flex-col break-words w-full rounded">
+                <div className="flex-auto">
+                    <div className="tab-content tab-space">
+                        <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                            <div className="flex flex-col items-center justify-center">
+                                <GalleryCardList
+                                    orderBy={"likes"}
+                                    itemsPerPage={12}
+                                />
                             </div>
-                            <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                                <div className="flex flex-col items-center justify-center">
-                                    <GalleryCardList
-                                        orderBy={"createdAt"}
-                                        itemsPerPage={12}
-                                    />
-                                </div>
+                        </div>
+                        <div className={openTab === 2 ? "block" : "hidden"} id="link2">
+                            <div className="flex flex-col items-center justify-center">
+                                <GalleryCardList
+                                    orderBy={"createdAt"}
+                                    itemsPerPage={12}
+                                />
                             </div>
                         </div>
                     </div>

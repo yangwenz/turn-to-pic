@@ -1,52 +1,28 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FaHeart} from "react-icons/fa";
 
 export type ImageInfo = {
     id: string,
     imageUrl: string,
     author: string,
+    width: number,
+    height: number,
     likes: number,
     userLiked: boolean
 }
 
-function Content({imageUrl, author, isSmall, onClick}: {
-    imageUrl: string,
-    author: string,
-    isSmall: boolean,
-    onClick: () => void
-}) {
-    let frameStyle: string;
-    let contentStyle: string;
-    if (isSmall) {
-        frameStyle = "lg:w-[256px] w-[160px] ";
-        contentStyle = "lg:w-[256px] lg:h-[256px] w-[160px] h-[160px] ";
-    } else {
-        frameStyle = "lg:w-[512px] w-[320px] ";
-        contentStyle = "lg:w-[512px] lg:h-[512px] w-[320px] h-[320px] ";
-    }
-
-    return (
-        <div
-            className={frameStyle + "flex flex-col w-full items-center justify-center"}
-            onClick={onClick}
-        >
-            <div
-                className={contentStyle + "relative rounded-lg bg-slate-300 overflow-hidden"}>
-                <Image
-                    src={imageUrl}
-                    alt="imagebox"
-                    fill
-                />
-            </div>
-            <div>
-                <h2 className="text-slate-900 drop-shadow-xl mb-1">
-                    Shared by <span className="font-bold">{author}</span>
-                </h2>
-            </div>
-        </div>
-    )
+function computeSize(
+    width: number,
+    height: number
+): [number, number] {
+    const maxWidth = 300;
+    const maxHeight = 300;
+    const a = maxWidth / width;
+    const b = maxHeight / height;
+    const r = a > b? b: a;
+    return [Math.floor(r * width), Math.floor(r * height)]
 }
 
 function ImageModal({showModal, setShowModal, imageUrl, author}: {
@@ -55,30 +31,18 @@ function ImageModal({showModal, setShowModal, imageUrl, author}: {
     imageUrl: string,
     author:string
 }) {
-    const buttonStyle =
-        "h-10 px-8 m-2 text-white transition-colors duration-150 " +
-        "bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg focus:ring-4 hover:bg-gradient-to-bl";
-
     return (
         <div>
             {showModal ? (
-                <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+                <div
+                    className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+                    onClick={() => setShowModal(false)}
+                >
                     <div
                         className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                         rounded-lg shadow-xl bg-slate-300"
                     >
-                        <Content
-                            imageUrl={imageUrl}
-                            author={author}
-                            isSmall={false}
-                            onClick={() => null}
-                        />
-                        <button
-                            className={buttonStyle}
-                            onClick={() => setShowModal(false)}
-                        >
-                            Close
-                        </button>
+                        <img src={imageUrl} alt="Generated image"/>
                     </div>
                 </div>
             ) : null}
@@ -113,7 +77,7 @@ export default function GalleryCard({image}: {
     const [showModal, setShowModal] = useState(false);
     const [numLikes, setNumLikes] = useState(image.likes);
     const [disabled, setDisabled] = useState(image.userLiked);
-    const frameStyle = "lg:w-[256px] w-[160px] ";
+    const [newWidth, newHeight] = computeSize(image.width, image.height);
 
     useEffect(() => {
         setNumLikes(image.likes);
@@ -146,10 +110,9 @@ export default function GalleryCard({image}: {
     }
 
     return (
-        <div>
+        <div style={{"width": newWidth, "height": newHeight}}>
             <motion.div
-                className={frameStyle + "flex flex-col w-full items-start justify-center " +
-                    "bg-white/40 rounded-lg shadow-xl"}
+                className="flex flex-col w-full h-full items-start justify-center bg-white/40"
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
@@ -159,19 +122,12 @@ export default function GalleryCard({image}: {
                     }
                 }}
             >
-                <div className="hover:cursor-pointer">
-                    <Content
-                        imageUrl={image.imageUrl}
-                        author={image.author}
-                        isSmall={true}
-                        onClick={() => setShowModal(true)}
-                    />
+                <div
+                    className="hover:cursor-pointer relative w-full h-full"
+                    onClick={() => setShowModal(true)}
+                >
+                    <Image src={image.imageUrl} alt="image" fill/>
                 </div>
-                <LikeButton
-                    numLikes={numLikes}
-                    disabled={disabled}
-                    onClick={() => onClickLike()}
-                />
             </motion.div>
             <ImageModal
                 showModal={showModal}

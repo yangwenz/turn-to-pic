@@ -11,6 +11,8 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
             id: String(i),
             imageUrl: `https://robohash.org/${i}?200x200`,
             author: String(i),
+            width: 200,
+            height: 200,
             likes: i,
             userLiked: i % 2 === 0
         })
@@ -36,10 +38,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div
-                className="grid md:grid-cols-4 grid-cols-2"
-                style={{gridGap: "10px"}}
-            >
+            <div className="flex flex-wrap items-center justify-center">
                 {images.map((image, i) => {
                     return (
                         <div key={`${i}`}>
