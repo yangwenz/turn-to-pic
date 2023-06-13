@@ -31,18 +31,28 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     itemsPerPage: number
 }) {
     const [isTablet, setIsTablet] = useState<boolean>(false);
+    const [screenWidth, setScreenWidth] = useState<number>(0);
+    const [numColumns, setNumColumns] = useState<number>(1);
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
         // Function to check if the screen width is for desktop or tablet
         const checkScreenWidth = () => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth >= 768) {
+            if (window.innerWidth >= 768) {
                 // 768px is the breakpoint for tablet devices
                 setIsTablet(false);
             } else {
                 setIsTablet(true);
+            }
+            const width = window.innerWidth;
+            setScreenWidth(width)
+            if (width >= 1280) {
+                setNumColumns(4);
+            } else if (width < 1280 && width >= 768) {
+                setNumColumns(2);
+            } else {
+                setNumColumns(1);
             }
         };
         // Call the checkScreenWidth function initially
@@ -68,17 +78,39 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         }
     }
 
-    return (
-        <div className="flex flex-col items-center justify-center w-full">
-            <div className="md:w-[1280px] w-full md:columns-4 columns-1 gap-0">
-                {images.map((image, i) => {
+    const ImageColumn = (col: number, numColumns: number) => {
+        return (
+            <div className="flex flex-col" key={col}>
+                {images.filter((_, i) => {return (i % numColumns) === col})
+                    .map((image, i) => {
                     return (
-                        <div key={`${i}`}>
-                            <GalleryCard isTablet={isTablet} image={images[i]}/>
+                        <div key={image.id}>
+                            <GalleryCard isTablet={isTablet} image={image}/>
                         </div>
                     )
                 })}
             </div>
+        )
+    }
+
+    const ImageColumns = () => {
+        let className: string = `w-[1280px] flex flex-row`;
+        if (numColumns == 1) {
+            className = "w-full columns-1"
+        } else if (numColumns == 2) {
+            className = "w-[640px] flex flex-row"
+        }
+        const indices = Array.from(Array(numColumns).keys()).map(x => x);
+        return (
+            <div className={className}>
+                {indices.map(i => ImageColumn(i, numColumns))}
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex flex-col items-center justify-center w-full">
+            <ImageColumns/>
             <button
                 className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500
                     w-1/2 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold mt-6"
