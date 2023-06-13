@@ -52,10 +52,13 @@ function HistoryCard(
                                 <LoadingIcon/>
                             </div>
                         )}
+                        {record.status == "succeeded" && (
+                            <span>Succeeded</span>
+                        )}
                         {record.status == "image unavailable" && (
                             <span>Image Unavailable</span>
                         )}
-                        {record.status != "starting" && record.status != "image unavailable" && (
+                        {record.status == "failed" || record.status == "unknown" && (
                             <span>Failed</span>
                         )}
                     </span>

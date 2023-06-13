@@ -54,7 +54,16 @@ export function useHistory() {
 
     const saveHistory = () => {
         setHistory(historyRecords);
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(historyRecords));
+        while (historyRecords.length > 0)
+        {
+            try {
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(historyRecords));
+                break;
+            } catch (e) {
+                // Remove the oldest record if there is no enough storage.
+                historyRecords = historyRecords.slice(1);
+            }
+        }
     }
 
     const addRecord = (
