@@ -37,7 +37,7 @@ export default function InfoCard({record, setShowInfo}: {
                     )}
                     {isHovering && (
                         <div className="absolute top-full right-0 -translate-y-full flex flex-col
-                            text-sm text-gray-300 font-semibold font-mono p-2 bg-white/20 rounded-lg">
+                            text-sm font-semibold font-mono p-2 bg-white/30 rounded-lg text-black">
                             <span>{`Width: ${record.width}`}</span>
                             <span>{`Height: ${record.height}`}</span>
                             <span>{`Inference steps: ${record.numInferenceSteps}`}</span>
