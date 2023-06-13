@@ -28,7 +28,7 @@ export default function ImageCard({url, isTablet, width, height}: {
         <div>
             <motion.div
                 className="border-slate-500 border m-3 relative shadow-xl
-                rounded-lg bg-slate-300 overflow-hidden"
+                    rounded-lg bg-slate-300 overflow-hidden"
                 style={{"width": newWidth, "height": newHeight}}
                 whileHover={{
                     position: 'relative',
@@ -40,10 +40,10 @@ export default function ImageCard({url, isTablet, width, height}: {
                 }}
             >
                 <div
-                    className="hover:cursor-pointer"
+                    className="hover:cursor-pointer relative w-full h-full"
                     onClick={() => setShowModal(true)}
                 >
-                    <Image src={url} alt="generated" fill/>
+                    <Image src={url} alt="generated image" fill/>
                 </div>
             </motion.div>
             <div>
