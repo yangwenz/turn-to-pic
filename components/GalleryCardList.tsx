@@ -24,7 +24,7 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
     for (let i = skip; i < skip + take; i++) {
         images.push({
             id: String(i),
-            imageUrl: `https://robohash.org/${i}?200x200`,
+            url: `https://robohash.org/${i}?200x200`,
             author: String(i),
             width: getRandomInt(256, 512),
             height: getRandomInt(256, 512),

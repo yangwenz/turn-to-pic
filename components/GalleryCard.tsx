@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
 
 export type ImageInfo = {
     id: string,
-    imageUrl: string,
+    url: string,
     author: string,
     width: number,
     height: number,
@@ -13,11 +13,10 @@ export type ImageInfo = {
     userLiked: boolean
 }
 
-function ImageModal({showModal, setShowModal, imageUrl, author}: {
+function ImageModal({showModal, setShowModal, image}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
-    imageUrl: string,
-    author:string
+    image: ImageInfo
 }) {
     return (
         <div>
@@ -30,7 +29,7 @@ function ImageModal({showModal, setShowModal, imageUrl, author}: {
                         className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                         rounded-lg shadow-xl bg-slate-300"
                     >
-                        <img src={imageUrl} alt="Generated image"/>
+                        <img src={image.url} alt="Generated image"/>
                     </div>
                 </div>
             ) : null}
@@ -86,14 +85,13 @@ export default function GalleryCard({image, width, height}: {
                     className="hover:cursor-pointer relative w-full h-full"
                     onClick={() => setShowModal(true)}
                 >
-                    <Image src={image.imageUrl} alt="image" fill/>
+                    <Image src={image.url} alt="image" fill/>
                 </div>
             </motion.div>
             <ImageModal
                 showModal={showModal}
                 setShowModal={(x: boolean) => setShowModal(x)}
-                imageUrl={image.imageUrl}
-                author={image.author}
+                image={image}
             />
         </div>
     )
