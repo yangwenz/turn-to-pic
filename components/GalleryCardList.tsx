@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import GalleryCard, {ImageInfo} from "@/components/GalleryCard";
-import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
-import image = mockSession.user.image;
 
 function resizeImage(
     isTablet: boolean,
