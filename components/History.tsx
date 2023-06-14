@@ -92,6 +92,15 @@ function HistoryCard(
                         >
                             <InfoIcon/>
                         </button>
+                        {hasDataUrl && (
+                            <button
+                                className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
+                                title="Share"
+                                onClick={() => {}}
+                            >
+                                <ShareIcon/>
+                            </button>
+                        )}
                         <button
                             className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
                             title="Delete"
@@ -226,7 +235,7 @@ function DeleteModal({showDelete, setShowDelete, deleteRecord}: {
 
 function OpenIcon() {
     return (
-        <svg fill="#000000" width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19,2 C20.5976809,2 21.9036609,3.24891996 21.9949073,4.82372721 L22,5
                 L22,15 C22,16.5976809 20.75108,17.9036609 19.1762728,17.9949073 L19,18 L15,18
                 L15,16 L19,16 C19.5128358,16 19.9355072,15.6139598 19.9932723,15.1166211
@@ -256,7 +265,7 @@ function OpenIcon() {
 
 function InfoIcon() {
     return (
-        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2 20V4C2 3.44772 2.44772 3 3 3H8.44792C8.79153 3 9.11108 3.17641 9.29416 3.46719L10.5947
             5.53281C10.7778 5.82359 11.0974 6 11.441 6H21C21.5523 6 22 6.44772 22 7V20C22 20.5523 21.5523 21 21
             21H3C2.44772 21 2 20.5523 2 20Z" stroke="#200E32" strokeWidth="2"/>
@@ -268,7 +277,7 @@ function InfoIcon() {
 
 function RefreshIcon() {
     return (
-        <svg fill="#000000" width="30px" height="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="#000000" width="25px" height="25px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
             <path d="M27.1 14.313V5.396L24.158 8.34c-2.33-2.325-5.033-3.503-8.11-3.503C9.902
             4.837 4.901 9.847 4.899 16c.001 6.152 5.003 11.158 11.15 11.16 4.276 0 9.369-2.227
             10.836-8.478l.028-.122h-3.23l-.022.068c-1.078 3.242-4.138 5.421-7.613 5.421a8 8 0
@@ -280,8 +289,7 @@ function RefreshIcon() {
 
 function LoadingIcon() {
     return (
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-             width="30px" height="30px" viewBox="0 0 32 32">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 32 32">
             <path className="linesandangles_een" d="M24.308,10.229V9H26V4H6v5h2v1.229c0,2.665,1.79,5.037,4.352,5.769L12.36,16l-0.008,0.002
             C9.79,16.734,8,19.107,8,21.771V23H6v5h20v-5h-1.692v-1.229c0-2.665-1.79-5.037-4.352-5.769L19.948,16l0.008-0.002
             C22.518,15.266,24.308,12.893,24.308,10.229z M8,7V6h16v1H8z M24,25v1H8v-1H24z M17.716,17.442l1.69,0.483
@@ -294,7 +302,7 @@ function LoadingIcon() {
 
 function DeleteIcon() {
     return (
-        <svg width="30px" height="30px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg width="25px" height="25px" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="Dribbble-Light-Preview" transform="translate(-179.000000, -360.000000)" fill="#000000">
                     <g id="icons" transform="translate(56.000000, 160.000000)">
@@ -305,6 +313,24 @@ function DeleteIcon() {
                         L140.85,220 L140.85,206 L144,206 L144,204 L138.75,204 Z" id="delete-[#1487]"/>
                     </g>
                 </g>
+            </g>
+        </svg>
+    )
+}
+
+function ShareIcon() {
+    return (
+        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <path d="M9 6L12 3M12 3L15 6M12 3V13M7.00023 10C6.06835 10 5.60241 10 5.23486
+                10.1522C4.74481 10.3552 4.35523 10.7448 4.15224 11.2349C4 11.6024 4 12.0681
+                4 13V17.8C4 18.9201 4 19.4798 4.21799 19.9076C4.40973 20.2839 4.71547 20.5905
+                5.0918 20.7822C5.5192 21 6.07899 21 7.19691 21H16.8036C17.9215 21 18.4805 21
+                18.9079 20.7822C19.2842 20.5905 19.5905 20.2839 19.7822 19.9076C20 19.4802 20
+                18.921 20 17.8031V13C20 12.0681 19.9999 11.6024 19.8477 11.2349C19.6447 10.7448
+                19.2554 10.3552 18.7654 10.1522C18.3978 10 17.9319 10 17 10"
+                      stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                />
             </g>
         </svg>
     )
