@@ -59,7 +59,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         return () => {
             window.removeEventListener("resize", checkScreenWidth);
         };
-    }, []);
+    }, [itemsPerPage, orderBy]);
 
     async function fetchData(page: number) {
         if (page < 100) {
