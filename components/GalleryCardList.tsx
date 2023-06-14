@@ -77,7 +77,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
                     const [w, h] = resizeImage(isTablet, image.width, image.height);
                     return (
                         <div key={image.id}>
-                            <GalleryCard isTablet={isTablet} image={image} width={w} height={h}/>
+                            <GalleryCard image={image} width={w} height={h}/>
                         </div>
                     )
                 })}

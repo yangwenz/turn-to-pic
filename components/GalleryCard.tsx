@@ -59,8 +59,7 @@ function LikeButton({numLikes, disabled, onClick}: {
     )
 }
 
-export default function GalleryCard({isTablet, image, width, height}: {
-    isTablet: boolean,
+export default function GalleryCard({image, width, height}: {
     image: ImageInfo,
     width: number,
     height: number
