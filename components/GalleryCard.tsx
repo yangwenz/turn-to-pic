@@ -5,19 +5,19 @@ import {FaHeart} from "react-icons/fa";
 import InfoCard from "@/components/InfoCard";
 
 export type GalleryImageInfo = {
-    id: string,
-    dataUrl: string,
-    author: string,
+    id: string;
+    dataUrl: string;
+    author: string;
 
-    width: number,
-    height: number,
-    hero: string,
-    style: string,
-    prompt: string,
-    negativePrompt: string,
+    width: number;
+    height: number;
+    hero: string;
+    style: string;
+    prompt: string;
+    negativePrompt: string;
 
-    likes: number,
-    userLiked: boolean
+    likes: number;
+    userLiked: boolean;
 }
 
 function ImageModal({showModal, setShowModal, image}: {
