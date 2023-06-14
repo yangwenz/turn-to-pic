@@ -2,13 +2,20 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
+import InfoCard from "@/components/InfoCard";
 
-export type ImageInfo = {
+export type GalleryImageInfo = {
     id: string,
-    url: string,
+    dataUrl: string,
     author: string,
+
     width: number,
     height: number,
+    hero: string,
+    style: string,
+    prompt: string,
+    negativePrompt: string,
+
     likes: number,
     userLiked: boolean
 }
@@ -16,20 +23,19 @@ export type ImageInfo = {
 function ImageModal({showModal, setShowModal, image}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
-    image: ImageInfo
+    image: GalleryImageInfo
 }) {
     return (
         <div>
             {showModal ? (
                 <div
                     className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
-                    onClick={() => setShowModal(false)}
                 >
                     <div
                         className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                         rounded-lg shadow-xl bg-slate-300"
                     >
-                        <img src={image.url} alt="Generated image"/>
+                        <InfoCard record={image} setShowInfo={setShowModal}/>
                     </div>
                 </div>
             ) : null}
@@ -57,7 +63,7 @@ function LikeButton({numLikes, disabled, onClick}: {
 }
 
 export default function GalleryCard({image, width, height}: {
-    image: ImageInfo,
+    image: GalleryImageInfo,
     width: number,
     height: number
 }) {
@@ -99,10 +105,10 @@ export default function GalleryCard({image, width, height}: {
             >
                 <div
                     className="hover:cursor-pointer relative w-full h-full"
-                    onClick={onClickLike}
+                    onClick={() => setShowModal(true)}
                 >
                     <Image
-                        src={image.url}
+                        src={image.dataUrl}
                         alt="image"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw,
@@ -114,14 +120,14 @@ export default function GalleryCard({image, width, height}: {
                         <LikeButton
                             numLikes={numLikes}
                             disabled={disabled}
-                            onClick={() => {}}
+                            onClick={onClickLike}
                         />
                     </div>
                 )}
             </motion.div>
             <ImageModal
                 showModal={showModal}
-                setShowModal={(x: boolean) => setShowModal(x)}
+                setShowModal={setShowModal}
                 image={image}
             />
         </div>

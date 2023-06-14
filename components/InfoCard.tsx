@@ -2,8 +2,25 @@ import React, {useState} from "react";
 import Image from "next/image";
 import {UserHistoryRecord} from "@/hooks/useHistory";
 
+interface ImageInfo {
+    id: string;
+    dataUrl?: string;
+
+    hero: string;
+    heroWeight?: number;
+    style: string;
+    styleWeight?: number;
+    prompt: string;
+    negativePrompt: string;
+    width: number;
+    height: number;
+    numInferenceSteps?: number;
+    guidanceScale?: number;
+    seed?: number | string;
+}
+
 export default function InfoCard({record, setShowInfo}: {
-    record: UserHistoryRecord | null
+    record: ImageInfo | null
     setShowInfo: (x: boolean) => void
 }) {
     const [isHovering, setIsHovering] = useState(false);
@@ -31,6 +48,7 @@ export default function InfoCard({record, setShowInfo}: {
                             src={record.dataUrl!}
                             alt="Generated image"
                             fill={true}
+                            sizes="(max-width: 512px) 100vw"
                             style={{objectFit: "contain"}}
                             onClick={() => setShowInfo(false)}
                         />
@@ -40,9 +58,15 @@ export default function InfoCard({record, setShowInfo}: {
                             text-sm font-semibold font-mono p-2 bg-white/30 rounded-lg text-black">
                             <span>{`Width: ${record.width}`}</span>
                             <span>{`Height: ${record.height}`}</span>
-                            <span>{`Inference steps: ${record.numInferenceSteps}`}</span>
-                            <span>{`Guidance scale: ${record.guidanceScale}`}</span>
-                            <span>{`Random seed: ${record.seed == ""? "null": record.seed}`}</span>
+                            {record.numInferenceSteps != undefined && (
+                                <span>{`Inference steps: ${record.numInferenceSteps}`}</span>
+                            )}
+                            {record.guidanceScale != undefined && (
+                                <span>{`Guidance scale: ${record.guidanceScale}`}</span>
+                            )}
+                            {record.seed != undefined && (
+                                <span>{`Random seed: ${record.seed == ""? "null": record.seed}`}</span>
+                            )}
                         </div>
                     )}
                 </div>

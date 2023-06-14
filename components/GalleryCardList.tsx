@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import GalleryCard, {ImageInfo} from "@/components/GalleryCard";
+import GalleryCard, {GalleryImageInfo} from "@/components/GalleryCard";
 
 function resizeImage(
     isTablet: boolean,
@@ -13,7 +13,7 @@ function resizeImage(
 
 // For testing purpose
 async function getRecentImages(skip: number, take: number, orderBy?: string) {
-    let images: ImageInfo[] = []
+    let images: GalleryImageInfo[] = []
 
     function getRandomInt(min: number, max: number) {
         min = Math.ceil(min);
@@ -24,10 +24,14 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
     for (let i = skip; i < skip + take; i++) {
         images.push({
             id: String(i),
-            url: `https://robohash.org/${i}?200x200`,
+            dataUrl: `https://robohash.org/${i}?200x200`,
             author: String(i),
             width: getRandomInt(256, 512),
             height: getRandomInt(256, 512),
+            hero: "robot",
+            style: "Default",
+            prompt: "prompt",
+            negativePrompt: "negative prompt",
             likes: i,
             userLiked: i % 2 === 0
         })
@@ -41,7 +45,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
 }) {
     const [isTablet, setIsTablet] = useState<boolean>(false);
     const [numColumns, setNumColumns] = useState(4);
-    const [images, setImages] = useState<ImageInfo[]>([]);
+    const [images, setImages] = useState<GalleryImageInfo[]>([]);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
@@ -79,7 +83,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         }
     }
 
-    function imageColumn(images: ImageInfo[], key: number) {
+    function imageColumn(images: GalleryImageInfo[], key: number) {
         return (
             <div className="flex flex-col" key={key}>
                 {images.map(image => {
@@ -112,7 +116,11 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     )
 }
 
-function buildImageGrid(isTablet: boolean, images: ImageInfo[], numColumns: number) {
+function buildImageGrid(
+    isTablet: boolean,
+    images: GalleryImageInfo[],
+    numColumns: number
+) {
     if (numColumns <= 1)
         return [images];
 
@@ -128,7 +136,7 @@ function buildImageGrid(isTablet: boolean, images: ImageInfo[], numColumns: numb
         heights[k] += h;
     }
 
-    let grid: ImageInfo[][] = [];
+    let grid: GalleryImageInfo[][] = [];
     for (let i = 0; i < numColumns; i++)
         grid.push([]);
     for (let i = 0; i < images.length; i++) {
