@@ -8,6 +8,15 @@ function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+function resizeImage(
+    isTablet: boolean,
+    width: number,
+    height: number
+): [number, number] {
+    const maxWidth: number = isTablet? 256: 320;
+    const r = maxWidth / width;
+    return [Math.floor(r * width), Math.floor(r * height)]
+}
 
 // For testing purpose
 async function getRecentImages(skip: number, take: number, orderBy?: string) {
@@ -31,43 +40,28 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     itemsPerPage: number
 }) {
     const [isTablet, setIsTablet] = useState<boolean>(false);
-    const [numColumns, setNumColumns] = useState<number>(1);
     const [images, setImages] = useState<ImageInfo[]>([]);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
-        // Function to check if the screen width is for desktop or tablet
         const checkScreenWidth = () => {
-            if (window.innerWidth >= 768) {
-                // 768px is the breakpoint for tablet devices
-                setIsTablet(false);
-            } else {
-                setIsTablet(true);
-            }
-            const width = window.innerWidth;
-            if (width >= 1280) {
-                setNumColumns(4);
-            } else if (width < 1280 && width >= 768) {
-                setNumColumns(2);
-            } else {
-                setNumColumns(1);
-            }
+            setIsTablet(window.innerWidth < 768);
         };
-        // Call the checkScreenWidth function initially
         checkScreenWidth();
-        // Set up an event listener for window resize events
         window.addEventListener("resize", checkScreenWidth);
-        // Clean up the event listener on unmount
+
+        const fetchData = async () => {
+            const r = await getRecentImages(0, itemsPerPage, orderBy);
+            setImages([...r.images]);
+        }
+        fetchData().catch(console.error);
+
         return () => {
             window.removeEventListener("resize", checkScreenWidth);
         };
     }, []);
 
-    useEffect(() => {
-        fetchData(page);
-    }, [page])
-
-    const fetchData = async (page: number) => {
+    async function fetchData(page: number) {
         if (page < 100) {
             const skip = page * itemsPerPage;
             const r = await getRecentImages(skip, itemsPerPage, orderBy);
@@ -76,32 +70,17 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         }
     }
 
-    const ImageColumn = (col: number, numColumns: number) => {
+    function ImageColumns() {
         return (
-            <div className="flex flex-col" key={col}>
-                {images.filter((_, i) => {return (i % numColumns) === col})
-                    .map(image => {
+            <div className="lg:w-[1280px] md:w-[640px] w-full lg:columns-4 md:columns-2 columns-1 gap-0">
+                {images.map(image => {
+                    const [w, h] = resizeImage(isTablet, image.width, image.height);
                     return (
                         <div key={image.id}>
-                            <GalleryCard isTablet={isTablet} image={image}/>
+                            <GalleryCard isTablet={isTablet} image={image} width={w} height={h}/>
                         </div>
                     )
                 })}
-            </div>
-        )
-    }
-
-    const ImageColumns = () => {
-        let className: string = `w-[1280px] flex flex-row`;
-        if (numColumns == 1) {
-            className = "w-full columns-1"
-        } else if (numColumns == 2) {
-            className = "w-[640px] flex flex-row"
-        }
-        const indices = Array.from(Array(numColumns).keys()).map(x => x);
-        return (
-            <div className={className}>
-                {indices.map(i => ImageColumn(i, numColumns))}
             </div>
         )
     }
@@ -112,7 +91,9 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
             <button
                 className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500
                     w-1/2 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold mt-6"
-                onClick={() => setPage(page + 1)}>
+                onClick={async () => {
+                    await fetchData(page + 1);
+                }}>
                 Load More
             </button>
         </div>

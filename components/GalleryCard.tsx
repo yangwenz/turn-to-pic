@@ -13,16 +13,6 @@ export type ImageInfo = {
     userLiked: boolean
 }
 
-function computeSize(
-    isTablet: boolean,
-    width: number,
-    height: number
-): [number, number] {
-    const maxWidth: number = isTablet? 256: 320;
-    const r = maxWidth / width;
-    return [Math.floor(r * width), Math.floor(r * height)]
-}
-
 function ImageModal({showModal, setShowModal, imageUrl, author}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
@@ -69,14 +59,15 @@ function LikeButton({numLikes, disabled, onClick}: {
     )
 }
 
-export default function GalleryCard({isTablet, image}: {
+export default function GalleryCard({isTablet, image, width, height}: {
     isTablet: boolean,
-    image: ImageInfo
+    image: ImageInfo,
+    width: number,
+    height: number
 }) {
     const [showModal, setShowModal] = useState(false);
     const [numLikes, setNumLikes] = useState(image.likes);
     const [disabled, setDisabled] = useState(image.userLiked);
-    const [newWidth, newHeight] = computeSize(isTablet, image.width, image.height);
 
     useEffect(() => {
         setNumLikes(image.likes);
@@ -109,7 +100,10 @@ export default function GalleryCard({isTablet, image}: {
     }
 
     return (
-        <div className="border border-slate-400 align-top inline-block" style={{"width": newWidth, "height": newHeight}}>
+        <div
+            className="border border-slate-400 align-top inline-block"
+            style={{"width": width, "height": height}}
+        >
             <motion.div
                 className="flex flex-col w-full h-full items-start justify-center bg-white/40"
                 whileHover={{
