@@ -79,9 +79,9 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         }
     }
 
-    function imageColumn(images: ImageInfo[]) {
+    function imageColumn(images: ImageInfo[], key: number) {
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col" key={key}>
                 {images.map(image => {
                     const [w, h] = resizeImage(isTablet, image.width, image.height);
                     return (
@@ -98,7 +98,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     return (
         <div className="flex flex-col items-center justify-center w-full">
             <div className="flex flex-row">
-                {grid.map(images => imageColumn(images))}
+                {grid.map((images, i) => imageColumn(images, i))}
             </div>
             <button
                 className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500

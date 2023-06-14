@@ -101,7 +101,13 @@ export default function GalleryCard({image, width, height}: {
                     className="hover:cursor-pointer relative w-full h-full"
                     onClick={onClickLike}
                 >
-                    <Image src={image.url} alt="image" fill/>
+                    <Image
+                        src={image.url}
+                        alt="image"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw,
+                        (max-width: 1200px) 33vw, 25vw"
+                    />
                 </div>
                 {isHovering && (
                     <div className="absolute top-full -translate-y-full flex flex-row">
