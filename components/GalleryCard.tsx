@@ -65,38 +65,6 @@ export default function GalleryCard({image, width, height}: {
     height: number
 }) {
     const [showModal, setShowModal] = useState(false);
-    const [numLikes, setNumLikes] = useState(image.likes);
-    const [disabled, setDisabled] = useState(image.userLiked);
-
-    useEffect(() => {
-        setNumLikes(image.likes);
-        setDisabled(image.userLiked);
-    }, [image])
-
-    async function onClickLike() {
-        setNumLikes(numLikes + 1);
-        setDisabled(true);
-        /*
-        try {
-            const res = await fetch("/api/gallery/rate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userId: userId,
-                    photoId: image.id
-                }),
-            });
-            if (res.status !== 200) {
-                throw new Error("Failed to rate the image");
-            }
-        } catch (error) {
-            setNumLikes(numLikes);
-            setDisabled(false);
-        }
-        */
-    }
 
     return (
         <div
