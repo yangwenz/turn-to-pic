@@ -43,18 +43,16 @@ function LikeButton({numLikes, disabled, onClick}: {
     onClick: () => void
 }) {
     let heartColor = disabled? "text-red-600": "text-white";
+    let style = !disabled? "bg-white/60 hover:bg-white/90": "bg-white/60";
     return (
-        <div className="relative left-1/2 -translate-x-1/2 m-2">
-            <button
-                onClick={onClick}
-                className="flex items-center justify-center bg-sky-500
-                px-3 py-1 rounded-lg min-w-[80px] enabled:hover:bg-sky-700 disabled:opacity-70"
-                disabled={disabled}
-            >
-                <FaHeart className={`mr-1 ${heartColor}`}/>
-                <span className="font-semibold text-base">{numLikes}</span>
-            </button>
-        </div>
+        <button
+            onClick={onClick}
+            className={`z-40 flex items-center justify-center bg-white 
+                rounded px-4 py-2 mb-1 h-[30px] w-auto ${style}`}
+        >
+            <FaHeart className={`mr-1 ${heartColor}`}/>
+            <span className="font-semibold text-base">{numLikes}</span>
+        </button>
     )
 }
 
@@ -63,7 +61,23 @@ export default function GalleryCard({image, width, height}: {
     width: number,
     height: number
 }) {
+    const [numLikes, setNumLikes] = useState(image.likes);
+    const [disabled, setDisabled] = useState(image.userLiked);
     const [showModal, setShowModal] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
+
+    async function onClickLike() {
+        if (!disabled) {
+            setNumLikes(numLikes + 1);
+            setDisabled(true);
+            try {
+
+            } catch (error) {
+                setNumLikes(numLikes);
+                setDisabled(false);
+            }
+        }
+    }
 
     return (
         <div
@@ -71,7 +85,7 @@ export default function GalleryCard({image, width, height}: {
             style={{"width": width, "height": height}}
         >
             <motion.div
-                className="flex flex-col w-full h-full items-start justify-center bg-white/40"
+                className="flex flex-col w-full h-full items-center justify-center bg-white/40"
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
@@ -80,13 +94,24 @@ export default function GalleryCard({image, width, height}: {
                         duration: .2
                     }
                 }}
+                onMouseOver={() => setIsHovering(true)}
+                onMouseOut={() => setIsHovering(false)}
             >
                 <div
                     className="hover:cursor-pointer relative w-full h-full"
-                    onClick={() => setShowModal(true)}
+                    onClick={onClickLike}
                 >
                     <Image src={image.url} alt="image" fill/>
                 </div>
+                {isHovering && (
+                    <div className="absolute top-full -translate-y-full flex flex-row">
+                        <LikeButton
+                            numLikes={numLikes}
+                            disabled={disabled}
+                            onClick={() => {}}
+                        />
+                    </div>
+                )}
             </motion.div>
             <ImageModal
                 showModal={showModal}
