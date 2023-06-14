@@ -1,13 +1,6 @@
 import React, {useEffect, useState} from "react";
 import GalleryCard, {ImageInfo} from "@/components/GalleryCard";
 
-
-function getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
 function resizeImage(
     isTablet: boolean,
     width: number,
@@ -21,6 +14,13 @@ function resizeImage(
 // For testing purpose
 async function getRecentImages(skip: number, take: number, orderBy?: string) {
     let images: ImageInfo[] = []
+
+    function getRandomInt(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
     for (let i = skip; i < skip + take; i++) {
         images.push({
             id: String(i),
