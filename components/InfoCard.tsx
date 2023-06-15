@@ -37,7 +37,7 @@ export default function InfoCard({record, setShowInfo}: {
                 justify-center"
             >
                 <div
-                    className="relative md:w-[512px] md:h-[512px] w-[320px] h-[320px]
+                    className="relative md:w-[480px] md:h-[480px] w-[320px] h-[320px]
                         rounded-lg overflow-hidden m-2"
                     onMouseOver={() => {setIsHovering(true)}}
                     onMouseOut={() => {setIsHovering(false)}}
