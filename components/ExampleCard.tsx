@@ -105,13 +105,11 @@ function Card(url: string) {
                     }
                 }}
             >
-                <div className="hover:cursor-pointer">
-                    <Content
-                        imageUrl={url}
-                        isSmall={true}
-                        onClick={() => setShowModal(true)}
-                    />
-                </div>
+                <Content
+                    imageUrl={url}
+                    isSmall={true}
+                    onClick={() => {}}
+                />
             </motion.div>
             <ImageModal
                 showModal={showModal}
