@@ -46,8 +46,8 @@ export default function Header(
         "rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold";
 
     return (
-        <header className="flex w-full justify-between items-center border-b border-slate-500 p-3">
-            <Tilt className="Tilt br3 shadow-3 pa3">
+        <header className="flex w-full justify-between items-center border-b border-slate-500 py-3">
+            <Tilt className="Tilt br3 shadow-3 px-4">
                 <Link href="/" className="flex">
                     <Image
                         alt="logo"
@@ -65,7 +65,7 @@ export default function Header(
                     </h1>
                 </Link>
             </Tilt>
-            <div className="flex justify-end items-center text-center">
+            <div className="flex justify-end items-center text-center px-4">
                 {photo && (
                     <Image
                         alt="profile"

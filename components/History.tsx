@@ -31,7 +31,7 @@ function HistoryCard(
             <div className="relative flex items-center justify-center">
                 {hasDataUrl && (
                     <div
-                        className="relative rounded-lg overflow-hidden md:w-60 md:h-60 w-48 h-48"
+                        className="relative rounded-lg overflow-hidden md:w-56 md:h-56 w-48 h-48"
                     >
                         <Image
                             src={record.dataUrl!}
@@ -42,7 +42,7 @@ function HistoryCard(
                 )}
                 {!hasDataUrl && (
                     <div
-                        className="relative rounded-lg overflow-hidden md:w-60 md:h-10 w-48 h-8
+                        className="relative rounded-lg overflow-hidden md:w-56 md:h-10 w-48 h-8
                     flex flex-col items-center justify-center"
                     >
                     <span className="font-semibold">
@@ -143,7 +143,7 @@ export default function History(
                 id="drawer"
                 className={clsx(
                     showHistory ? "-translate-x-full" : "translate-x-0",
-                    "z-40 m-0 flex h-screen md:w-72 w-64 flex-col justify-between bg-gray-900/50 p-3 " +
+                    "z-40 m-0 flex h-screen md:w-72 w-64 flex-col justify-between bg-gray-900/90 p-3 " +
                     "text-gray-300 shadow-3xl transition-all",
                     "fixed top-0 left-full "
                 )}

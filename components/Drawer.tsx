@@ -32,7 +32,7 @@ export default function Drawer({
                 id="drawer"
                 className={clsx(
                     showDrawer ? "translate-x-0" : "-translate-x-full",
-                    "z-30 m-0 flex h-screen md:w-72 w-64 flex-col justify-between bg-gray-900/50 p-3 " +
+                    "z-30 m-0 flex h-screen md:w-64 w-64 flex-col justify-between bg-gray-900/90 p-3 " +
                     "text-gray-300 shadow-3xl transition-all",
                     "fixed top-0 "
                 )}
@@ -95,7 +95,7 @@ function NegativePrompt({prompt, setPrompt}: {
             {show && (
                 <textarea
                     id="message"
-                    rows={12}
+                    rows={8}
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-300 rounded border
                         border-gray-300 focus:ring-blue-500 focus:border-blue-500 resize-none"
                     placeholder="Write negative prompt here..."
@@ -221,7 +221,7 @@ function InferenceSteps({numSteps, setNumSteps}: {
                 </div>
             )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
-                Number of denoising steps (min: 1; max: 200)
+                Number of denoising steps
             </label>
         </div>
     )
@@ -270,7 +270,7 @@ function GuidanceScale({guidanceScale, setGuidanceScale}:{
                 </div>
             )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
-                Classifier-free guidance (min: 1; max: 20)
+                Classifier-free guidance scale
             </label>
         </div>
     )
