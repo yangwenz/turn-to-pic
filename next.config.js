@@ -8,6 +8,7 @@ const nextConfig = {
             "lh3.googleusercontent.com",
             "robohash.org"
         ],
+        unoptimized: true,
     }
 }
 

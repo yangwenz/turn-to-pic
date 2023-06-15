@@ -143,7 +143,7 @@ export default function History(
                 id="drawer"
                 className={clsx(
                     showHistory ? "-translate-x-full" : "translate-x-0",
-                    "z-40 m-0 flex h-screen md:w-80 w-64 flex-col justify-between bg-gray-900 p-3 " +
+                    "z-40 m-0 flex h-screen md:w-72 w-64 flex-col justify-between bg-gray-900/50 p-3 " +
                     "text-gray-300 shadow-3xl transition-all",
                     "fixed top-0 left-full "
                 )}
