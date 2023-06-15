@@ -118,8 +118,8 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
     setWidth: (x: number) => void,
     setHeight: (x: number) => void
 }) {
-    const widths = [256, 384, 480, 512, 720, 768, 960];
-    const heights = [256, 384, 480, 512, 720, 768, 960];
+    const widths = [384, 480, 512, 720, 768];
+    const heights = [384, 480, 512, 720, 768];
     const [showWidth, setShowWidth] = useState(false);
     const [showHeight, setShowHeight] = useState(false);
 
@@ -148,7 +148,7 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
                 </div>
             )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60 mb-5">
-                Maximum size is 960x768 or 768x960
+                Maximum size is 768x768
             </label>
             <label
                 className="flex flex-row items-center justify-between
@@ -173,7 +173,7 @@ function WidthAndHeight({width, height, setWidth, setHeight}: {
                 </div>
             )}
             <label className="block mt-1 text-sm font-medium text-gray-300/60">
-                Maximum size is 960x768 or 768x960
+                Maximum size is 768x768
             </label>
         </div>
     )

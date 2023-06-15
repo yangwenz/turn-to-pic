@@ -75,7 +75,7 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
     }, [itemsPerPage, orderBy]);
 
     async function fetchData(page: number) {
-        if (page < 100) {
+        if (page < 25) {
             const skip = page * itemsPerPage;
             const r = await getRecentImages(skip, itemsPerPage, orderBy);
             setImages([...images, ...r.images]);

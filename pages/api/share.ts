@@ -28,7 +28,7 @@ interface ShareRequest extends NextApiRequest {
 const rateLimit = redis
     ? new Ratelimit({
         redis: redis,
-        limiter: Ratelimit.fixedWindow(6, "60 s"),
+        limiter: Ratelimit.fixedWindow(5, "60 s"),
         analytics: true,
     })
     : undefined;
