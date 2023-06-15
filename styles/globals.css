@@ -27,34 +27,14 @@ body {
   }
 }
 
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  cursor: pointer;
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.pagination a {
-  padding: 6px;
-  border-radius: 5px;
-  border: 1px solid rgb(75 85 99);
-  background: rgb(75 85 99);
-  color: white;
-  opacity: 80%;
-  margin-left: 2px;
-  margin-right: 2px;
+::-webkit-scrollbar-thumb {
+  background-color: #718096;
 }
 
-.pagination__link {
-  font-weight: bold;
-}
-
-.pagination__link--active a {
-  color: #475569;
-  border: 1px solid #475569;
-  background: rgb(241 245 249);
-}
-
-.pagination__link--disabled a {
-  opacity: 50%;
+::-webkit-scrollbar-track {
+  background-color: #CBD5E0;
 }
