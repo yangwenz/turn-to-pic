@@ -52,6 +52,7 @@ function Content({imageUrl, isSmall, onClick}: {
                     fill
                     sizes="(max-width: 120px), (max-width: 240px),
                     (max-width: 256px), (max-width: 480px)"
+                    unoptimized={true}
                 />
             </div>
         </div>

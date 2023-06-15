@@ -43,7 +43,7 @@ export default function ImageCard({url, isTablet, width, height}: {
                     className="hover:cursor-pointer relative w-full h-full"
                     onClick={() => setShowModal(true)}
                 >
-                    <Image src={url} alt="generated image" fill/>
+                    <Image src={url} alt="generated image" fill unoptimized={true}/>
                 </div>
             </motion.div>
             <div>
