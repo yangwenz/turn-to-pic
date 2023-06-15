@@ -12,7 +12,11 @@ function StyleCard({style, setStyle, weight, setWeight, setShowModal}: {
     const styles = getStyles();
     const [selectedStyle, setSelectedStyle] = useState<string>(style);
     const [selectedWeight, setSelectedWeight] = useState<number>(weight);
-    let imgUrl = selectedStyle != "None"? "/styles/" + selectedStyle + ".png": "";
+    let imgUrl = "";
+    if (selectedStyle != "None") {
+        imgUrl = "https://upcdn.io/12a1yBZ/raw/turn2pic/styles/small/" +
+            selectedStyle.replace(" ", "%20") + ".png"
+    }
 
     return (
         <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2

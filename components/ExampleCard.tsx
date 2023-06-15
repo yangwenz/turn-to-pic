@@ -133,7 +133,7 @@ export function GalleryExample() {
                 className="grid md:grid-cols-4 grid-cols-2"
                 style={{gridGap: "10px"}}
             >
-                {images.map(img => Card("/images/" + img))}
+                {images.map(img => Card("https://upcdn.io/12a1yBZ/raw/turn2pic/examples/small/" + img))}
             </div>
         </div>
     )

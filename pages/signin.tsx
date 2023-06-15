@@ -79,10 +79,10 @@ export default function SignIn() {
                     className="grid md:grid-cols-4 grid-cols-2"
                     style={{gridGap: "10px"}}
                 >
-                    {Card("/images/0.png")}
-                    {Card("/images/1.png")}
-                    {Card("/images/2.png")}
-                    {Card("/images/3.png")}
+                    {Card("https://upcdn.io/12a1yBZ/raw/turn2pic/examples/small/0.png")}
+                    {Card("https://upcdn.io/12a1yBZ/raw/turn2pic/examples/small/1.png")}
+                    {Card("https://upcdn.io/12a1yBZ/raw/turn2pic/examples/small/2.png")}
+                    {Card("https://upcdn.io/12a1yBZ/raw/turn2pic/examples/small/3.png")}
                 </div>
                 <Footer/>
             </main>
