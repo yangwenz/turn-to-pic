@@ -93,7 +93,7 @@ function Card(url: string) {
         <div key={url}>
             <motion.div
                 className="flex flex-col items-center justify-center
-                        lg:w-[256px] w-[120px] lg:h-[384px] h-[180px]
+                        lg:w-[216px] w-[120px] lg:h-[324px] h-[180px]
                         rounded-lg bg-slate-300 overflow-hidden relative"
                 whileHover={{
                     position: 'relative',
@@ -129,7 +129,7 @@ export function GalleryExample() {
     }, [])
 
     return (
-        <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-3">
+        <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-3 max-h-screen overflow-y-scroll">
             <div
                 className="grid md:grid-cols-4 grid-cols-2"
                 style={{gridGap: "10px"}}
