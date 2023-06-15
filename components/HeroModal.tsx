@@ -21,6 +21,7 @@ function Card(label: string, url: string, setHero: (x: string) => void) {
                         title={label2name(label)}
                         fill
                         sizes="(max-width: 96px), (max-width: 64px)"
+                        unoptimized={true}
                     />
                 </div>
             </div>
@@ -70,8 +71,14 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                         clickAttribute("strength")
                     }}
                 >
-                    <Image alt="Strength" src="/heroes/Strength_attribute_symbol.png"
-                           title="Strength" width={40} height={40}/>
+                    <Image
+                        alt="Strength"
+                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Strength_attribute_symbol.png"
+                        title="Strength"
+                        width={40}
+                        height={40}
+                        unoptimized={true}
+                    />
                 </button>
                 <button
                     className={clsx(attribute === "agility" ? "bg-gray-500" : "", "w-auto ml-1 rounded")}
@@ -79,8 +86,14 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                         clickAttribute("agility")
                     }}
                 >
-                    <Image alt="Agility" src="/heroes/Agility_attribute_symbol.png"
-                           title="Agility" width={40} height={40}/>
+                    <Image
+                        alt="Agility"
+                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Agility_attribute_symbol.png"
+                        title="Agility"
+                        width={40}
+                        height={40}
+                        unoptimized={true}
+                    />
                 </button>
                 <button
                     className={clsx(attribute === "intelligence" ? "bg-gray-500" : "", "w-auto ml-1 rounded")}
@@ -88,8 +101,14 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                         clickAttribute("intelligence")
                     }}
                 >
-                    <Image alt="Intelligence" src="/heroes/Intelligence_attribute_symbol.png"
-                           title="Intelligence" width={40} height={40}/>
+                    <Image
+                        alt="Intelligence"
+                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Intelligence_attribute_symbol.png"
+                        title="Intelligence"
+                        width={40}
+                        height={40}
+                        unoptimized={true}
+                    />
                 </button>
                 <button
                     className={clsx(attribute === "universal" ? "bg-gray-500" : "", "w-auto ml-1 rounded")}
@@ -97,15 +116,22 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                         clickAttribute("universal")
                     }}
                 >
-                    <Image alt="Universal" src="/heroes/Universal_attribute_symbol.png"
-                           title="Universal" width={40} height={40}/>
+                    <Image
+                        alt="Universal"
+                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Universal_attribute_symbol.png"
+                        title="Universal"
+                        width={40}
+                        height={40}
+                        unoptimized={true}
+                    />
                 </button>
             </div>
             <div
                 className="grid grid-cols-4 mt-2 mb-2 lg:h-96 h-64 overflow-y-scroll"
                 style={{gridGap: "5px"}}
             >
-                {heroList.map(hero => Card(hero, "/heroes/" + hero + ".jpg", setSelectedHero))}
+                {heroList.map(hero => Card(
+                    hero, "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/" + hero + ".jpg", setSelectedHero))}
             </div>
             {hasWeight && (
                 <div className="w-full flex flex-row items-center justify-center mb-2">

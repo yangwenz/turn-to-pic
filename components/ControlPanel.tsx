@@ -11,7 +11,10 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
     setPrompt: (x: string) => void,
     onClickGenerate: () => void
 }) {
-    let heroUrl = hero != "" ? "/heroes/" + hero + ".jpg" : "/heroes/question_mark.png";
+    let heroUrl = hero != "" ?
+        "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/" + hero + ".jpg" :
+        "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/question_mark.png";
+
     return (
         <div className="flex flex-col w-full items-center justify-center">
             <div className="flex flex-row w-full items-center justify-center border-slate-500 rounded p-2 mb-2">
@@ -32,6 +35,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                                 title={label2name(hero)}
                                 fill
                                 sizes="(max-width: 96px), (max-width: 64px)"
+                                unoptimized={true}
                             />
                         </div>
                     </div>
