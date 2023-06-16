@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
-import InfoCard from "@/components/InfoCard";
+import ImageInfoCard from "@/components/ImageInfoCard";
 
 export type GalleryImageInfo = {
     id: string;
@@ -35,7 +35,7 @@ function ImageModal({showModal, setShowModal, image}: {
                         className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                         rounded-lg shadow-xl bg-slate-300"
                     >
-                        <InfoCard record={image} setShowInfo={setShowModal}/>
+                        <ImageInfoCard record={image} setShowInfo={setShowModal}/>
                     </div>
                 </div>
             ) : null}

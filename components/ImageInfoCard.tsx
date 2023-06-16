@@ -18,7 +18,7 @@ interface ImageInfo {
     seed?: number | string;
 }
 
-export default function InfoCard({record, setShowInfo}: {
+export default function ImageInfoCard({record, setShowInfo}: {
     record: ImageInfo | null
     setShowInfo: (x: boolean) => void
 }) {

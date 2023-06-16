@@ -4,22 +4,24 @@ import {checkRateLimit} from "@/utils/limit";
 import type {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
-import {hashHistoryRecord} from "@/utils/crypto";
 
 export type ShareResponse = {
     id: string;
 };
 
-export type ShareData = {
+interface ShareData {
     id: string;
-    url: string;
-    hash: string;
+    imageUrl: string;
     width: number;
     height: number;
     hero: string;
+    heroWeight: number;
     style: string;
+    styleWeight: number;
     prompt: string;
     negativePrompt: string;
+    numInferenceSteps: number;
+    guidanceScale: number;
 }
 
 interface ShareRequest extends NextApiRequest {
@@ -34,47 +36,8 @@ const rateLimit = redis
     })
     : undefined;
 
-async function uploadImage(url: string, timeout: number = 10000): Promise<string | null> {
-    try {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), timeout);
-
-        const response = await fetch(
-            `https://api.upload.io/v2/accounts/${process.env.UPLOAD_ACCOUNT_ID}/uploads/url`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + process.env.UPLOAD_APIKEY,
-                },
-                body: JSON.stringify({
-                    url: url
-                }),
-                signal: controller.signal
-            }
-        );
-        clearTimeout(id);
-
-        if (response.status === 200) {
-            const jsonResponse = await response.json();
-            return jsonResponse.fileUrl;
-        } else {
-            console.log(response);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    return null;
-}
-
 async function insertPhoto(data: ShareData, userId: string) {
 
-}
-
-function isValid(data: ShareData): boolean {
-    if (!data.hash)
-        return false;
-    return data.hash === hashHistoryRecord(data);
 }
 
 export default async function handler(
@@ -93,13 +56,7 @@ export default async function handler(
 
     try {
         const userId = session.user.email!;
-        // Check if the URL in the request is valid
-        if (!isValid(req.body)) {
-            return res.status(500).json(errorMessage);
-        }
-        // Upload the image to Upload.io
-        const uploadUrl = await uploadImage(req.body.url)
-        if (uploadUrl === null) {
+        if (!req.body.imageUrl) {
             return res.status(500).json(errorMessage);
         }
         // Store the image info in the database

@@ -3,7 +3,11 @@ import React, {useState} from "react";
 import Image from "next/image";
 import {FaBars} from "react-icons/fa";
 import {UserHistoryRecord} from "@/hooks/useHistory";
-import InfoCard from "@/components/InfoCard";
+import ImageInfoCard from "@/components/ImageInfoCard";
+import {ErrorInfoModal, LoadingInfoModal} from "@/components/InfoModal";
+import {Upload} from "upload-js";
+import {dataURLtoBlob} from "@/utils/file";
+import {hashHistoryRecord} from "@/utils/crypto";
 
 function HistoryCard(
     record: UserHistoryRecord,
@@ -133,13 +137,70 @@ export default function History(
     const [showInfo, setShowInfo] = useState(false);
     const [isHovering, setIsHovering] = useState("");
     const [showDelete, setShowDelete] = useState("");
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     async function refresh(record: UserHistoryRecord) {
         await refreshRecord(record);
     }
 
+    async function uploadImage(dataUrl: string): Promise<string | null> {
+        const apikey = "public_12a1yBZ3H44YxxUMCWehveSQrgJr";
+        try {
+            const upload = Upload({apiKey: apikey});
+            const {fileUrl} = await upload.uploadFile(
+                dataURLtoBlob(dataUrl),
+                {
+                    onBegin:    ({ cancel })   => console.log("File upload started!"),
+                    onProgress: ({ progress }) => console.log(`File uploading... ${progress}%`),
+                }
+            );
+            return fileUrl;
+        } catch (error) {
+            console.log(error);
+        }
+        return null;
+    }
+
     async function share(record: UserHistoryRecord) {
-        console.log(record);
+        setLoading(true);
+        setError(null);
+        if (!record.dataUrl && record.hash === hashHistoryRecord(record))
+            setError("Failed to share the image")
+
+        try {
+            const fileUrl = await uploadImage(record.dataUrl!);
+            if (!fileUrl) {
+                setError("Failed to share image");
+            }
+            const res = await fetch("/api/share", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: record.id,
+                    imageUrl: fileUrl,
+                    width: record.width,
+                    height: record.height,
+                    hero: record.hero,
+                    heroWeight: record.heroWeight,
+                    style: record.style,
+                    styleWeight: record.styleWeight,
+                    prompt: record.prompt,
+                    negativePrompt: record.negativePrompt,
+                    numInferenceSteps: record.numInferenceSteps,
+                    guidanceScale: record.guidanceScale
+                }),
+            });
+            if (res.status !== 200) {
+                setError(await res.json());
+            }
+        } catch (error) {
+            setError("Failed to share image");
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -185,13 +246,25 @@ export default function History(
                 </div>
             </div>
             {showInfo && (
-                <InfoCard record={record} setShowInfo={setShowInfo}/>
+                <ImageInfoCard record={record} setShowInfo={setShowInfo}/>
             )}
             {showDelete != "" && (
                 <DeleteModal
                     showDelete={showDelete}
                     setShowDelete={setShowDelete}
                     deleteRecord={deleteRecord}
+                />
+            )}
+            {loading && (
+                <LoadingInfoModal
+                    content="Sharing ..."
+                    otherInfo=""
+                />
+            )}
+            {error && (
+                <ErrorInfoModal
+                    error={error}
+                    onClickError={() => setError(null)}
                 />
             )}
         </>
