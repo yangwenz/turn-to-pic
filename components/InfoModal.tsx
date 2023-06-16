@@ -50,3 +50,43 @@ export function ErrorInfoModal({error, onClickError}: {
         </div>
     );
 }
+
+export function DeleteModal({showDelete, setShowDelete, deleteRecord}: {
+    showDelete: string,
+    setShowDelete: (x: string) => void,
+    deleteRecord: (x: string) => void
+}) {
+    return (
+        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+            <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
+                rounded-lg shadow-xl bg-gray-900 flex flex-col items-center
+                justify-center p-1"
+            >
+                <div className="text-white text-center text-xl font-bold px-5 py-2">
+                    Are you sure to delete this record?
+                </div>
+                <div className="flex flex-row">
+                    <button
+                        className="h-10 px-2 m-2 text-white transition-colors duration-150
+                                bg-gradient-to-br from-gray-500 to-gray-700
+                                rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
+                        onClick={() => setShowDelete("")}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="h-10 px-5 m-2 text-white transition-colors duration-150
+                                bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
+                                rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
+                        onClick={() => {
+                            deleteRecord(showDelete);
+                            setShowDelete("")
+                        }}
+                    >
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
