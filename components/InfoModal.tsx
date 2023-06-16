@@ -12,7 +12,7 @@ export function LoadingInfoModal({content, otherInfo}: {
                 style={{zIndex: 100}}
             >
                 <div className="p-4 w-80 bg-white text-center rounded-lg animate-in zoom-in
-                                    flex flex-col items-center justify-center">
+                    flex flex-col items-center justify-center">
                     <Spinner/>
                     <p className="pt-3 opacity-50 text-center text-base mb-2">
                         {content}
@@ -20,6 +20,33 @@ export function LoadingInfoModal({content, otherInfo}: {
                     <span className="text-xs opacity-30">
                         {otherInfo}
                     </span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export function LoadingProgressModal({content, progress}: {
+    content: string,
+    progress: number
+}) {
+    return (
+        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+            <div
+                className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                style={{zIndex: 100}}
+            >
+                <div className="p-4 w-80 bg-white text-center rounded-lg animate-in zoom-in
+                                    flex flex-col items-center justify-center">
+                    <p className="opacity-50 text-center text-base mb-2">
+                        {content}
+                    </p>
+                    <div className="w-full bg-gray-300 rounded-full dark:bg-gray-700">
+                        <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center rounded-full"
+                             style={{"width": `${progress}%`}}>
+                            {`${progress}%`}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

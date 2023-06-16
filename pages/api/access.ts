@@ -16,7 +16,7 @@ export default async function handler(
     req: AccessRequest,
     res: NextApiResponse<AccessResponse | string>
 ) {
-    let n = Math.min(req.body.numTrials, 60);
+    let n = Math.min(req.body.numTrials, 30);
     for (let i = 0; i < n; i++) {
         try {
             // Loop in 1s intervals until the alt text is ready
@@ -42,7 +42,9 @@ export default async function handler(
                 await new Promise((resolve) => setTimeout(resolve, 1000));
             }
         } catch (error) {
-            return res.status(503).json("Failed to generate the image");
+            // Parsing the response fails sometimes
+            console.log(error);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
         }
     }
     return res.status(500).json("Timeout. Please check the history later.");

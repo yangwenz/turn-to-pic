@@ -237,9 +237,6 @@ export default function Generate() {
             } else if (res.status === 502) {
                 // Image was deleted
                 await updateRecord(requestId, "image unavailable");
-            } else if (res.status === 503) {
-                // Other errors
-                await updateRecord(requestId, "unknown");
             } else if (res.status !== 200) {
                 // Running
                 setError(await res.json());
@@ -387,8 +384,6 @@ async function fetchTaskInfo(
         await updateRecord(id, "failed");
     } else if (res.status === 502) {
         await updateRecord(id, "image unavailable");
-    } else if (res.status === 503) {
-        await updateRecord(id, "unknown");
     } else if (res.status === 200) {
         let response = (await res.json()) as AccessResponse;
         await updateRecord(id, "succeeded", response.generated);

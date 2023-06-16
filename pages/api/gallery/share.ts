@@ -1,9 +1,7 @@
-import redis from "@/utils/redis";
-import {Ratelimit} from "@upstash/ratelimit";
-import {checkRateLimit} from "@/utils/limit";
 import type {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import {hashHistoryRecord} from "@/utils/crypto";
 
 export type ShareResponse = {
     id: string;
@@ -12,6 +10,7 @@ export type ShareResponse = {
 interface ShareData {
     id: string;
     imageUrl: string;
+    hash: string;
     width: number;
     height: number;
     hero: string;
@@ -28,14 +27,6 @@ interface ShareRequest extends NextApiRequest {
     body: ShareData;
 }
 
-const rateLimit = redis
-    ? new Ratelimit({
-        redis: redis,
-        limiter: Ratelimit.fixedWindow(5, "60 s"),
-        analytics: true,
-    })
-    : undefined;
-
 async function insertPhoto(data: ShareData, userId: string) {
 
 }
@@ -48,19 +39,14 @@ export default async function handler(
     if (!session || !session.user) {
         return res.status(500).json("Please login");
     }
-    const success = await checkRateLimit(session, rateLimit, "share", res);
-    if (!success) {
-        return res.status(501).json("Exceed the sharing limit");
-    }
     const errorMessage = "Failed to share the image";
 
     try {
-        const userId = session.user.email!;
-        if (!req.body.imageUrl) {
+        if (!req.body.imageUrl || req.body.hash !== hashHistoryRecord(req.body)) {
             return res.status(500).json(errorMessage);
         }
         // Store the image info in the database
-        const response = await insertPhoto(req.body, userId);
+        const response = await insertPhoto(req.body, session.user.email!);
         if (response === null) {
             return res.status(500).json(errorMessage);
         }
