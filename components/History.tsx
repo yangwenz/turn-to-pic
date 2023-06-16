@@ -175,13 +175,13 @@ export default function History(
         setError(null);
 
         if (!record.dataUrl || record.hash !== hashHistoryRecord(record))
-            setError("Failed to share the image")
+            setError("The data is invalid")
         else {
             try {
                 // TODO: Check if the image has been already shared
                 const fileUrl = await uploadImage(record.dataUrl!);
                 if (!fileUrl) {
-                    setError("Failed to share image");
+                    setError("Connection error or exceed the sharing limit. Please try again later.");
                 } else {
                     const obj = {
                         id: record.id,
@@ -211,7 +211,7 @@ export default function History(
                     }
                 }
             } catch (error) {
-                setError("Failed to share image");
+                setError("An error occurred, please try again later.");
             }
         }
         setLoading(false);
