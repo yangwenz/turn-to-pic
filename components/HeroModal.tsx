@@ -37,6 +37,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
     setShowModal: (x: boolean) => void
 }) {
     const hasWeight = true;
+    const urlBase: string = "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/";
     const [heroes, heroAttributes] = getHeroes();
     const [selectedHero, setSelectedHero] = useState<string>(hero);
     const [selectedWeight, setSelectedWeight] = useState<number>(weight);
@@ -73,7 +74,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                 >
                     <Image
                         alt="Strength"
-                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Strength_attribute_symbol.png"
+                        src={urlBase + "Strength_attribute_symbol.png"}
                         title="Strength"
                         width={40}
                         height={40}
@@ -88,7 +89,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                 >
                     <Image
                         alt="Agility"
-                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Agility_attribute_symbol.png"
+                        src={urlBase + "Agility_attribute_symbol.png"}
                         title="Agility"
                         width={40}
                         height={40}
@@ -103,7 +104,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                 >
                     <Image
                         alt="Intelligence"
-                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Intelligence_attribute_symbol.png"
+                        src={urlBase + "Intelligence_attribute_symbol.png"}
                         title="Intelligence"
                         width={40}
                         height={40}
@@ -118,7 +119,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                 >
                     <Image
                         alt="Universal"
-                        src="https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/Universal_attribute_symbol.png"
+                        src={urlBase + "Universal_attribute_symbol.png"}
                         title="Universal"
                         width={40}
                         height={40}
@@ -131,7 +132,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
                 style={{gridGap: "5px"}}
             >
                 {heroList.map(hero => Card(
-                    hero, "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/" + hero + ".jpg", setSelectedHero))}
+                    hero, urlBase + hero + ".jpg", setSelectedHero))}
             </div>
             {hasWeight && (
                 <div className="w-full flex flex-row items-center justify-center mb-2">
