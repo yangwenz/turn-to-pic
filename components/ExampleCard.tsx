@@ -59,37 +59,7 @@ function Content({imageUrl, isSmall, onClick}: {
     )
 }
 
-function ImageModal({showModal, setShowModal, imageUrl}: {
-    showModal: boolean,
-    setShowModal: (x: boolean) => void,
-    imageUrl: string
-}) {
-    return (
-        <div>
-            {showModal ? (
-                <div
-                    className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
-                    onClick={() => setShowModal(false)}
-                >
-                    <div
-                        className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
-                        rounded-lg shadow-xl"
-                    >
-                        <Content
-                            imageUrl={imageUrl}
-                            isSmall={false}
-                            onClick={() => null}
-                        />
-                    </div>
-                </div>
-            ) : null}
-        </div>
-    );
-}
-
 function Card(url: string) {
-    const [showModal, setShowModal] = useState(false);
-
     return (
         <div key={url}>
             <motion.div
@@ -111,11 +81,6 @@ function Card(url: string) {
                     onClick={() => {}}
                 />
             </motion.div>
-            <ImageModal
-                showModal={showModal}
-                setShowModal={(x: boolean) => setShowModal(x)}
-                imageUrl={url}
-            />
         </div>
     )
 }
@@ -124,7 +89,7 @@ export function GalleryExample() {
     const [images, setImages] = useState<string[]>([...examples]);
 
     useEffect(() => {
-        setImages(shuffle(examples));
+        setImages(shuffle(examples).slice(0, Math.ceil(examples.length / 2)));
     }, [])
 
     return (
