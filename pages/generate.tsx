@@ -222,7 +222,7 @@ export default function Generate() {
             const body = {
                 endpointUrl: endpointUrl,
                 token: settings.apikey!,
-                numTrials: 20
+                numTrials: 15
             }
             const res = await fetch("/api/access", {
                 method: "POST",
