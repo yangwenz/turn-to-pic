@@ -4,6 +4,7 @@ import {checkRateLimit} from "@/utils/limit";
 import type {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import {hashHistoryRecord} from "@/utils/crypto";
 
 export type ShareResponse = {
     id: string;
@@ -71,7 +72,9 @@ async function insertPhoto(data: ShareData, userId: string) {
 }
 
 function isValid(data: ShareData): boolean {
-    return true;
+    if (!data.hash)
+        return false;
+    return data.hash === hashHistoryRecord(data);
 }
 
 export default async function handler(
@@ -84,7 +87,7 @@ export default async function handler(
     }
     const success = await checkRateLimit(session, rateLimit, "share", res);
     if (!success) {
-        return res.status(500).json("Wait for a while");
+        return res.status(501).json("Exceed the sharing limit");
     }
     const errorMessage = "Failed to share the image";
 

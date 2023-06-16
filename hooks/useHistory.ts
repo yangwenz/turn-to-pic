@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {downloadImageAsDataURL} from "@/utils/file";
+import {hashHistoryRecord} from "@/utils/crypto";
 
 export type UserHistoryRecord = {
     // Task info
@@ -24,6 +25,7 @@ export type UserHistoryRecord = {
     // Image info
     imageUrl?: string;
     dataUrl?: string;
+    hash?: string;
 }
 
 const HISTORY_KEY = "USER_HISTORY";
@@ -88,8 +90,10 @@ export function useHistory() {
                 if (imageUrl) {
                     historyRecords[i].imageUrl = imageUrl;
                     const dataUrl = await downloadImageAsDataURL(imageUrl);
-                    if (dataUrl != "")
+                    if (dataUrl != "") {
                         historyRecords[i].dataUrl = dataUrl;
+                        historyRecords[i].hash = hashHistoryRecord(historyRecords[i]);
+                    }
                     else
                         historyRecords[i].status = "image unavailable";
                 }
