@@ -14,6 +14,7 @@ function HistoryCard(
     isHovering: string,
     setIsHovering: (x: string) => void,
     refresh: (x: UserHistoryRecord) => void,
+    share: (x: UserHistoryRecord) => void,
 ) {
     const hasDataUrl = !!record.dataUrl;
 
@@ -96,7 +97,7 @@ function HistoryCard(
                             <button
                                 className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
                                 title="Share"
-                                onClick={() => {}}
+                                onClick={() => share(record)}
                             >
                                 <ShareIcon/>
                             </button>
@@ -137,6 +138,10 @@ export default function History(
         await refreshRecord(record);
     }
 
+    async function share(record: UserHistoryRecord) {
+        console.log(record);
+    }
+
     return (
         <>
             <div
@@ -174,7 +179,7 @@ export default function History(
                     {historyRecords.length > 0 && (
                         historyRecords.slice(0).reverse().map((record) => HistoryCard(
                             record, setShowInfo, setRecord, loadHistoryRecord,
-                            setShowDelete, isHovering, setIsHovering, refresh
+                            setShowDelete, isHovering, setIsHovering, refresh, share
                         ))
                     )}
                 </div>
