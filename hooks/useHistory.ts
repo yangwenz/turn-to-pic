@@ -87,7 +87,11 @@ export function useHistory() {
                 historyRecords[i].status = status;
                 if (imageUrl) {
                     historyRecords[i].imageUrl = imageUrl;
-                    historyRecords[i].dataUrl = await downloadImageAsDataURL(imageUrl);
+                    const dataUrl = await downloadImageAsDataURL(imageUrl);
+                    if (dataUrl != "")
+                        historyRecords[i].dataUrl = dataUrl;
+                    else
+                        historyRecords[i].status = "image unavailable";
                 }
                 break;
             }

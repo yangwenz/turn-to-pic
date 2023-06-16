@@ -66,7 +66,7 @@ function HistoryCard(
                 )}
                 {isHovering == record.id && (
                     <div className="absolute top-full -translate-y-full flex flex-row">
-                        {!hasDataUrl && (
+                        {!hasDataUrl && record.status == "starting" && (
                             <button
                                 className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
                                 title="Refresh"
