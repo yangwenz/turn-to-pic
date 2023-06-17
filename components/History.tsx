@@ -52,6 +52,7 @@ function HistoryCard(
                             src={record.dataUrl!}
                             alt={record.id}
                             fill
+                            unoptimized={true}
                         />
                     </div>
                 )}

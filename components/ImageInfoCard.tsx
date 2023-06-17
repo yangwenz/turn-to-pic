@@ -47,9 +47,10 @@ export default function ImageInfoCard({record, setShowInfo}: {
                             src={record.dataUrl!}
                             alt="Generated image"
                             fill={true}
-                            sizes="(max-width: 512px) 100vw"
+                            sizes="(max-width: 480px) 100vw"
                             style={{objectFit: "contain"}}
                             onClick={() => setShowInfo(false)}
+                            unoptimized={true}
                         />
                     )}
                     {isHovering && (
