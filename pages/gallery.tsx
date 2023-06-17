@@ -48,7 +48,7 @@ function Tabs() {
                         data-toggle="tab"
                         role="tablist"
                     >
-                        Latest Shared
+                        Shared Recently
                     </a>
                 </li>
             </ul>

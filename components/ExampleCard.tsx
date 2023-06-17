@@ -89,7 +89,7 @@ export function GalleryExample() {
     const [images, setImages] = useState<string[]>([...examples]);
 
     useEffect(() => {
-        setImages(shuffle(examples).slice(0, Math.ceil(examples.length / 2)));
+        setImages(shuffle(examples).slice(0, 20));
     }, [])
 
     return (
