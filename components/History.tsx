@@ -157,6 +157,7 @@ export default function History(
 
     async function uploadImage(dataUrl: string): Promise<string | null> {
         try {
+            setProgress(0);
             const upload = Upload({apiKey: getUploadKey()});
             const {fileUrl} = await upload.uploadFile(
                 dataURLtoBlob(dataUrl),
