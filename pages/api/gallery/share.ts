@@ -1,3 +1,4 @@
+import prisma from "@/lib/prisma";
 import type {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
@@ -27,8 +28,27 @@ interface ShareRequest extends NextApiRequest {
     body: ShareData;
 }
 
-async function insertPhoto(data: ShareData, userId: string) {
-
+async function insertImage(image: ShareData, userId: string) {
+    return await prisma.image.create({
+        data: {
+            id: image.id,
+            userId: userId,
+            url: image.imageUrl,
+            width: image.width,
+            height: image.height,
+            hero: image.hero,
+            heroWeight: image.heroWeight,
+            style: image.style,
+            styleWeight: image.styleWeight,
+            prompt: image.prompt,
+            negativePrompt: image.negativePrompt,
+            numInferenceSteps: image.numInferenceSteps,
+            guidanceScale: image.guidanceScale
+        },
+    }).catch(async (e) => {
+        console.error(e);
+        return null;
+    })
 }
 
 export default async function handler(
@@ -46,7 +66,7 @@ export default async function handler(
             return res.status(500).json(errorMessage);
         }
         // Store the image info in the database
-        const response = await insertPhoto(req.body, session.user.email!);
+        const response = await insertImage(req.body, session.user.email!);
         if (response === null) {
             return res.status(500).json(errorMessage);
         }

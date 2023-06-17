@@ -46,7 +46,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  photos        Photo[]
+  sharedImages  Image[]
 }
 
 model VerificationToken {
@@ -58,21 +58,32 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Photo {
-  id          String   @id @default(cuid())
-  userId      String
-  url         String   @unique
-  createdAt   DateTime @default(now())
-  description String?  @db.Text
-  likes       Int      @default(0)
-  user        User     @relation(fields: [userId], references: [email], onDelete: Cascade)
+model Image {
+  id        String   @id
+  userId    String
+  url       String   @unique
+  createdAt DateTime @default(now())
+  likes     Int      @default(0)
+
+  width             Int
+  height            Int
+  hero              String @db.VarChar(100)
+  heroWeight        Int
+  style             String @db.VarChar(100)
+  styleWeight       Int
+  prompt            String @db.VarChar(1000)
+  negativePrompt    String @db.VarChar(1500)
+  numInferenceSteps Int
+  guidanceScale     Float
+
+  user User @relation(fields: [userId], references: [email], onDelete: Cascade)
 }
 
 model Rating {
   userId    String
-  photoId   String
+  imageId   String
   rating    Int      @default(1)
   createdAt DateTime @default(now())
 
-  @@unique([userId, photoId], name: "ratingId")
+  @@unique([userId, imageId], name: "ratingId")
 }

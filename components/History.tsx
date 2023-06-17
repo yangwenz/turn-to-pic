@@ -17,6 +17,7 @@ import {
     RefreshIcon,
     ShareIcon
 } from "@/components/Icons";
+import {GetImageResponse} from "@/pages/api/gallery/image";
 
 function HistoryCard(
     record: UserHistoryRecord,
@@ -178,40 +179,66 @@ export default function History(
             setError("The data is invalid")
         else {
             try {
-                // TODO: Check if the image has been already shared
+                // Check if the image has been already shared
+                const imageRes = await fetch("/api/gallery/image", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: record.id,
+                        onlyUrl: true
+                    }),
+                })
+                if (imageRes.status != 200) {
+                    setError("Connection error, please try again later.");
+                    return;
+                }
+                let imageJsonResponse = (await imageRes.json()) as GetImageResponse;
+                if (imageJsonResponse.id) {
+                    setError("The image has been shared already.");
+                    return;
+                }
+
+                // Upload the image file
                 const fileUrl = await uploadImage(record.dataUrl!);
                 if (!fileUrl) {
                     setError("Connection error or exceed the sharing limit. Please try again later.");
-                } else {
-                    const obj = {
-                        id: record.id,
-                        imageUrl: fileUrl!,
-                        hash: "",
-                        width: record.width,
-                        height: record.height,
-                        hero: record.hero,
-                        heroWeight: record.heroWeight,
-                        style: record.style,
-                        styleWeight: record.styleWeight,
-                        prompt: record.prompt,
-                        negativePrompt: record.negativePrompt,
-                        numInferenceSteps: record.numInferenceSteps,
-                        guidanceScale: record.guidanceScale
-                    }
-                    obj.hash = hashHistoryRecord(obj);
-                    const res = await fetch("/api/gallery/share", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(obj),
-                    });
-                    if (res.status !== 200) {
-                        setError(await res.json());
-                    }
+                    return;
                 }
+
+                // Update the share information
+                const obj = {
+                    id: record.id,
+                    imageUrl: fileUrl!,
+                    hash: "",
+                    width: record.width,
+                    height: record.height,
+                    hero: record.hero,
+                    heroWeight: record.heroWeight,
+                    style: record.style,
+                    styleWeight: record.styleWeight,
+                    prompt: record.prompt,
+                    negativePrompt: record.negativePrompt,
+                    numInferenceSteps: record.numInferenceSteps,
+                    guidanceScale: record.guidanceScale
+                }
+                obj.hash = hashHistoryRecord(obj);
+                const res = await fetch("/api/gallery/share", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(obj),
+                });
+                if (res.status !== 200) {
+                    setError(await res.json());
+                }
+
             } catch (error) {
                 setError("An error occurred, please try again later.");
+            } finally {
+                setLoading(false);
             }
         }
         setLoading(false);
