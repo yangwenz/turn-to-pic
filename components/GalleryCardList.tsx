@@ -48,8 +48,9 @@ async function getImages(type: string, hero: string, skip: number, take: number)
         return  [];
 }
 
+/*
 // For testing purpose
-async function getRecentImages(skip: number, take: number, orderBy?: string) {
+async function getRecentImages(skip: number, take: number) {
     let images: GalleryImageInfo[] = []
 
     function getRandomInt(min: number, max: number) {
@@ -74,6 +75,7 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
     }
     return {images: images, counts: 100};
 }
+*/
 
 export default function GalleryCardList({type, hero, itemsPerPage}: {
     type: string,

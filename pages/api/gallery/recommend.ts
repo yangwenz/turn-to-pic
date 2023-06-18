@@ -10,7 +10,7 @@ interface RecommendRequest extends NextApiRequest {
         skip: number,
         take: number
     };
-};
+}
 
 export type RecommendItem = {
     id: string,
