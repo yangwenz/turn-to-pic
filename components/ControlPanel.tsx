@@ -62,7 +62,7 @@ export default function ControlPanel({hero, setShowHeroModal, style, setShowStyl
                     name="prompt"
                     value={prompt == ""? undefined: prompt}
                     placeholder="Enter a prompt: e.g., standing, (full body)++.
-                        Each run of the same prompt will generate a unique image.
+                        Each run of the same prompt will generate a different image.
                         You can choose the best image from multiple runs."
                     className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full resize-none font-semibold
