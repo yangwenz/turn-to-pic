@@ -12,19 +12,21 @@ function resizeImage(
     return [Math.floor(r * width), Math.floor(r * height)]
 }
 
-function newImageInfo(r: RecommendItem) {
-    return {
-        id: r.id,
-        dataUrl: r.url,
-        width: r.width,
-        height: r.height,
-        hero: "",
-        style: "",
-        prompt: "",
-        negativePrompt: "",
-        likes: 0,
-        userLiked: false
-    }
+function newImageInfo(items: RecommendItem[]) {
+    return items.map(r => {
+        return {
+            id: r.id,
+            dataUrl: r.url,
+            width: r.width,
+            height: r.height,
+            hero: "",
+            style: "",
+            prompt: "",
+            negativePrompt: "",
+            likes: 0,
+            userLiked: false
+        }
+    })
 }
 
 async function getImages(type: string, hero: string, skip: number, take: number) {
@@ -41,8 +43,7 @@ async function getImages(type: string, hero: string, skip: number, take: number)
         })
     });
     if (res.status == 200) {
-        const items = (await res.json()) as RecommendItem[];
-        return items.map(r => newImageInfo(r));
+        return newImageInfo((await res.json()) as RecommendItem[]);
     }
     else
         return  [];

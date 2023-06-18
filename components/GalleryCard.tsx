@@ -91,6 +91,7 @@ export default function GalleryCard({image, width, height}: {
                         fill
                         sizes="(max-width: 320px) 100vw"
                         unoptimized={true}
+                        priority={true}
                     />
                 </div>
                 {isHovering && (
