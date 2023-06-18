@@ -48,7 +48,7 @@ export default function GalleryCard({image, width, height}: {
 
     let url = image.dataUrl;
     if (url.startsWith("https://upcdn.io"))
-        url = url.replace("/raw/", "/image/") + "?w=320&h=320&fit=max";
+        url = url.replace("/raw/", "/image/") + "?w=480&h=480&fit=max";
 
     async function onClickLike() {
         if (!disabled) {
