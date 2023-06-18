@@ -49,7 +49,6 @@ export default function SignIn() {
                 className="flex flex-1 w-full flex-col items-center justify-center text-center sm:mb-0 mb-auto">
                 <h1
                     className="mx-auto font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-5xl mb-5"
-                    style={{fontFamily: "ABC"}}
                 >
                     <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
                         bg-clip-text text-transparent font-black">

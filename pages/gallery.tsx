@@ -101,7 +101,6 @@ export default function Gallery() {
                 text-center px-4 mt-8 sm:mb-0 mb-auto w-full">
                     <h1 className="mx-auto font-display text-4xl font-bold
                     tracking-normal text-slate-900 sm:text-5xl mb-4 drop-shadow-xl"
-                        style={{fontFamily: "ABC"}}
                     >
                     <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
                         bg-clip-text text-transparent font-black">
@@ -110,7 +109,6 @@ export default function Gallery() {
                     </h1>
                     <h2 className="mx-auto font-display text-2xl font-semibold
                         tracking-normal text-slate-400 mb-6 drop-shadow-xl"
-                        style={{fontFamily: "ABC"}}
                     >
                         <span>
                             View beautiful pictures shared by other amazing users
