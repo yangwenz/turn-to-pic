@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import GalleryCard, {GalleryImageInfo} from "@/components/GalleryCard";
+import {RecommendItem} from "@/pages/api/gallery/recommend";
 
 function resizeImage(
     isTablet: boolean,
@@ -9,6 +10,42 @@ function resizeImage(
     const maxWidth: number = isTablet? 256: 320;
     const r = maxWidth / width;
     return [Math.floor(r * width), Math.floor(r * height)]
+}
+
+function newImageInfo(r: RecommendItem) {
+    return {
+        id: r.id,
+        dataUrl: r.url,
+        width: r.width,
+        height: r.height,
+        hero: "",
+        style: "",
+        prompt: "",
+        negativePrompt: "",
+        likes: 0,
+        userLiked: false
+    }
+}
+
+async function getImages(type: string, hero: string, skip: number, take: number) {
+    const res = await fetch("/api/gallery/recommend", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            type: type,
+            hero: hero,
+            skip: skip,
+            take: take
+        })
+    });
+    if (res.status == 200) {
+        const items = (await res.json()) as RecommendItem[];
+        return items.map(r => newImageInfo(r));
+    }
+    else
+        return  [];
 }
 
 // For testing purpose
@@ -38,8 +75,9 @@ async function getRecentImages(skip: number, take: number, orderBy?: string) {
     return {images: images, counts: 100};
 }
 
-export default function GalleryCardList({orderBy, itemsPerPage}: {
-    orderBy: string,
+export default function GalleryCardList({type, hero, itemsPerPage}: {
+    type: string,
+    hero: string,
     itemsPerPage: number
 }) {
     const [isTablet, setIsTablet] = useState<boolean>(false);
@@ -63,21 +101,21 @@ export default function GalleryCardList({orderBy, itemsPerPage}: {
         window.addEventListener("resize", checkScreenWidth);
 
         const fetchData = async () => {
-            const r = await getRecentImages(0, itemsPerPage, orderBy);
-            setImages([...r.images]);
+            const items = await getImages(type, hero, 0, itemsPerPage);
+            setImages([...items]);
         }
         fetchData().catch(console.error);
 
         return () => {
             window.removeEventListener("resize", checkScreenWidth);
         };
-    }, [itemsPerPage, orderBy]);
+    }, [itemsPerPage, type, hero]);
 
     async function fetchData(page: number) {
         if (page < 25) {
             const skip = page * itemsPerPage;
-            const r = await getRecentImages(skip, itemsPerPage, orderBy);
-            setImages([...images, ...r.images]);
+            const items = await getImages(type, hero, skip, itemsPerPage);
+            setImages([...images, ...items]);
             setPage(page);
         }
     }

@@ -58,7 +58,8 @@ function Tabs() {
                         <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
-                                    orderBy={"likes"}
+                                    type="popular"
+                                    hero="all"
                                     itemsPerPage={8}
                                 />
                             </div>
@@ -66,7 +67,8 @@ function Tabs() {
                         <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
-                                    orderBy={"createdAt"}
+                                    type="recent"
+                                    hero="all"
                                     itemsPerPage={8}
                                 />
                             </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
 import ImageInfoCard from "@/components/ImageInfoCard";
@@ -7,30 +7,14 @@ import ImageInfoCard from "@/components/ImageInfoCard";
 export type GalleryImageInfo = {
     id: string;
     dataUrl: string;
-
     width: number;
     height: number;
     hero: string;
     style: string;
     prompt: string;
     negativePrompt: string;
-
     likes: number;
     userLiked: boolean;
-}
-
-function ImageModal({showModal, setShowModal, image}: {
-    showModal: boolean,
-    setShowModal: (x: boolean) => void,
-    image: GalleryImageInfo
-}) {
-    return (
-        <div>
-            {showModal ? (
-                <ImageInfoCard record={image} setShowInfo={setShowModal}/>
-            ) : null}
-        </div>
-    );
 }
 
 function LikeButton({numLikes, disabled, onClick}: {
@@ -38,8 +22,8 @@ function LikeButton({numLikes, disabled, onClick}: {
     disabled: boolean,
     onClick: () => void
 }) {
-    let heartColor = disabled? "text-red-600": "text-white";
-    let style = !disabled? "bg-white/60 hover:bg-white/90": "bg-white/60";
+    let heartColor = disabled ? "text-red-600" : "text-white";
+    let style = !disabled ? "bg-white/60 hover:bg-white/90" : "bg-white/60";
     return (
         <button
             onClick={onClick}
@@ -61,6 +45,10 @@ export default function GalleryCard({image, width, height}: {
     const [disabled, setDisabled] = useState(image.userLiked);
     const [showModal, setShowModal] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+
+    let url = image.dataUrl;
+    if (url.startsWith("https://upcdn.io"))
+        url = url.replace("/raw/", "/image/") + "?w=480&h=480&fit=max";
 
     async function onClickLike() {
         if (!disabled) {
@@ -85,7 +73,7 @@ export default function GalleryCard({image, width, height}: {
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
-                    scale: 1.1  ,
+                    scale: 1.1,
                     transition: {
                         duration: .2
                     }
@@ -98,11 +86,10 @@ export default function GalleryCard({image, width, height}: {
                     onClick={() => setShowModal(true)}
                 >
                     <Image
-                        src={image.dataUrl}
+                        src={url}
                         alt="image"
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw,
-                        (max-width: 1200px) 33vw, 25vw"
+                        sizes="(max-width: 320px) 100vw"
                         unoptimized={true}
                     />
                 </div>
@@ -116,11 +103,12 @@ export default function GalleryCard({image, width, height}: {
                     </div>
                 )}
             </motion.div>
-            <ImageModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                image={image}
-            />
+            {showModal && (
+                <ImageInfoCard
+                    record={image}
+                    setShowInfo={setShowModal}
+                />
+            )}
         </div>
     )
 }

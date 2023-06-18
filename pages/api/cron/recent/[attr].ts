@@ -9,6 +9,9 @@ export default async function handler(
     if (!attr)
         return res.status(500).json("No Attr");
     const attribute = typeof attr === "string"? attr: attr[0];
-    await updateRecommendation(attribute, "recent");
-    return res.status(200).json("success");
+    const success = await updateRecommendation(attribute, "recent");
+    if (success)
+        return res.status(200).json("success");
+    else
+        return res.status(500).json("failed");
 }

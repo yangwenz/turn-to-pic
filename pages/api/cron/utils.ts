@@ -26,17 +26,25 @@ export async function updateRecommendation(attr: string, type: string) {
     try {
         if (attr === "all") {
             const images = await listImages("", numItems, orderBy);
-            if (redis)
-                await redis.set(`recommend_${type}_all`, JSON.stringify(images));
+            if (redis) {
+                const values = images.map(image => JSON.stringify(image));
+                await redis.del(`recommend_${type}_all`);
+                await redis.lpush(`recommend_${type}_all`, ...values);
+            }
         } else {
             const heroes = heroAttributes.get(attr);
             for (const hero of heroes!) {
                 const images = await listImages(hero, numItems, orderBy);
-                if (redis)
-                    await redis.set(`recommend_${type}_${hero}`, JSON.stringify(images));
+                if (redis) {
+                    const values = images.map(image => JSON.stringify(image));
+                    await redis.del(`recommend_${type}_${hero}`);
+                    await redis.lpush(`recommend_${type}_${hero}`, ...values);
+                }
             }
         }
+        return true;
     } catch (error) {
         console.log(error);
+        return false;
     }
 }
