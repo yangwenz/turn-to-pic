@@ -22,7 +22,7 @@ export default function Home() {
                             Creating Amazing Pictures of Dota 2 Heroes
                         </span>
                     </h1>
-                    <h2 className="mx-auto font-display text-3xl font-semibold
+                    <h2 className="mx-auto font-display text-2xl font-semibold
                         tracking-normal text-slate-400 mb-6 drop-shadow-xl"
                     >
                         <span>
