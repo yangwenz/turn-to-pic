@@ -63,6 +63,6 @@ export default async function handler(
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json("Failed to get image info");
+        res.status(500).json("Connection error, please try again later.");
     }
 }

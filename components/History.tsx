@@ -27,6 +27,7 @@ function HistoryCard(
     setDeleteRecord: (x: string) => void,
     isHovering: string,
     setIsHovering: (x: string) => void,
+    isRefreshing: boolean,
     refresh: (x: UserHistoryRecord) => void,
     share: (x: UserHistoryRecord) => void,
 ) {
@@ -87,6 +88,7 @@ function HistoryCard(
                                 className="px-2 bg-white/60 rounded m-1 hover:bg-slate-500"
                                 title="Refresh"
                                 onClick={() => refresh(record)}
+                                disabled={isRefreshing}
                             >
                                 <RefreshIcon/>
                             </button>
@@ -151,9 +153,13 @@ export default function History(
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [progress, setProgress] = useState<number>(0);
+    const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
     async function refresh(record: UserHistoryRecord) {
+        setIsRefreshing(true);
+        await new Promise(f => setTimeout(f, 1000));
         await refreshRecord(record);
+        setIsRefreshing(false);
     }
 
     async function uploadImage(dataUrl: string): Promise<string | null> {
@@ -193,7 +199,7 @@ export default function History(
                     }),
                 })
                 if (imageRes.status != 200) {
-                    setError("Connection error, please try again later.");
+                    setError(await imageRes.json());
                     return;
                 }
                 let imageJsonResponse = (await imageRes.json()) as GetImageResponse;
@@ -283,7 +289,8 @@ export default function History(
                     {historyRecords.length > 0 && (
                         historyRecords.slice(0).reverse().map((record) => HistoryCard(
                             record, setShowInfo, setRecord, loadHistoryRecord,
-                            setShowDelete, isHovering, setIsHovering, refresh, share
+                            setShowDelete, isHovering, setIsHovering, isRefreshing,
+                            refresh, share
                         ))
                     )}
                 </div>
