@@ -57,7 +57,7 @@ export default async function handler(
     }
     const success = await checkRateLimit(session, rateLimit, "generate", res);
     if (!success) {
-        return;
+        return res.status(500).json("Wait for a while");
     }
 
     try {
