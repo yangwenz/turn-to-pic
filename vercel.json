@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/popular/all",
+      "schedule": "0 * * * *"
+    }
+  ]
+}
