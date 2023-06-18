@@ -164,7 +164,6 @@ export default function History(
 
     async function uploadImage(dataUrl: string): Promise<string | null> {
         try {
-            setProgress(0);
             const upload = Upload({apiKey: getUploadKey()});
             const {fileUrl} = await upload.uploadFile(
                 dataURLtoBlob(dataUrl),
@@ -182,6 +181,7 @@ export default function History(
     async function share(record: UserHistoryRecord) {
         setLoading(true);
         setError(null);
+        setProgress(0);
 
         if (!record.dataUrl || record.hash !== hashHistoryRecord(record))
             setError("The data is invalid")
