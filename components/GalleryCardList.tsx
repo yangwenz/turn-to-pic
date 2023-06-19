@@ -12,7 +12,7 @@ function resizeImage(
     return [Math.floor(r * width), Math.floor(r * height)]
 }
 
-function newImageInfo(items: RecommendItem[]) {
+function expandImageInfo(items: RecommendItem[]) {
     return items.map(r => {
         return {
             id: r.id,
@@ -23,8 +23,8 @@ function newImageInfo(items: RecommendItem[]) {
             style: "",
             prompt: "",
             negativePrompt: "",
-            likes: 0,
-            userLiked: false
+            likes: r.likes? r.likes: 0,
+            userLiked: r.userLiked? r.userLiked: false
         }
     })
 }
@@ -43,7 +43,7 @@ async function getImages(type: string, hero: string, skip: number, take: number)
         })
     });
     if (res.status == 200) {
-        return newImageInfo((await res.json()) as RecommendItem[]);
+        return expandImageInfo((await res.json()) as RecommendItem[]);
     }
     else
         return  [];
