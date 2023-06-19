@@ -44,39 +44,12 @@ async function getImages(type: string, hero: string, skip: number, take: number)
     });
     if (res.status == 200) {
         return expandImageInfo((await res.json()) as RecommendItem[]);
+    } else if (res.status == 501) {
+        return null;
+    } else {
+        return [];
     }
-    else
-        return  [];
 }
-
-/*
-// For testing purpose
-async function getRecentImages(skip: number, take: number) {
-    let images: GalleryImageInfo[] = []
-
-    function getRandomInt(min: number, max: number) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    for (let i = skip; i < skip + take; i++) {
-        images.push({
-            id: String(i),
-            dataUrl: `https://robohash.org/${i}?200x200`,
-            width: getRandomInt(256, 512),
-            height: getRandomInt(256, 512),
-            hero: "robot",
-            style: "Default",
-            prompt: "prompt",
-            negativePrompt: "negative prompt",
-            likes: i,
-            userLiked: i % 2 === 0
-        })
-    }
-    return {images: images, counts: 100};
-}
-*/
 
 export default function GalleryCardList({type, hero, itemsPerPage}: {
     type: string,
@@ -87,6 +60,7 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
     const [numColumns, setNumColumns] = useState(4);
     const [images, setImages] = useState<GalleryImageInfo[]>([]);
     const [loadDisable, setLoadDisable] = useState<boolean>(false);
+    const [noMoreImages, setNoMoreImages] = useState<boolean>(false);
 
     useEffect(() => {
         const checkScreenWidth = () => {
@@ -106,8 +80,12 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
         const fetchData = async () => {
             setLoadDisable(true);
             const items = await getImages(type, hero, 0, itemsPerPage);
-            setImages([...items]);
-            setLoadDisable(false);
+            if (items === null) {
+                setNoMoreImages(true);
+            } else {
+                setImages([...items]);
+                setLoadDisable(false);
+            }
         }
         fetchData().catch(console.error);
 
@@ -117,12 +95,16 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
     }, [itemsPerPage, type, hero]);
 
     async function fetchData() {
-        if (images.length < 200) {
+        if (images.length < 200 && !noMoreImages) {
             setLoadDisable(true);
             const skip = images.length;
             const items = await getImages(type, hero, skip, itemsPerPage);
-            setImages([...images, ...items]);
-            setLoadDisable(false);
+            if (items === null) {
+                setNoMoreImages(true);
+            } else {
+                setImages([...images, ...items]);
+                setLoadDisable(false);
+            }
         } else {
             setLoadDisable(true);
         }

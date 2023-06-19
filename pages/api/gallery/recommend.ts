@@ -100,10 +100,14 @@ export default async function handler(
             req.body.skip,
             req.body.skip + Math.max(0, req.body.take - 1)
         );
-        // @ts-ignore
-        let items = await queryLikes(r);
-        items = await queryUserLiked(session.user.email!, items);
-        return res.status(200).json(items);
+        if (r.length > 0) {
+            // @ts-ignore
+            let items = await queryLikes(r);
+            items = await queryUserLiked(session.user.email!, items);
+            return res.status(200).json(items);
+        } else {
+            return res.status(501).json("No more images");
+        }
 
     } catch (e) {
         console.log(e);
