@@ -1,10 +1,4 @@
-import {
-    FaLightbulb,
-    FaDiceOne,
-    FaDiceTwo,
-    FaDiceThree,
-    FaDiceFour
-} from "react-icons/fa";
+import {FaLightbulb} from "react-icons/fa";
 
 export default function HelpModal({showModal, setShowModal}: {
     showModal: boolean,
