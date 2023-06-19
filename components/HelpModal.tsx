@@ -21,12 +21,12 @@ export default function HelpModal({showModal, setShowModal}: {
                             <ol className="flex flex-col text-left font-medium pl-4 pr-4" type="1">
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        1. Choose a Dota 2 Hero.
+                                        1. Select a Dota 2 Hero.
                                     </div>
                                 </li>
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        2. Choose a style. If you want to use your own style, please choose
+                                        2. Select a style. If you prefer to use your own style, please choose
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             None.
                                         </span>
@@ -34,21 +34,26 @@ export default function HelpModal({showModal, setShowModal}: {
                                 </li>
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        3. Input proper prompt. If you want to emphasize more on some words, use
-                                        the operator
+                                        3. Enter the appropriate prompt. If you want to emphasize certain words,
+                                        use the operator
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             (some words)+
                                         </span> where the number of + can be up to 3.
-                                        For example, you may use
+                                        For example, you can use
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             (sitting in a chair)+, (full body)++
                                         </span>
-                                        to let a specific hero sit down.
+                                        to depict a specific hero sitting down.
                                     </div>
                                 </li>
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        4. Click generate and wait about 6 seconds for the result.
+                                        4. Click
+                                        <span className="font-semibold italic ml-1 mr-1 text-white">
+                                            Generate
+                                        </span>
+                                        and patiently wait for approximately six seconds
+                                        to receive the result.
                                     </div>
                                 </li>
                             </ol>
