@@ -55,7 +55,18 @@ export default function GalleryCard({image, width, height}: {
             setNumLikes(numLikes + 1);
             setDisabled(true);
             try {
-
+                const res = await fetch("/api/gallery/rate", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        imageId: image.id
+                    }),
+                });
+                if (res.status !== 200) {
+                    throw new Error("Rating failed");
+                }
             } catch (error) {
                 setNumLikes(numLikes);
                 setDisabled(false);

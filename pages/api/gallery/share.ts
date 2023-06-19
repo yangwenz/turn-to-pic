@@ -56,7 +56,7 @@ export default async function handler(
     res: NextApiResponse<ShareResponse | string>
 ) {
     const session = await getServerSession(req, res, authOptions);
-    if (!session || !session.user) {
+    if (!session || !session.user || !session.user.email) {
         return res.status(500).json("Please login");
     }
     const errorMessage = "Failed to share the image";
