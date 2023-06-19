@@ -21,12 +21,15 @@ export default function HelpModal({showModal, setShowModal}: {
                             <ol className="flex flex-col text-left font-medium pl-4 pr-4" type="1">
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        1. Choose a Dota 2 Hero
+                                        1. Choose a Dota 2 Hero.
                                     </div>
                                 </li>
                                 <li className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        2. Choose a style. If you want to use your own style, please choose None.
+                                        2. Choose a style. If you want to use your own style, please choose
+                                        <span className="font-semibold italic ml-1 mr-1 text-white">
+                                            None.
+                                        </span>
                                     </div>
                                 </li>
                                 <li className="flex flex-row items-center mb-2">
