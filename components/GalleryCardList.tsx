@@ -86,7 +86,7 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
     const [isTablet, setIsTablet] = useState<boolean>(false);
     const [numColumns, setNumColumns] = useState(4);
     const [images, setImages] = useState<GalleryImageInfo[]>([]);
-    const [page, setPage] = useState(0);
+    const [loadDisable, setLoadDisable] = useState<boolean>(false);
 
     useEffect(() => {
         const checkScreenWidth = () => {
@@ -104,8 +104,10 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
         window.addEventListener("resize", checkScreenWidth);
 
         const fetchData = async () => {
+            setLoadDisable(true);
             const items = await getImages(type, hero, 0, itemsPerPage);
             setImages([...items]);
+            setLoadDisable(false);
         }
         fetchData().catch(console.error);
 
@@ -114,12 +116,15 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
         };
     }, [itemsPerPage, type, hero]);
 
-    async function fetchData(page: number) {
-        if (page < 25) {
-            const skip = page * itemsPerPage;
+    async function fetchData() {
+        if (images.length < 200) {
+            setLoadDisable(true);
+            const skip = images.length;
             const items = await getImages(type, hero, skip, itemsPerPage);
             setImages([...images, ...items]);
-            setPage(page);
+            setLoadDisable(false);
+        } else {
+            setLoadDisable(true);
         }
     }
 
@@ -146,10 +151,13 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
             </div>
             <button
                 className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500
-                    w-1/2 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold mt-6"
+                    w-1/2 rounded-lg border-2 enabled:hover:bg-slate-500 enabled:hover:text-black font-bold mt-6
+                    disabled:opacity-50"
                 onClick={async () => {
-                    await fetchData(page + 1);
-                }}>
+                    await fetchData();
+                }}
+                disabled={loadDisable}
+            >
                 Load More
             </button>
         </div>
