@@ -35,7 +35,11 @@ export default function HelpModal({showModal, setShowModal}: {
     showModal: boolean,
     setShowModal: (x: boolean) => void,
 }) {
-    const content = ["a", "b", "c"];
+    const content = [
+        "a",
+        "b",
+        "c"
+    ];
 
     return (
         <div>
