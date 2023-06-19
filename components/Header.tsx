@@ -47,24 +47,45 @@ export default function Header(
 
     return (
         <header className="flex w-full justify-between items-center border-b border-slate-500 py-3">
-            <Tilt className="Tilt br3 shadow-3 px-4">
-                <Link href="/" className="flex">
-                    <div className="flex flex-row items-center justify-center">
-                        <Image
-                            alt="logo"
-                            src="/logo_3.png"
-                            className="sm:w-12 sm:h-12 w-7 h-7"
-                            width={30}
-                            height={30}
-                        />
-                        <div className="lg:text-3xl text-2xl font-bold ml-2 tracking-tight drop-shadow-xl">
-                            <span className="text-slate-400">Turn</span>
-                            <span className="text-slate-400">2</span>
-                            <span className="text-slate-300">Pic</span>
+            <div className="relative">
+                <Tilt className="peer Tilt br3 shadow-3 px-4">
+                    <Link href="/" className="flex">
+                        <div className="flex flex-row items-center justify-center">
+                            <Image
+                                alt="logo"
+                                src="/logo_3.png"
+                                className="sm:w-12 sm:h-12 w-7 h-7"
+                                width={30}
+                                height={30}
+                            />
+                            <div className="lg:text-3xl text-2xl font-bold ml-2 tracking-tight drop-shadow-xl">
+                                <span className="text-slate-400">Turn</span>
+                                <span className="text-slate-400">2</span>
+                                <span className="text-slate-300">Pic</span>
+                            </div>
                         </div>
-                    </div>
-                </Link>
-            </Tilt>
+                    </Link>
+                </Tilt>
+                <div className="hidden z-40 absolute peer-hover:flex hover:flex w-full flex-col
+                    bg-gray-800/90 rounded-lg drop-shadow-lg items-center justify-center p-2
+                    left-1/2 -translate-x-1/2"
+                >
+                    <Link
+                        className="px-2 py-2 hover:bg-slate-700 rounded-lg w-full text-center hover:font-semibold
+                            font-medium border border-slate-700 text-black hover:text-white bg-slate-400 md:text-base text-sm"
+                        href="/generate"
+                    >
+                        Generate Image
+                    </Link>
+                    <Link
+                        className="mt-1 px-2 py-2 hover:bg-slate-700 rounded-lg w-full text-center hover:font-semibold
+                            font-medium border border-slate-700 text-black hover:text-white bg-slate-400 md:text-base text-sm"
+                        href="/gallery"
+                    >
+                        Visit Gallery
+                    </Link>
+                </div>
+            </div>
             <div className="flex justify-end items-center text-center px-4">
                 {photo && (
                     <Image
