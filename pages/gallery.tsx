@@ -22,10 +22,9 @@ function Tabs({hero}: {hero: string}) {
                 <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
                     <a
                         className={
-                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
-                            "border-2 border-slate-500 " +
+                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block border " +
                             (openTab === 1
-                                ? "text-black bg-slate-500"
+                                ? "text-black bg-slate-300 border-slate-300"
                                 : "text-gray-300 bg-transparent border-slate-500")
                         }
                         onClick={e => {
@@ -41,10 +40,9 @@ function Tabs({hero}: {hero: string}) {
                 <li className="last:mr-0 flex-auto text-center hover:cursor-pointer">
                     <a
                         className={
-                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
-                            "border-2 border-slate-500 " +
+                            "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block border " +
                             (openTab === 2
-                                ? "text-black bg-slate-500"
+                                ? "text-black bg-slate-300 border-slate-300"
                                 : "text-gray-300 bg-transparent border-slate-500")
                         }
                         onClick={e => {

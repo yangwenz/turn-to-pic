@@ -113,7 +113,7 @@ export default function GalleryCard({image, width, height}: {
 
     return (
         <div
-            className="border border-slate-400 align-top inline-block"
+            className="align-top inline-block"
             style={{"width": width, "height": height}}
         >
             <motion.div

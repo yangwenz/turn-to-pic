@@ -9,9 +9,7 @@
 }
 
 body {
-  background: linear-gradient(-45deg, rgb(15 40 60), rgb(15 35 65), rgb(15 30 70));
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  background: radial-gradient(rgb(8 45 95), rgb(17 24 39));
 }
 
 @keyframes gradient {
