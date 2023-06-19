@@ -1,43 +1,33 @@
 import Image from "next/image";
-import {FaCog} from "react-icons/fa";
+import {
+    FaLightbulb,
+    FaDiceOne,
+    FaDiceTwo,
+    FaDiceThree,
+    FaDiceFour
+} from "react-icons/fa";
 
 function getNumberIcon(index: number) {
     switch (index) {
         case 1:
             return (
-                <Image
-                    src="/number-1.svg"
-                    width={24}
-                    height={24}
-                    alt="number-1"
-                />
+                <FaDiceOne className="text-white text-xl"/>
             );
         case 2:
             return (
-                <Image
-                    src="/number-2.svg"
-                    width={24}
-                    height={24}
-                    alt="number-2"
-                />
+                <FaDiceTwo className="text-white text-xl"/>
             );
         case 3:
             return (
-                <Image
-                    src="/number-3.svg"
-                    width={24}
-                    height={24}
-                    alt="number-3"
-                />
+                <FaDiceThree className="text-white text-xl"/>
+            );
+        case 4:
+            return (
+                <FaDiceFour className="text-white text-xl"/>
             );
         default:
             return (
-                <Image
-                    src="/number-1.svg"
-                    width={24}
-                    height={24}
-                    alt="number-1"
-                />
+                <FaDiceOne className="text-white text-xl"/>
             )
     }
 }
@@ -59,12 +49,13 @@ export default function HelpModal({showModal, setShowModal}: {
                             <h2 className="text-white text-center text-xl font-bold">
                                 Tips
                             </h2>
+                            <FaLightbulb className="text-white text-xl ml-2"/>
                         </div>
                         <div className="mt-3 mb-2 text-gray-300">
                             <ol className="text-left font-medium pl-8 pr-8">
                                 {content.map((item, index) =>
                                     <div key={index}>
-                                        <li key={index} className="p-0.5 inline-flex">
+                                        <li key={index} className="flex flex-row items-center mb-2">
                                             {getNumberIcon(index + 1)}
                                             <span className="ml-2">{item}</span>
                                         </li>
