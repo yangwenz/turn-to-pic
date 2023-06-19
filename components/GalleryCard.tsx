@@ -3,6 +3,7 @@ import {motion} from "framer-motion";
 import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
 import ImageInfoCard from "@/components/ImageInfoCard";
+import {GetImageResponse} from "@/pages/api/gallery/image";
 
 export type GalleryImageInfo = {
     id: string;
@@ -75,6 +76,37 @@ export default function GalleryCard({image, width, height}: {
         }
     }
 
+    async function onClickImage() {
+        try {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 10000);
+
+            const response = await fetch("/api/gallery/image", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: image.id,
+                    onlyUrl: false
+                }),
+                signal: controller.signal
+            })
+            clearTimeout(id);
+
+            if (response.status == 200) {
+                let imageResponse = (await response.json()) as GetImageResponse;
+                image.hero = imageResponse.hero!;
+                image.style = imageResponse.style!;
+                image.prompt = imageResponse.prompt!;
+                image.negativePrompt = imageResponse.negativePrompt!;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        setShowModal(true);
+    }
+
     return (
         <div
             className="border border-slate-400 align-top inline-block"
@@ -95,7 +127,7 @@ export default function GalleryCard({image, width, height}: {
             >
                 <div
                     className="hover:cursor-pointer relative w-full h-full"
-                    onClick={() => setShowModal(true)}
+                    onClick={onClickImage}
                 >
                     <Image
                         src={url}
