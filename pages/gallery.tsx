@@ -5,9 +5,13 @@ import {useRouter} from "next/router";
 import React, {useState} from "react";
 import DefaultLayout from "@/layout/default";
 import GalleryCardList from "@/components/GalleryCardList";
+import Image from "next/image";
+import {label2name} from "@/configs/heroes";
+import HeroModal from "@/components/HeroModal";
 
-function Tabs() {
+function Tabs({hero}: {hero: string}) {
     const [openTab, setOpenTab] = useState(1);
+    hero = hero == ""? "all": hero;
 
     return (
         <div className="flex flex-wrap w-full">
@@ -19,9 +23,10 @@ function Tabs() {
                     <a
                         className={
                             "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
+                            "border-2 border-slate-500 " +
                             (openTab === 1
-                                ? "text-white bg-gray-600/80"
-                                : "text-blueGray-600 bg-slate-300/80")
+                                ? "text-black bg-slate-500"
+                                : "text-gray-300 bg-transparent border-slate-500")
                         }
                         onClick={e => {
                             e.preventDefault();
@@ -37,9 +42,10 @@ function Tabs() {
                     <a
                         className={
                             "text-base font-bold uppercase px-5 py-3 shadow-lg rounded-lg block " +
+                            "border-2 border-slate-500 " +
                             (openTab === 2
-                                ? "text-white bg-gray-600/80"
-                                : "text-blueGray-600 bg-slate-300/80")
+                                ? "text-black bg-slate-500"
+                                : "text-gray-300 bg-transparent border-slate-500")
                         }
                         onClick={e => {
                             e.preventDefault();
@@ -59,7 +65,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     type="popular"
-                                    hero="all"
+                                    hero={hero}
                                     itemsPerPage={8}
                                 />
                             </div>
@@ -68,7 +74,7 @@ function Tabs() {
                             <div className="flex flex-col items-center justify-center">
                                 <GalleryCardList
                                     type="recent"
-                                    hero="all"
+                                    hero={hero}
                                     itemsPerPage={8}
                                 />
                             </div>
@@ -82,6 +88,8 @@ function Tabs() {
 
 export default function Gallery() {
     const {data: session, status} = useSession();
+    const [hero, setHero] = useState<string>("");
+    const [showHeroModal, setShowHeroModal] = useState(false);
     const router = useRouter();
 
     if (status === "unauthenticated") {
@@ -93,6 +101,10 @@ export default function Gallery() {
         </div>
     }
 
+    let heroUrl = hero != "" ?
+        "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/" + hero + ".jpg" :
+        "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/question_mark.png";
+
     return (
         <DefaultLayout>
             <div className="flex flex-col lg:max-w-6xl w-full mx-auto items-center min-h-screen">
@@ -100,21 +112,46 @@ export default function Gallery() {
                 <main className="flex flex-col items-center justify-center
                 text-center px-4 mt-8 sm:mb-0 mb-auto w-full">
                     <h1 className="mx-auto font-display text-4xl font-bold
-                    tracking-normal text-slate-900 sm:text-5xl mb-4 drop-shadow-xl"
+                    tracking-normal text-slate-900 sm:text-5xl mb-5 drop-shadow-xl"
                     >
-                    <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
-                        bg-clip-text text-transparent font-black">
-                        Gallery of Dota 2 Heroes
-                    </span>
-                    </h1>
-                    <h2 className="mx-auto font-display text-2xl font-semibold
-                        tracking-normal text-slate-400 mb-6 drop-shadow-xl"
-                    >
-                        <span>
-                            View beautiful pictures shared by other amazing users
+                        <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
+                            bg-clip-text text-transparent font-black">
+                            Gallery of Dota 2 Heroes
                         </span>
-                    </h2>
-                    <Tabs/>
+                    </h1>
+                    <div className="flex flex-row mb-5">
+                        <button
+                            className="w-auto h-[36px] px-3 mr-0.5 text-gray-300 lg:text-base text-xs bg-transparent
+                                border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
+                            onClick={() => setShowHeroModal(true)}
+                            title="Choose a hero"
+                        >
+                            Hero
+                        </button>
+                        <div className={"flex flex-col w-[64px] items-center justify-center ml-0.5"}>
+                            <div className={"relative w-[64px] h-[36px] rounded-lg overflow-hidden bg-gray-900"}>
+                                <Image
+                                    src={heroUrl}
+                                    alt="imagebox"
+                                    title={label2name(hero)}
+                                    fill
+                                    sizes="(max-width: 96px), (max-width: 64px)"
+                                    unoptimized={true}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <Tabs
+                        hero={hero}
+                    />
+                    <HeroModal
+                        showModal={showHeroModal}
+                        setShowModal={setShowHeroModal}
+                        hero={hero}
+                        setHero={(x: string) => setHero(x)}
+                        weight={-100}
+                        setWeight={(x: number) => {}}
+                    />
                 </main>
                 <Footer/>
             </div>

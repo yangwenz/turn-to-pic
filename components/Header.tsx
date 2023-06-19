@@ -49,19 +49,20 @@ export default function Header(
         <header className="flex w-full justify-between items-center border-b border-slate-500 py-3">
             <Tilt className="Tilt br3 shadow-3 px-4">
                 <Link href="/" className="flex">
-                    <Image
-                        alt="logo"
-                        src="/logo_3.png"
-                        className="sm:w-12 sm:h-12 w-7 h-7"
-                        width={30}
-                        height={30}
-                    />
-                    <h1 className="lg:text-4xl text-2xl font-bold ml-2 tracking-tight
-                        antialiased mt-1 drop-shadow-xl">
-                        <span className="text-slate-400">Turn</span>
-                        <span className="text-slate-400">2</span>
-                        <span className="text-slate-300">Pic</span>
-                    </h1>
+                    <div className="flex flex-row items-center justify-center">
+                        <Image
+                            alt="logo"
+                            src="/logo_3.png"
+                            className="sm:w-12 sm:h-12 w-7 h-7"
+                            width={30}
+                            height={30}
+                        />
+                        <div className="lg:text-3xl text-2xl font-bold ml-2 tracking-tight drop-shadow-xl">
+                            <span className="text-slate-400">Turn</span>
+                            <span className="text-slate-400">2</span>
+                            <span className="text-slate-300">Pic</span>
+                        </div>
+                    </div>
                 </Link>
             </Tilt>
             <div className="flex justify-end items-center text-center px-4">

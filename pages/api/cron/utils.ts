@@ -26,7 +26,7 @@ export async function updateRecommendation(attr: string, type: string) {
     try {
         if (attr === "all") {
             const images = await listImages("", numItems, orderBy);
-            if (redis) {
+            if (redis && images.length > 0) {
                 const values = images.map(image => JSON.stringify(image));
                 await redis.del(`recommend_${type}_all`);
                 await redis.rpush(`recommend_${type}_all`, ...values);
@@ -35,7 +35,7 @@ export async function updateRecommendation(attr: string, type: string) {
             const heroes = heroAttributes.get(attr);
             for (const hero of heroes!) {
                 const images = await listImages(hero, numItems, orderBy);
-                if (redis) {
+                if (redis && images.length > 0) {
                     const values = images.map(image => JSON.stringify(image));
                     await redis.del(`recommend_${type}_${hero}`);
                     await redis.rpush(`recommend_${type}_${hero}`, ...values);

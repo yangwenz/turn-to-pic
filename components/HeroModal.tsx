@@ -36,7 +36,7 @@ function HeroCard({hero, setHero, weight, setWeight, setShowModal}: {
     setWeight: (x: number) => void,
     setShowModal: (x: boolean) => void
 }) {
-    const hasWeight = true;
+    const hasWeight = weight > -10;
     const urlBase: string = "https://upcdn.io/12a1yBZ/raw/turn2pic/heroes/";
     const [heroes, heroAttributes] = getHeroes();
     const [selectedHero, setSelectedHero] = useState<string>(hero);
