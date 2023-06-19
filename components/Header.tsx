@@ -72,14 +72,14 @@ export default function Header(
                 >
                     <Link
                         className="px-2 py-2 hover:bg-slate-700 rounded-lg w-full text-center hover:font-semibold
-                            font-medium border border-slate-700 text-black hover:text-white bg-slate-400 md:text-base text-sm"
+                            font-medium border border-slate-700 text-black hover:text-white bg-slate-300 md:text-base text-sm"
                         href="/generate"
                     >
                         Image Creator
                     </Link>
                     <Link
                         className="mt-1 px-2 py-2 hover:bg-slate-700 rounded-lg w-full text-center hover:font-semibold
-                            font-medium border border-slate-700 text-black hover:text-white bg-slate-400 md:text-base text-sm"
+                            font-medium border border-slate-700 text-black hover:text-white bg-slate-300 md:text-base text-sm"
                         href="/gallery"
                     >
                         Image Gallery

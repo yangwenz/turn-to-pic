@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import GalleryCard, {GalleryImageInfo} from "@/components/GalleryCard";
 import {RecommendItem} from "@/pages/api/gallery/recommend";
+import {LoadingInfoModal} from "@/components/InfoModal";
 
 function resizeImage(
     isTablet: boolean,
@@ -30,23 +31,28 @@ function expandImageInfo(items: RecommendItem[]) {
 }
 
 async function getImages(type: string, hero: string, skip: number, take: number) {
-    const res = await fetch("/api/gallery/recommend", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            type: type,
-            hero: hero,
-            skip: skip,
-            take: take
-        })
-    });
-    if (res.status == 200) {
-        return expandImageInfo((await res.json()) as RecommendItem[]);
-    } else if (res.status == 501) {
-        return null;
-    } else {
+    try {
+        const res = await fetch("/api/gallery/recommend", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                type: type,
+                hero: hero,
+                skip: skip,
+                take: take
+            })
+        });
+        if (res.status == 200) {
+            return expandImageInfo((await res.json()) as RecommendItem[]);
+        } else if (res.status == 501) {
+            return null;
+        } else {
+            return [];
+        }
+    } catch (e) {
+        console.log(e);
         return [];
     }
 }
@@ -59,7 +65,7 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
     const [isTablet, setIsTablet] = useState<boolean>(false);
     const [numColumns, setNumColumns] = useState(4);
     const [images, setImages] = useState<GalleryImageInfo[]>([]);
-    const [loadDisable, setLoadDisable] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [noMoreImages, setNoMoreImages] = useState<boolean>(false);
 
     useEffect(() => {
@@ -78,14 +84,14 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
         window.addEventListener("resize", checkScreenWidth);
 
         const fetchData = async () => {
-            setLoadDisable(true);
+            setLoading(true);
             const items = await getImages(type, hero, 0, itemsPerPage);
             if (items === null) {
                 setNoMoreImages(true);
             } else {
                 setImages([...items]);
-                setLoadDisable(false);
             }
+            setLoading(false);
         }
         fetchData().catch(console.error);
 
@@ -96,17 +102,17 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
 
     async function fetchData() {
         if (images.length < 200 && !noMoreImages) {
-            setLoadDisable(true);
+            setLoading(true);
             const skip = images.length;
             const items = await getImages(type, hero, skip, itemsPerPage);
             if (items === null) {
                 setNoMoreImages(true);
             } else {
                 setImages([...images, ...items]);
-                setLoadDisable(false);
             }
+            setLoading(false);
         } else {
-            setLoadDisable(true);
+            setNoMoreImages(true);
         }
     }
 
@@ -138,10 +144,16 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
                 onClick={async () => {
                     await fetchData();
                 }}
-                disabled={loadDisable}
+                disabled={loading || noMoreImages}
             >
                 Load More
             </button>
+            {loading && (
+                <LoadingInfoModal
+                    content="Loading ..."
+                    otherInfo=""
+                />
+            )}
         </div>
     )
 }
