@@ -29,7 +29,7 @@ export async function updateRecommendation(attr: string, type: string) {
             if (redis) {
                 const values = images.map(image => JSON.stringify(image));
                 await redis.del(`recommend_${type}_all`);
-                await redis.lpush(`recommend_${type}_all`, ...values);
+                await redis.rpush(`recommend_${type}_all`, ...values);
             }
         } else {
             const heroes = heroAttributes.get(attr);
@@ -38,7 +38,7 @@ export async function updateRecommendation(attr: string, type: string) {
                 if (redis) {
                     const values = images.map(image => JSON.stringify(image));
                     await redis.del(`recommend_${type}_${hero}`);
-                    await redis.lpush(`recommend_${type}_${hero}`, ...values);
+                    await redis.rpush(`recommend_${type}_${hero}`, ...values);
                 }
             }
         }
