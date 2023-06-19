@@ -150,7 +150,7 @@ export default function Gallery() {
                         hero={hero}
                         setHero={(x: string) => setHero(x)}
                         weight={-100}
-                        setWeight={(x: number) => {}}
+                        setWeight={() => {}}
                     />
                 </main>
                 <Footer/>
