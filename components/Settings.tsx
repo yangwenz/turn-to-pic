@@ -31,7 +31,7 @@ export default function Settings({showModal, setShowModal}: {
     return (
         <div>
             {showModal ? (
-                <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+                <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
                     <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                         rounded-lg shadow-xl bg-gray-900">
                         <div className="flex items-center justify-center border-b-2 border-slate-500

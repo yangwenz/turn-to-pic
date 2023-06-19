@@ -30,6 +30,7 @@ import {AccessResponse} from "@/pages/api/access";
 import {useHistory, UserHistoryRecord} from "@/hooks/useHistory";
 import {ErrorInfoModal, LoadingInfoModal} from "@/components/InfoModal";
 import {ImageIcon} from "@/components/Icons";
+import HelpModal from "@/components/HelpModal";
 
 
 export default function Generate() {
@@ -58,6 +59,7 @@ export default function Generate() {
     // Modal related
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
+    const [showHelpModal, setShowHelpModal] = useState(false);
     // App states
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
@@ -307,11 +309,8 @@ export default function Generate() {
                     </div>
                     <ButtonList
                         onClickDownload={onClickDownload}
-                        onClickHelp={() => {
-                        }}
-                        onClickHistory={() => {
-                            setShowHistory(!showHistory)
-                        }}
+                        onClickHelp={() => setShowHelpModal(true)}
+                        onClickHistory={() => setShowHistory(!showHistory)}
                     />
                     <HeroModal
                         showModal={showHeroModal}
@@ -328,6 +327,10 @@ export default function Generate() {
                         setStyle={setStyle}
                         weight={styleWeight}
                         setWeight={(x: number) => setStyleWeight(x)}
+                    />
+                    <HelpModal
+                        showModal={showHelpModal}
+                        setShowModal={setShowHelpModal}
                     />
                 </main>
                 <Footer/>
