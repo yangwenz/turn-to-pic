@@ -32,8 +32,8 @@ function Content({imageUrl, isSmall, onClick}: {
     let frameStyle: string;
     let contentStyle: string;
     if (isSmall) {
-        frameStyle = "lg:w-[256px] w-[120px] ";
-        contentStyle = "lg:w-[256px] lg:h-[384px] w-[120px] h-[180px] ";
+        frameStyle = "lg:w-[216px] w-[120px] ";
+        contentStyle = "lg:w-[216px] lg:h-[324px] w-[120px] h-[180px] ";
     } else {
         frameStyle = "lg:w-[480px] w-[240px] ";
         contentStyle = "lg:w-[480px] lg:h-[720px] w-[240px] h-[360px] ";
@@ -50,8 +50,7 @@ function Content({imageUrl, isSmall, onClick}: {
                     src={imageUrl}
                     alt="imagebox"
                     fill
-                    sizes="(max-width: 120px), (max-width: 240px),
-                    (max-width: 256px), (max-width: 480px)"
+                    sizes="(max-width: 120px), (max-width: 216px)"
                     unoptimized={true}
                 />
             </div>
@@ -93,7 +92,7 @@ export function GalleryExample() {
     }, [])
 
     return (
-        <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-2 max-h-screen overflow-y-scroll">
+        <div className="rounded-lg shadow-lg m-1 bg-white/25 mb-4 p-3 max-h-screen overflow-y-scroll">
             <div
                 className="grid md:grid-cols-4 grid-cols-2"
                 style={{gridGap: "10px"}}
