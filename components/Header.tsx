@@ -67,7 +67,7 @@ export default function Header(
                     </Link>
                 </Tilt>
                 <div className="hidden z-40 absolute peer-hover:flex hover:flex w-full flex-col
-                    bg-gray-800/90 rounded-lg drop-shadow-lg items-center justify-center p-2
+                    bg-gray-900/90 rounded-lg drop-shadow-lg items-center justify-center p-2
                     left-1/2 -translate-x-1/2"
                 >
                     <Link
