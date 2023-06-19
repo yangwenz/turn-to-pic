@@ -64,13 +64,14 @@ export default function GalleryCard({image, width, height}: {
                         imageId: image.id
                     }),
                 });
-                if (res.status !== 200) {
-                    throw new Error("Rating failed");
+                if (res.status == 200) {
+                    return;
                 }
             } catch (error) {
-                setNumLikes(numLikes);
-                setDisabled(false);
+                console.log(error);
             }
+            setNumLikes(numLikes);
+            setDisabled(false);
         }
     }
 
