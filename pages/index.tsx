@@ -33,13 +33,13 @@ export default function Home() {
                         <Link href={"/generate"} passHref>
                             <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
                             hover:bg-gradient-to-br font-bold rounded-full text-lg px-10 py-2.5 text-center mr-2 mb-4">
-                                Getting Started
+                                Image Creator
                             </button>
                         </Link>
                         <Link href={"/gallery"} passHref>
                             <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
                             hover:bg-gradient-to-br font-bold rounded-full text-lg px-10 py-2.5 text-center ml-2 mb-4">
-                                Hero Gallery
+                                Image Gallery
                             </button>
                         </Link>
                     </div>
