@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {FaHeart} from "react-icons/fa";
 import ImageInfoCard from "@/components/ImageInfoCard";
 import {GetImageResponse} from "@/pages/api/gallery/image";
+import {LoadingInfoModal} from "@/components/InfoModal";
 
 export type GalleryImageInfo = {
     id: string;
@@ -46,6 +47,7 @@ export default function GalleryCard({image, width, height}: {
     const [disabled, setDisabled] = useState(image.userLiked);
     const [showModal, setShowModal] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     let url = image.dataUrl;
     if (url.startsWith("https://upcdn.io"))
@@ -77,6 +79,7 @@ export default function GalleryCard({image, width, height}: {
     }
 
     async function onClickImage() {
+        setLoading(true);
         try {
             const controller = new AbortController();
             const id = setTimeout(() => controller.abort(), 10000);
@@ -104,6 +107,7 @@ export default function GalleryCard({image, width, height}: {
         } catch (error) {
             console.log(error);
         }
+        setLoading(false);
         setShowModal(true);
     }
 
@@ -152,6 +156,12 @@ export default function GalleryCard({image, width, height}: {
                 <ImageInfoCard
                     record={image}
                     setShowInfo={setShowModal}
+                />
+            )}
+            {loading && (
+                <LoadingInfoModal
+                    content="Loading ..."
+                    otherInfo=""
                 />
             )}
         </div>
