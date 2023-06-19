@@ -179,7 +179,7 @@ export default function HeroModal({showModal, setShowModal, hero, setHero, weigh
     return (
         <div>
             {showModal ? (
-                <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+                <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
                     <HeroCard
                         hero={hero}
                         setHero={setHero}

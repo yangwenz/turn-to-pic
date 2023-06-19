@@ -6,7 +6,7 @@ export function LoadingInfoModal({content, otherInfo}: {
     otherInfo: string}
 ) {
     return (
-        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+        <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
             <div
                 className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
                 style={{zIndex: 100}}
@@ -31,7 +31,7 @@ export function LoadingProgressModal({content, progress}: {
     progress: number
 }) {
     return (
-        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+        <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
             <div
                 className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
                 style={{zIndex: 100}}
@@ -59,7 +59,7 @@ export function ErrorInfoModal({error, onClickError}: {
 ) {
     return (
         <div
-            className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+            className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90"
             onClick={() => onClickError()}
         >
             <div
@@ -84,7 +84,7 @@ export function DeleteModal({showDelete, setShowDelete, deleteRecord}: {
     deleteRecord: (x: string) => void
 }) {
     return (
-        <div className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90">
+        <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
             <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
                 rounded-lg shadow-xl bg-gray-900 flex flex-col items-center
                 justify-center p-1"

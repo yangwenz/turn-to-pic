@@ -49,7 +49,7 @@ export default function ImageCard({url, isTablet, width, height}: {
             <div>
                 {showModal ? (
                     <div
-                        className="fixed z-50 top-0 left-0 w-screen h-screen bg-gray-800/90"
+                        className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90"
                         onClick={() => setShowModal(false)}
                     >
                         <div className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2
