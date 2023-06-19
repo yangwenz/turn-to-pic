@@ -1,6 +1,7 @@
 import {FaCog, FaKey} from "react-icons/fa";
 import {useState} from "react";
 import {useSettings} from "@/hooks/useSettings";
+import Link from "next/link";
 
 
 export default function Settings({showModal, setShowModal}: {
@@ -44,7 +45,14 @@ export default function Settings({showModal, setShowModal}: {
                             <FaCog className="text-white text-xl ml-2"/>
                         </div>
                         <div className="text-gray-300 mt-2 text-left px-4">
-                            Please set your Replicate API key here:
+                            Please set your Replicate API key (
+                            <Link
+                                className="underline text-amber-400 mr-1"
+                                href={"https://replicate.com/account/api-tokens"}
+                            >
+                                Here
+                            </Link>
+                            to find your API key):
                         </div>
                         <div className="mt-3 mb-2">
                             <div className="flex m-4">

@@ -1,4 +1,5 @@
 import {FaLightbulb} from "react-icons/fa";
+import Link from "next/link";
 
 export default function HelpModal({showModal, setShowModal}: {
     showModal: boolean,
@@ -18,23 +19,35 @@ export default function HelpModal({showModal, setShowModal}: {
                             <FaLightbulb className="text-white text-xl ml-2"/>
                         </div>
                         <div className="mt-3 text-gray-300 lg:text-base text-sm">
-                            <ol className="flex flex-col text-left font-medium pl-4 pr-4" type="1">
-                                <li className="flex flex-row items-center mb-2">
+                            <div className="flex flex-col text-left font-medium pl-4 pr-4">
+                                <div className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        1. Select a Dota 2 Hero.
+                                        1. Set the Replicate API Key.
+                                        <Link
+                                            className="underline text-amber-400 mr-1 ml-1"
+                                            href={"https://replicate.com/account/api-tokens"}
+                                        >
+                                            Here
+                                        </Link>
+                                        to find your API key.
                                     </div>
-                                </li>
-                                <li className="flex flex-row items-center mb-2">
+                                </div>
+                                <div className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        2. Select a style. If you prefer to use your own style, please choose
+                                        2. Select a Dota 2 Hero.
+                                    </div>
+                                </div>
+                                <div className="flex flex-row items-center mb-2">
+                                    <div className="ml-2">
+                                        3. Select a style. If you prefer to use your own style, please choose
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             None.
                                         </span>
                                     </div>
-                                </li>
-                                <li className="flex flex-row items-center mb-2">
+                                </div>
+                                <div className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        3. Enter the appropriate prompt. If you want to emphasize certain words,
+                                        4. Enter the appropriate prompt. If you want to emphasize certain words,
                                         use the operator
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             (some words)+
@@ -45,18 +58,18 @@ export default function HelpModal({showModal, setShowModal}: {
                                         </span>
                                         to depict a specific hero sitting down.
                                     </div>
-                                </li>
-                                <li className="flex flex-row items-center mb-2">
+                                </div>
+                                <div className="flex flex-row items-center mb-2">
                                     <div className="ml-2">
-                                        4. Click
+                                        5. Click
                                         <span className="font-semibold italic ml-1 mr-1 text-white">
                                             Generate
                                         </span>
                                         and patiently wait for approximately six seconds
                                         to receive the result.
                                     </div>
-                                </li>
-                            </ol>
+                                </div>
+                            </div>
                         </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
