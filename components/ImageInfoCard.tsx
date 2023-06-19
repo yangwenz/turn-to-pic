@@ -33,12 +33,12 @@ export default function ImageInfoCard({record, setShowInfo}: {
     return (
         <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
             <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
-                rounded-lg shadow-xl bg-gray-900 flex flex-col items-center
+                rounded shadow-xl bg-gray-900 flex flex-col items-center
                 justify-center"
             >
                 <div
                     className="relative md:w-[480px] md:h-[480px] w-[320px] h-[320px]
-                        rounded-lg overflow-hidden m-2"
+                        rounded overflow-hidden m-2"
                     onMouseOver={() => {setIsHovering(true)}}
                     onMouseOut={() => {setIsHovering(false)}}
                 >
@@ -55,7 +55,7 @@ export default function ImageInfoCard({record, setShowInfo}: {
                     )}
                     {isHovering && (
                         <div className="absolute top-full right-0 -translate-y-full flex flex-col
-                            text-sm font-semibold font-mono p-2 bg-white/30 rounded-lg text-black">
+                            text-sm font-semibold font-mono p-2 bg-white/30 rounded text-black">
                             <span>{`Width: ${record.width}`}</span>
                             <span>{`Height: ${record.height}`}</span>
                             {record.numInferenceSteps != undefined && (
@@ -80,7 +80,7 @@ export default function ImageInfoCard({record, setShowInfo}: {
                                 id="info_hero"
                                 rows={1}
                                 value={record?.hero}
-                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
                         lg:text-base text-sm mx-2"
                                 disabled={true}
@@ -94,7 +94,7 @@ export default function ImageInfoCard({record, setShowInfo}: {
                                 id="info_style"
                                 rows={1}
                                 value={record?.style}
-                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                                className="bg-gray-300 border border-gray-300 text-gray-900 rounded
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
                         lg:text-base text-sm mx-2"
                                 disabled={true}
@@ -108,7 +108,7 @@ export default function ImageInfoCard({record, setShowInfo}: {
                         id="info_prompt"
                         rows={2}
                         value={record?.prompt}
-                        className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                        className="bg-gray-300 border border-gray-300 text-gray-900 rounded
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
                         lg:text-base text-sm mx-2"
                         disabled={true}
@@ -120,7 +120,7 @@ export default function ImageInfoCard({record, setShowInfo}: {
                         id="info_negative_prompt"
                         rows={2}
                         value={record?.negativePrompt}
-                        className="bg-gray-300 border border-gray-300 text-gray-900 rounded-lg
+                        className="bg-gray-300 border border-gray-300 text-gray-900 rounded
                         focus:ring-blue-500 focus:border-blue-500 block p-2.5 resize-none font-semibold
                         lg:text-base text-sm mx-2"
                         disabled={true}
