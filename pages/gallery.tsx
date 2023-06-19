@@ -116,7 +116,7 @@ export default function Gallery() {
                     >
                         <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
                             bg-clip-text text-transparent font-black">
-                            Gallery of Dota 2 Heroes
+                            Gallery of Amazing Hero Images
                         </span>
                     </h1>
                     <div className="flex flex-row mb-5">

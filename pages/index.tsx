@@ -29,12 +29,20 @@ export default function Home() {
                             Transform Your Love for Dota 2 into Stunning Visual Art
                         </span>
                     </h2>
-                    <Link href={"/generate"} passHref>
-                        <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
-                            hover:bg-gradient-to-br font-bold rounded-full text-lg px-16 py-2.5 text-center mr-2 mb-4">
-                            Getting Started
-                        </button>
-                    </Link>
+                    <div className="flex flex-row items-center justify-center">
+                        <Link href={"/generate"} passHref>
+                            <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
+                            hover:bg-gradient-to-br font-bold rounded-full text-lg px-10 py-2.5 text-center mr-2 mb-4">
+                                Getting Started
+                            </button>
+                        </Link>
+                        <Link href={"/gallery"} passHref>
+                            <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
+                            hover:bg-gradient-to-br font-bold rounded-full text-lg px-10 py-2.5 text-center ml-2 mb-4">
+                                Hero Gallery
+                            </button>
+                        </Link>
+                    </div>
                     <div className="lg:flex items-center text-center justify-center">
                         <GalleryExample/>
                     </div>
