@@ -1,10 +1,38 @@
 import {FaSmile} from "react-icons/fa";
 import Link from "next/link";
 import {useState} from "react";
+import {UserSettings} from "@/hooks/useSettings";
 
+type CheckStatus = {
+    checked: boolean
+}
+
+export function loadCheckStatus() {
+    if (typeof window === "undefined") {
+        return false;
+    }
+    const data = localStorage.getItem("WELCOME_CHECK");
+    if (!data) {
+        return false;
+    }
+    try {
+        const obj = JSON.parse(data) as CheckStatus;
+        return obj.checked;
+    } catch (error) {
+        return false;
+    }
+}
 
 export default function WelcomeModal() {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(!loadCheckStatus());
+    const [checkStatus, setCheckStatus] = useState(false);
+
+    function onClickOK() {
+        setShowModal(false);
+        try {
+            localStorage.setItem("WELCOME_CHECK", JSON.stringify({checked: checkStatus}));
+        } catch (e) {}
+    }
 
     return (
         <div>
@@ -46,11 +74,21 @@ export default function WelcomeModal() {
                                 </div>
                             </div>
                         </div>
+                        <div className="flex flex-row items-center justify-center w-full mt-1">
+                            <input
+                                type="checkbox"
+                                value=""
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                onChange={
+                                (event) => setCheckStatus(event.target.checked)}
+                            />
+                            <label className="ml-2 text-white">Don&#39;t show this message again</label>
+                        </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
                                 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
                                 rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
-                            onClick={() => setShowModal(false)}
+                            onClick={onClickOK}
                         >
                             OK
                         </button>
