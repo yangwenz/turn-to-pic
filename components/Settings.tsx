@@ -34,7 +34,7 @@ export default function Settings({showModal, setShowModal}: {
             {showModal ? (
                 <div className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90">
                     <div className="fixed z-200 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2
-                        rounded-lg shadow-xl bg-gray-900"
+                        rounded-lg shadow-xl bg-gray-900 md:w-[600px] w-80"
                     >
                         <div className="flex items-center justify-center border-b-2 border-slate-500
                             text-gray-300 rounded-t-lg pt-2 pb-2"
@@ -68,13 +68,15 @@ export default function Settings({showModal, setShowModal}: {
                                     value={apikey}
                                     placeholder="r8_PT67qpcPYfcc94KOzLlibtMHWuOs7G13xxxxx"
                                     className="border border-gray-300 text-gray-900 text-small rounded-lg
-                                        focus:ring-blue-500 focus:border-blue-500 block sm:w-96 p-2"
+                                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     onChange={onChange}
                                 />
                             </div>
                         </div>
                         <div className="text-gray-300 mb-2 text-left px-4">
-                            Your API key will be stored exclusively on your local device
+                            Your API key will be stored exclusively on your local device.
+                            The model utilizes an A100 GPU. If the usage exceeds the free limit,
+                            each generation will incur a cost of approximately $0.0115.
                         </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
