@@ -18,8 +18,11 @@ async function listImages(hero: string, take: number, orderBy: string) {
         });
 }
 
-export async function updateRecommendation(attr: string, type: string) {
-    const numItems = 200;
+export async function updateRecommendation(
+    attr: string,
+    type: string,
+    numItems: number = 200
+) {
     const [_, heroAttributes] = getHeroes();
     const orderBy = type == "popular"? "likes": "createdAt";
 

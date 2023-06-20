@@ -101,7 +101,7 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
     }, [itemsPerPage, type, hero]);
 
     async function fetchData() {
-        if (images.length < 200 && !noMoreImages) {
+        if (images.length < 500 && !noMoreImages) {
             setLoading(true);
             const skip = images.length;
             const items = await getImages(type, hero, skip, itemsPerPage);
