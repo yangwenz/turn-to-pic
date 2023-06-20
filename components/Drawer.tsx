@@ -63,7 +63,7 @@ export default function Drawer({
                     <div className="w-full flex justify-center">
                         <button
                             className="w-auto h-10 px-10 ml-1 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-gray-300 hover:text-black font-bold"
+                                border-slate-500 rounded-lg border-2 hover:bg-slate-300 hover:text-black font-bold"
                             onClick={reset}
                         >
                             Reset

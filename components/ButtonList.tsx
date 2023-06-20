@@ -5,7 +5,7 @@ export default function ButtonList({onClickDownload, onClickHelp, onClickHistory
     onClickHistory: () => void
 }) {
     const buttonStyle = "bg-transparent text-gray-300 border-slate-500 " +
-        "font-bold hover:bg-slate-500 hover:text-black m-2 " +
+        "font-bold hover:bg-slate-300 hover:text-black m-2 " +
         "py-2 px-4 rounded-full inline-flex items-center"
 
     return (

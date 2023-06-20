@@ -139,7 +139,7 @@ export default function GalleryCardList({type, hero, itemsPerPage}: {
             </div>
             <button
                 className="h-10 px-3 ml-1 text-gray-300 lg:text-base text-lg bg-transparent border-slate-500
-                    w-1/2 rounded-lg border-2 enabled:hover:bg-slate-500 enabled:hover:text-black font-bold mt-6
+                    w-1/2 rounded-lg border-2 enabled:hover:bg-slate-300 enabled:hover:text-black font-bold mt-6
                     disabled:opacity-50"
                 onClick={async () => {
                     await fetchData();

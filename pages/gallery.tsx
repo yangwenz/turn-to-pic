@@ -119,7 +119,7 @@ export default function Gallery() {
                     <div className="flex flex-row mb-5">
                         <button
                             className="w-auto h-[36px] px-3 mr-0.5 text-gray-300 lg:text-base text-xs bg-transparent
-                                border-slate-500 rounded-lg border-2 hover:bg-slate-500 hover:text-black font-bold"
+                                border-slate-500 rounded-lg border-2 hover:bg-slate-300 hover:text-black font-bold"
                             onClick={() => setShowHeroModal(true)}
                             title="Choose a hero"
                         >
