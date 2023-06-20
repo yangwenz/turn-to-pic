@@ -5,6 +5,7 @@ import {Session} from "next-auth";
 import Tilt from "react-parallax-tilt";
 import {useState} from "react";
 import Settings from "@/components/Settings";
+import Badge from "@/components/Badge";
 
 
 function signButtons(session: Session | null, status: string) {
@@ -60,6 +61,9 @@ export default function Header(
                         </div>
                     </Link>
                 </Tilt>
+                <div className="absolute top-1 right-2 translate-x-full -translate-y-1/3">
+                    <Badge>Beta</Badge>
+                </div>
                 <div className="hidden z-40 absolute peer-hover:flex hover:flex w-full flex-col
                     bg-gray-900/90 rounded-lg drop-shadow-lg items-center justify-center p-2
                     left-1/2 -translate-x-1/2"
