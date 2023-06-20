@@ -1,7 +1,6 @@
 import {FaSmile} from "react-icons/fa";
 import Link from "next/link";
 import {useState} from "react";
-import {UserSettings} from "@/hooks/useSettings";
 
 type CheckStatus = {
     checked: boolean
