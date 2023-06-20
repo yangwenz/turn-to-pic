@@ -10,7 +10,7 @@ import Badge from "@/components/Badge";
 
 function signButtons(session: Session | null, status: string) {
     const buttonStyle =
-        "h-10 px-3 ml-1 text-gray-300 lg:text-base text-sm bg-transparent border-slate-500 " +
+        "h-10 lg:px-2 px-1 ml-1 text-gray-300 lg:text-base text-xs bg-transparent border-slate-500 " +
         "rounded-lg border-2 hover:bg-slate-300 hover:text-black font-bold";
 
     if (status === "loading") {
@@ -43,13 +43,13 @@ export default function Header(
     const photo = session?.user?.image || undefined
     const [showModal, setShowModal] = useState(false);
     const buttonStyle =
-        "h-10 px-3 ml-1 text-gray-300 lg:text-base text-sm bg-transparent border-slate-500 " +
+        "h-10 lg:px-2 px-1 ml-1 text-gray-300 lg:text-base text-xs bg-transparent border-slate-500 " +
         "rounded-lg border-2 hover:bg-slate-300 hover:text-black font-bold";
 
     return (
         <header className="flex w-full justify-between items-center border-b border-slate-500 py-3">
             <div className="relative">
-                <Tilt className="peer Tilt br3 shadow-3 px-4">
+                <Tilt className="peer px-4">
                     <Link href="/" className="flex">
                         <div className="flex flex-row items-center justify-center sm:h-10 h-7">
                             <Image
