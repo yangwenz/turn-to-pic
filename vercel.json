@@ -2,7 +2,43 @@
   "crons": [
     {
       "path": "/api/cron/popular/all",
-      "schedule": "0 * * * *"
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/cron/popular/strength",
+      "schedule": "3 */4 * * *"
+    },
+    {
+      "path": "/api/cron/popular/agility",
+      "schedule": "6 */4 * * *"
+    },
+    {
+      "path": "/api/cron/popular/intelligence",
+      "schedule": "9 */4 * * *"
+    },
+    {
+      "path": "/api/cron/popular/universal",
+      "schedule": "12 */4 * * *"
+    },
+    {
+      "path": "/api/cron/recent/all",
+      "schedule": "15 */2 * * *"
+    },
+    {
+      "path": "/api/cron/recent/strength",
+      "schedule": "18 */2 * * *"
+    },
+    {
+      "path": "/api/cron/recent/agility",
+      "schedule": "21 */2 * * *"
+    },
+    {
+      "path": "/api/cron/recent/intelligence",
+      "schedule": "24 */2 * * *"
+    },
+    {
+      "path": "/api/cron/recent/universal",
+      "schedule": "27 */2 * * *"
     }
   ]
 }
