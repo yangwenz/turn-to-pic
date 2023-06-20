@@ -1,7 +1,4 @@
-import {
-    TwitterShareButton,
-    TwitterIcon,
-} from 'next-share'
+import {TwitterShareButton} from 'next-share'
 
 export default function ButtonList({onClickDownload, onClickHelp, onClickHistory}: {
     onClickDownload: () => void,
