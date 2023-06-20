@@ -61,7 +61,6 @@ export default function Generate() {
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
     const [showHelpModal, setShowHelpModal] = useState(false);
-    const [showWelcomeModal, setShowWelcomeModal] = useState(true);
     // App states
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
@@ -337,10 +336,7 @@ export default function Generate() {
                         showModal={showHelpModal}
                         setShowModal={setShowHelpModal}
                     />
-                    <WelcomeModal
-                        showModal={showWelcomeModal}
-                        setShowModal={setShowWelcomeModal}
-                    />
+                    <WelcomeModal/>
                 </main>
                 <Footer/>
             </div>

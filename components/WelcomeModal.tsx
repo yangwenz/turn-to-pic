@@ -1,11 +1,11 @@
 import {FaSmile} from "react-icons/fa";
 import Link from "next/link";
+import {useState} from "react";
 
 
-export default function WelcomeModal({showModal, setShowModal}: {
-    showModal: boolean,
-    setShowModal: (x: boolean) => void,
-}) {
+export default function WelcomeModal() {
+    const [showModal, setShowModal] = useState(true);
+
     return (
         <div>
             {showModal ? (
