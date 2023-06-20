@@ -31,6 +31,7 @@ import {useHistory, UserHistoryRecord} from "@/hooks/useHistory";
 import {ErrorInfoModal, LoadingInfoModal} from "@/components/InfoModal";
 import {ImageIcon} from "@/components/Icons";
 import HelpModal from "@/components/HelpModal";
+import WelcomeModal from "@/components/WelcomeModal";
 
 
 export default function Generate() {
@@ -60,6 +61,7 @@ export default function Generate() {
     const [showHeroModal, setShowHeroModal] = useState(false);
     const [showStyleModal, setShowStyleModal] = useState(false);
     const [showHelpModal, setShowHelpModal] = useState(false);
+    const [showWelcomeModal, setShowWelcomeModal] = useState(true);
     // App states
     const [generatedImage, setGeneratedImage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
@@ -334,6 +336,10 @@ export default function Generate() {
                     <HelpModal
                         showModal={showHelpModal}
                         setShowModal={setShowHelpModal}
+                    />
+                    <WelcomeModal
+                        showModal={showWelcomeModal}
+                        setShowModal={setShowWelcomeModal}
                     />
                 </main>
                 <Footer/>
