@@ -49,13 +49,20 @@ export default function ImageCard({url, isTablet, width, height}: {
             <div>
                 {showModal ? (
                     <div
-                        className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90"
+                        className="fixed z-40 top-0 left-0 w-screen h-screen bg-gray-800/90
+                            flex flex-col items-center justify-center"
                         onClick={() => setShowModal(false)}
                     >
-                        <div className="fixed z-100 top-1/2 left-1/2 -translate-y-1/2
-                            -translate-x-1/2 rounded-lg shadow-xl">
-                            <img src={url} alt="Generated image"/>
-                        </div>
+                            <div className="relative md:w-3/4 md:h-3/4 w-full h-full">
+                                <Image
+                                    src={url}
+                                    alt="Generated image"
+                                    fill={true}
+                                    sizes="(max-width: 768px) 100vw"
+                                    style={{objectFit: "contain"}}
+                                    unoptimized={true}
+                                />
+                            </div>
                     </div>
                 ) : null}
             </div>
