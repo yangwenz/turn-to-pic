@@ -47,6 +47,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   sharedImages  Image[]
+  banned        Boolean   @default(false)
 }
 
 model VerificationToken {
