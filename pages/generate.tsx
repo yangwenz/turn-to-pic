@@ -290,6 +290,10 @@ export default function Generate() {
                                 title="The generated hero image will be shown here"
                             >
                                 <ImageIcon/>
+                                <div className="p-4 font-medium text-gray-900">
+                                    Each run of the same prompt will generate a different image.
+                                    You can choose the best image from multiple runs.
+                                </div>
                             </div>
                         )}
                         {loading && (
