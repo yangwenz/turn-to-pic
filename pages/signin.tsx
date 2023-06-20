@@ -1,10 +1,9 @@
+import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from 'next/router';
-import React from "react";
-import {router} from "next/client";
 import { motion } from "framer-motion";
 import DefaultLayout from "@/layout/default";
 
@@ -29,8 +28,7 @@ function Card(url: string) {
 }
 
 export default function SignIn() {
-    const buttonStyle = " bg-transparent border border-slate-500 text-gray-300 py-3 px-6 " +
-        "rounded-2xl flex items-center font-normal hover:bg-gray-300 hover:text-black shadow-lg"
+    const router = useRouter();
     const {error} = useRouter().query;
     const {data: session, status} = useSession();
 
@@ -38,6 +36,8 @@ export default function SignIn() {
         router.push("/");
         return <div>Authenticated</div>
     }
+    const buttonStyle = " bg-transparent border border-slate-500 text-gray-300 py-3 px-6 " +
+        "rounded-2xl flex items-center font-normal hover:bg-gray-300 hover:text-black shadow-lg"
 
     return (
         <DefaultLayout>
