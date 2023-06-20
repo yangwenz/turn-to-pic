@@ -274,7 +274,7 @@ export default function Generate() {
                         setPrompt={(x: string) => setPrompt(x)}
                         onClickGenerate={onClickGenerate}
                     />
-                    <div className="flex w-full flex-col items-center text-center mt-2">
+                    <div className="flex w-full flex-col items-center text-center mt-4">
                         {generatedImage && (
                             <ImageCard
                                 url={generatedImage}
