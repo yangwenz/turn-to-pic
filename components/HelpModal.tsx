@@ -76,11 +76,11 @@ export default function HelpModal({showModal, setShowModal}: {
                         </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
-                                bg-gradient-to-br from-gray-500 to-gray-700
+                                bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700
                                 rounded-lg focus:ring-4 hover:bg-gradient-to-bl"
                             onClick={() => setShowModal(false)}
                         >
-                            Close
+                            OK
                         </button>
                     </div>
                 </div>
