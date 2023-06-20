@@ -263,7 +263,7 @@ export default function Generate() {
                         tracking-normal text-slate-900 sm:text-5xl mb-5 drop-shadow-xl">
                     <span className="animate-text bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
                         bg-clip-text text-transparent font-black">
-                        Creating Amazing Pictures of Dota 2 Heroes
+                        Creating Amazing Images of Dota 2 Heroes
                     </span>
                     </h1>
                     <ControlPanel
