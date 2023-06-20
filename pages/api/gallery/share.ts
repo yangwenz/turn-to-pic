@@ -3,6 +3,7 @@ import type {NextApiRequest, NextApiResponse} from "next";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {hashHistoryRecord} from "@/utils/crypto";
+import {clean} from "@/utils/profanity";
 
 export type ShareResponse = {
     id: string;
@@ -40,8 +41,8 @@ async function insertImage(image: ShareData, userId: string) {
             heroWeight: image.heroWeight,
             style: image.style,
             styleWeight: image.styleWeight,
-            prompt: image.prompt,
-            negativePrompt: image.negativePrompt,
+            prompt: clean(image.prompt),
+            negativePrompt: clean(image.negativePrompt),
             numInferenceSteps: image.numInferenceSteps,
             guidanceScale: image.guidanceScale
         },
