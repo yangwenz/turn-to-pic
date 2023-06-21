@@ -12,23 +12,13 @@ export default function Footer() {
                 >
                     Dota 2{" "}
                 </a>
-                Fans.
-                Powered by{" "}
+                Fans. For inquiries or bug reports, please contact {" "}
                 <a
-                    href="https://vercel.com/"
-                    target="_blank"
+                    href="mailto: turn2pic@gmail.com"
                     className="text-gray-300 font-bold transition hover:text-gray-300/50"
                 >
-                    Vercel{" "}
-                </a>
-                and{" "}
-                <a
-                    href="https://https://replicate.com/"
-                    target="_blank"
-                    className="text-gray-300 font-bold transition hover:text-gray-300/50"
-                >
-                    Replicate.
-                </a>
+                    turn2pic@gmail.com
+                </a>.
             </div>
         </footer>
     );
