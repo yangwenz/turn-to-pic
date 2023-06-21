@@ -47,5 +47,6 @@ export default async function handler(
             await new Promise((resolve) => setTimeout(resolve, 1000));
         }
     }
-    return res.status(500).json("Timeout. Please check the history later.");
+    return res.status(500).json(
+        "Timeout. Please check the history later and click Refresh.");
 }
