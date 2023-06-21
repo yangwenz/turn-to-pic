@@ -74,8 +74,6 @@ export default function Generate() {
             if (screenWidth >= 768) {
                 // 768px is the breakpoint for tablet devices
                 setIsTablet(false);
-                setShowDrawer(true);
-                setShowHistory(true);
             } else {
                 setIsTablet(true);
                 setShowDrawer(false);
