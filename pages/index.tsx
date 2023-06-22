@@ -28,7 +28,7 @@ export default function Home() {
                         tracking-normal text-slate-400 mb-6 drop-shadow-xl"
                     >
                         <span>
-                            Transform Your Love for Dota 2 into Stunning Visual Art
+                            Stable Diffusion for Dota 2: Transform Your Love for Dota 2 into Stunning Visual Art
                         </span>
                     </h2>
                     <div className="flex flex-row items-center justify-center">
