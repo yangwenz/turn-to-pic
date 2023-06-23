@@ -43,10 +43,10 @@ export default function GalleryCard({image, width, height}: {
     width: number,
     height: number
 }) {
+    const isHovering = true;
     const [numLikes, setNumLikes] = useState(image.likes);
     const [disabled, setDisabled] = useState(image.userLiked);
     const [showModal, setShowModal] = useState(false);
-    const [isHovering, setIsHovering] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     let url = image.dataUrl;
@@ -117,7 +117,7 @@ export default function GalleryCard({image, width, height}: {
             style={{"width": width, "height": height}}
         >
             <motion.div
-                className="flex flex-col w-full h-full items-center justify-center bg-white/40"
+                className="relative flex flex-col w-full h-full items-center justify-center bg-white/40"
                 whileHover={{
                     position: 'relative',
                     zIndex: 1,
@@ -126,8 +126,6 @@ export default function GalleryCard({image, width, height}: {
                         duration: .2
                     }
                 }}
-                onMouseOver={() => setIsHovering(true)}
-                onMouseOut={() => setIsHovering(false)}
             >
                 <div
                     className="hover:cursor-pointer relative w-full h-full"
