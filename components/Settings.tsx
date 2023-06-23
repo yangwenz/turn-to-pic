@@ -75,8 +75,6 @@ export default function Settings({showModal, setShowModal}: {
                         </div>
                         <div className="text-gray-300 mb-2 text-left px-4">
                             Your API key will be stored exclusively on your local device.
-                            The model utilizes an A100 GPU. If the usage exceeds the free limit,
-                            each generation will incur a cost of approximately $0.0115.
                         </div>
                         <button
                             className="h-10 px-5 m-2 text-white transition-colors duration-150
