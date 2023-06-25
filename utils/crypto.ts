@@ -43,8 +43,6 @@ export function hashHistoryRecord(r: {
     return CryptoJS.SHA256(prefix + info + suffix).toString();
 }
 
-export function getUploadKey(v: string = "3512631236589555") {
-    const key = CryptoJS.enc.Utf8.parse(v);
-    const iv = CryptoJS.enc.Utf8.parse(v);
-    return decrypt("F3TTStr93VLM74eVJ6F+GzTCC6sSXH6fWAlTXACg5XX2XveJRVFXH+i8e6+UBLTl", key, iv);
+export function getUploadKey() {
+    return process.env.NEXT_PUBLIC_UPLOAD_KEY!;
 }
